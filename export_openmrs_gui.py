@@ -149,6 +149,22 @@ def split_obs_display(obs: Dict) -> Tuple[str, str]:
     return "", ""
 
 
+def extract_obs_display_value(obs: Dict, concept: str) -> str:
+    display = str(obs.get("display") or "").strip()
+    if not display:
+        return ""
+
+    if concept and display.casefold().startswith(concept.casefold()):
+        value = display[len(concept) :].strip()
+        if value.startswith(":") or value.startswith("="):
+            return value[1:].strip()
+        if not value:
+            return ""
+
+    _display_concept, display_value = split_obs_display(obs)
+    return display_value
+
+
 def extract_obs_concept(obs: Dict) -> str:
     concept = extract_entity_name(obs.get("concept"))
     if concept:
@@ -158,7 +174,8 @@ def extract_obs_concept(obs: Dict) -> str:
 
 
 def extract_obs_value(obs: Dict) -> str:
-    _display_concept, display_value = split_obs_display(obs)
+    concept = extract_entity_name(obs.get("concept"))
+    display_value = extract_obs_display_value(obs, concept)
     if display_value:
         return display_value
 
@@ -281,18 +298,19 @@ def flatten_obs(
 
         current_template_label = template_label
         group_members = obs.get("groupMembers")
-        if not current_template_label and isinstance(group_members, list) and group_members:
+        has_group_members = isinstance(group_members, list) and bool(group_members)
+        if not current_template_label and has_group_members:
             current_template_label = extract_obs_concept(obs)
 
         concept = extract_obs_concept(obs)
         value = extract_obs_value(obs)
-        if concept and value:
+        if concept and value and not has_group_members:
             column = build_obs_column_name(
                 concept,
                 extract_obs_source_label(encounter, current_template_label),
             )
             flattened.append((concept, column, value))
-        if isinstance(group_members, list):
+        if has_group_members:
             for member in group_members:
                 visit_obs(member, encounter, current_template_label)
 
