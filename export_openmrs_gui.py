@@ -248,6 +248,11 @@ def append_unique_value(values: Dict[str, str], key: str, value: str) -> None:
         values[key] = f"{existing} | {value}"
 
 
+def clean_csv_cell(value: object) -> str:
+    text = "" if value is None else str(value)
+    return re.sub(r"[\r\n\t]+", " ", text).strip()
+
+
 def collect_group_member_uuids(obs: Dict) -> set[str]:
     uuids: set[str] = set()
     group_members = obs.get("groupMembers")
@@ -797,14 +802,14 @@ def write_patients_csv(
             buffered_rows.append((fixed_row, obs_values))
 
     output_filename.parent.mkdir(parents=True, exist_ok=True)
-    with output_filename.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.writer(handle)
+    with output_filename.open("w", newline="", encoding="utf-8-sig") as handle:
+        writer = csv.writer(handle, quoting=csv.QUOTE_ALL, lineterminator="\n")
         header = DETAIL_COLUMNS + all_obs_columns
         writer.writerow(header)
         for fixed_row, obs_values in buffered_rows:
-            row = list(fixed_row)
+            row = [clean_csv_cell(value) for value in fixed_row]
             for column in all_obs_columns:
-                row.append(obs_values.get(column, ""))
+                row.append(clean_csv_cell(obs_values.get(column, "")))
             writer.writerow(row)
 
     return len(buffered_rows)
