@@ -250,7 +250,8 @@ def append_unique_value(values: Dict[str, str], key: str, value: str) -> None:
 
 def clean_csv_cell(value: object) -> str:
     text = "" if value is None else str(value)
-    return re.sub(r"[\r\n\t]+", " ", text).strip()
+    text = re.sub(r"[\r\n\t]+", " ", text).strip()
+    return text.replace(",", ";")
 
 
 def collect_group_member_uuids(obs: Dict) -> set[str]:
@@ -804,7 +805,7 @@ def write_patients_csv(
     output_filename.parent.mkdir(parents=True, exist_ok=True)
     with output_filename.open("w", newline="", encoding="utf-8-sig") as handle:
         writer = csv.writer(handle, quoting=csv.QUOTE_ALL, lineterminator="\n")
-        header = DETAIL_COLUMNS + all_obs_columns
+        header = [clean_csv_cell(column) for column in DETAIL_COLUMNS + all_obs_columns]
         writer.writerow(header)
         for fixed_row, obs_values in buffered_rows:
             row = [clean_csv_cell(value) for value in fixed_row]

@@ -754,9 +754,21 @@ def normalize_date(raw_value: str) -> str:
     match = re.search(r"(\d{4}-\d{2}-\d{2})", value)
     if match:
         return match.group(1)
-    for fmt in ("%Y-%m-%d", "%d/%m/%Y", "%m/%d/%Y"):
+    cleaned = re.sub(r"\s+[A-Z]{2,5}$", "", value).strip()
+    cleaned = re.sub(r"([A-Za-z]+\s+\d{1,2});\s*(\d{4})", r"\1, \2", cleaned)
+    for fmt in (
+        "%Y-%m-%d",
+        "%d/%m/%Y",
+        "%m/%d/%Y",
+        "%B %d, %Y %I:%M:%S %p",
+        "%B %d, %Y %I:%M %p",
+        "%b %d, %Y %I:%M:%S %p",
+        "%b %d, %Y %I:%M %p",
+        "%B %d, %Y",
+        "%b %d, %Y",
+    ):
         try:
-            return datetime.strptime(value, fmt).strftime("%Y-%m-%d")
+            return datetime.strptime(cleaned, fmt).strftime("%Y-%m-%d")
         except ValueError:
             continue
     return value
@@ -766,6 +778,24 @@ def normalize_time(raw_value: str) -> str:
     value = last_export_value(raw_value)
     if not value:
         return ""
+    cleaned = re.sub(r"\s+[A-Z]{2,5}$", "", value).strip()
+    cleaned = re.sub(r"([A-Za-z]+\s+\d{1,2});\s*(\d{4})", r"\1, \2", cleaned)
+    for fmt in (
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%d %H:%M",
+        "%B %d, %Y %I:%M:%S %p",
+        "%B %d, %Y %I:%M %p",
+        "%b %d, %Y %I:%M:%S %p",
+        "%b %d, %Y %I:%M %p",
+        "%I:%M:%S %p",
+        "%I:%M %p",
+        "%H:%M:%S",
+        "%H:%M",
+    ):
+        try:
+            return datetime.strptime(cleaned, fmt).strftime("%H:%M")
+        except ValueError:
+            continue
     match = re.search(r"(?:T|\b)(\d{1,2}:\d{2})(?::\d{2})?", value)
     if match:
         hour, minute = match.group(1).split(":")
@@ -912,7 +942,12 @@ def transform_rows(
         if first_row is None:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             with output_path.open("w", newline="", encoding="utf-8") as handle:
-                writer = csv.DictWriter(handle, fieldnames=SPECIAL_COLUMNS)
+                writer = csv.DictWriter(
+                    handle,
+                    fieldnames=SPECIAL_COLUMNS,
+                    quoting=csv.QUOTE_ALL,
+                    lineterminator="\n",
+                )
                 writer.writeheader()
             return 0, {MATERNAL_PROGRAM: 0, NEONATAL_PROGRAM: 0, "skipped": 0}, {}
 
@@ -971,7 +1006,12 @@ def transform_rows(
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=SPECIAL_COLUMNS + ordered_target_headers)
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=SPECIAL_COLUMNS + ordered_target_headers,
+            quoting=csv.QUOTE_ALL,
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(rows_to_write)
 
