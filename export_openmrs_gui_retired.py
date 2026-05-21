@@ -299,7 +299,7 @@ def flatten_obs(
         template_label: str = "",
     ) -> None:
         encounter = obs.get("encounter")
-        if not isinstance(encounter, dict) or not encounter:
+        if not isinstance(encounter, dict):
             encounter = inherited_encounter
 
         current_template_label = template_label
