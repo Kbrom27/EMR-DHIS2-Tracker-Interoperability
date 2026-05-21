@@ -27,10 +27,14 @@ from import_dhis2_tracker_csv import (
     build_attribute_payload,
     build_program_configs,
     build_stage_payloads,
+    default_import_log_path,
     extract_row_value,
+    format_dhis2_error,
+    add_import_value_issue,
     import_rows,
     reference_id,
     today_date,
+    write_import_value_log,
 )
 from transform_export_to_dhis2_csv import (
     MATERNAL_PROGRAM,
@@ -323,7 +327,8 @@ def import_transformed_records(
     username: str,
     password: str,
     rows: Sequence[Dict[str, str]],
-) -> Dict[str, int]:
+    log_path: Optional[Path] = None,
+) -> Dict[str, object]:
     configs = build_program_configs()
     client = Dhis2Client(base_url=base_url, username=username, password=password)
     client.validate_credentials()
@@ -334,8 +339,11 @@ def import_transformed_records(
         "updated_entities": 0,
         "created_enrollments": 0,
         "upserted_events": 0,
+        "unsynced_values": 0,
+        "row_errors": 0,
         "skipped": 0,
     }
+    value_issues = []
 
     for row in rows:
         program_value = normalize_program_value(row.get("program", ""))
@@ -349,45 +357,81 @@ def import_transformed_records(
             counts["skipped"] += 1
             continue
 
-        org_unit_id = client.resolve_org_unit(extract_row_value(row, "org_unit"))
-        attributes = build_attribute_payload(config, row)
-        stage_payloads = build_stage_payloads(config, row, import_date)
-        existing = client.search_tracked_entity(
-            record_attribute_id=config.record_id_attribute_id,
-            record_id=record_id,
-            tracked_entity_type=config.tracked_entity_type,
-        )
-
-        if existing:
-            tei_id = str(existing.get("trackedEntityInstance") or "").strip()
-            client.update_tracked_entity(tei_id, config, org_unit_id, attributes)
-            tei = client.get_tracked_entity(tei_id)
-            counts["updated_entities"] += 1
-        else:
-            tei_id = client.create_tracked_entity(config, org_unit_id, attributes)
-            tei = client.get_tracked_entity(tei_id)
-            counts["created_entities"] += 1
-
-        had_enrollment = any(
-            reference_id(enrollment.get("program")) == config.program_uid
-            for enrollment in (tei.get("enrollments") or [])
-        )
-        enrollment = client.ensure_enrollment(tei, config, org_unit_id, import_date)
-        if not had_enrollment:
-            counts["created_enrollments"] += 1
-
-        for event_payload in stage_payloads:
-            client.upsert_event(
-                tei_id=tei_id,
-                enrollment_id=reference_id(enrollment.get("enrollment")),
-                org_unit_id=org_unit_id,
-                event_payload=event_payload,
-                existing_enrollment=enrollment,
-                program_uid=config.program_uid,
+        try:
+            org_unit_id = client.resolve_org_unit(extract_row_value(row, "org_unit"))
+            attributes = build_attribute_payload(config, row, issues=value_issues)
+            stage_payloads = build_stage_payloads(config, row, import_date, issues=value_issues)
+            existing = client.search_tracked_entity(
+                record_attribute_id=config.record_id_attribute_id,
+                record_id=record_id,
+                tracked_entity_type=config.tracked_entity_type,
             )
-            counts["upserted_events"] += 1
-        counts["processed"] += 1
 
+            if existing:
+                tei_id = str(existing.get("trackedEntityInstance") or "").strip()
+                client.update_tracked_entity(
+                    tei_id,
+                    config,
+                    org_unit_id,
+                    attributes,
+                    row=row,
+                    issues=value_issues,
+                )
+                tei = client.get_tracked_entity(tei_id)
+                counts["updated_entities"] += 1
+            else:
+                tei_id = client.create_tracked_entity(
+                    config,
+                    org_unit_id,
+                    attributes,
+                    row=row,
+                    issues=value_issues,
+                )
+                tei = client.get_tracked_entity(tei_id)
+                counts["created_entities"] += 1
+
+            had_enrollment = any(
+                reference_id(enrollment.get("program")) == config.program_uid
+                for enrollment in (tei.get("enrollments") or [])
+            )
+            enrollment = client.ensure_enrollment(tei, config, org_unit_id, import_date)
+            if not had_enrollment:
+                counts["created_enrollments"] += 1
+
+            for event_payload in stage_payloads:
+                event_upserted = client.upsert_event(
+                    tei_id=tei_id,
+                    enrollment_id=reference_id(enrollment.get("enrollment")),
+                    org_unit_id=org_unit_id,
+                    event_payload=event_payload,
+                    existing_enrollment=enrollment,
+                    program_uid=config.program_uid,
+                    config=config,
+                    row=row,
+                    issues=value_issues,
+                )
+                if event_upserted:
+                    counts["upserted_events"] += 1
+            counts["processed"] += 1
+        except Exception as exc:
+            counts["row_errors"] += 1
+            add_import_value_issue(
+                value_issues,
+                row,
+                config,
+                "Row",
+                "Record ID",
+                "Record ID",
+                config.record_id_attribute_id,
+                record_id,
+                f"Row could not be fully imported: {format_dhis2_error(exc)}",
+            )
+            continue
+
+    resolved_log_path = log_path or default_import_log_path()
+    write_import_value_log(resolved_log_path, value_issues)
+    counts["unsynced_values"] = len(value_issues)
+    counts["log_file"] = str(resolved_log_path)
     return counts
 
 
@@ -924,13 +968,17 @@ class UnifiedApp:
 
         threading.Thread(target=worker, daemon=True).start()
 
-    def import_done(self, counts: Dict[str, int], title: str) -> None:
+    def import_done(self, counts: Dict[str, object], title: str) -> None:
         self.status_var.set(f"{title}. {counts['processed']} row(s) processed.")
         self.log(f"Rows processed: {counts['processed']}")
         self.log(f"Tracked entities created: {counts['created_entities']}")
         self.log(f"Tracked entities updated: {counts['updated_entities']}")
         self.log(f"Enrollments created: {counts['created_enrollments']}")
         self.log(f"Events created or updated: {counts['upserted_events']}")
+        self.log(f"Values discarded: {counts['unsynced_values']}")
+        if counts["row_errors"]:
+            self.log(f"Rows with import errors: {counts['row_errors']}")
+        self.log(f"Import value log: {counts['log_file']}")
         if counts["skipped"]:
             self.log(f"Rows skipped: {counts['skipped']}")
         self.set_busy(False)

@@ -85,6 +85,19 @@ class ProgramConfig:
     stages: Dict[str, List[StageField]]
 
 
+@dataclass
+class ImportValueIssue:
+    record_id: str
+    patient: str
+    program: str
+    stage: str
+    column: str
+    field_name: str
+    field_id: str
+    value: str
+    reason: str
+
+
 class Dhis2RequestError(RuntimeError):
     def __init__(self, method: str, url: str, status_code: int, payload: object) -> None:
         self.method = method
@@ -381,6 +394,7 @@ def normalize_import_option_value(
     data_type: str,
     options_text: str,
     target_header: str,
+    discarded_parts: Optional[List[str]] = None,
 ) -> str:
     code_map, label_map, token_map = parse_option_codes(options_text)
     multi_value = data_type == "MULTI_TEXT"
@@ -401,7 +415,12 @@ def normalize_import_option_value(
             continue
 
         resolved = resolve_option_code(part, code_map, label_map, token_map)
-        resolved_values.append(resolved or part.strip())
+        if resolved:
+            resolved_values.append(resolved)
+        elif discarded_parts is not None:
+            discarded_parts.append(part.strip())
+        else:
+            resolved_values.append(part.strip())
 
     deduped: List[str] = []
     for item in resolved_values:
@@ -418,6 +437,7 @@ def normalize_import_value(
     data_type: str,
     options_text: str = "",
     target_header: str = "",
+    discarded_parts: Optional[List[str]] = None,
 ) -> str:
     text = blank_to_empty(value)
     if not text:
@@ -435,7 +455,13 @@ def normalize_import_value(
         return normalize_datetime_value(text)
 
     if options_text:
-        return normalize_import_option_value(text, data_type, options_text, target_header)
+        return normalize_import_option_value(
+            text,
+            data_type,
+            options_text,
+            target_header,
+            discarded_parts=discarded_parts,
+        )
 
     if data_type == "DATE":
         normalized = normalize_date(text)
@@ -490,18 +516,159 @@ def infer_enrollment_date(config: ProgramConfig, row: Dict[str, str]) -> str:
     return min(dates) if dates else today_date()
 
 
-def build_attribute_payload(config: ProgramConfig, row: Dict[str, str]) -> List[Dict[str, str]]:
+def patient_label(row: Dict[str, str]) -> str:
+    candidates = [
+        "Patient",
+        "patient",
+        "Patient Name",
+        "Full Name",
+        "Name",
+        "MRN",
+        "Record ID",
+    ]
+    for column in candidates:
+        value = extract_row_value(row, column)
+        if value:
+            return value
+    return ""
+
+
+def add_import_value_issue(
+    issues: Optional[List[ImportValueIssue]],
+    row: Dict[str, str],
+    config: ProgramConfig,
+    stage: str,
+    column: str,
+    field_name: str,
+    field_id: str,
+    value: str,
+    reason: str,
+) -> None:
+    if issues is None or not blank_to_empty(value):
+        return
+    issues.append(
+        ImportValueIssue(
+            record_id=extract_row_value(row, "Record ID"),
+            patient=patient_label(row),
+            program=config.program_label,
+            stage=stage,
+            column=column,
+            field_name=field_name,
+            field_id=field_id,
+            value=blank_to_empty(value),
+            reason=reason,
+        )
+    )
+
+
+def invalid_value_reason(data_type: str, options_text: str) -> str:
+    if options_text:
+        return "Value is not a configured DHIS2 option and was discarded."
+    if data_type in {"DATE", "TIME", "DATETIME"}:
+        return f"Value could not be converted to DHIS2 {data_type} format and was discarded."
+    if data_type in {
+        "INTEGER",
+        "INTEGER_ZERO_OR_POSITIVE",
+        "INTEGER_POSITIVE",
+        "INTEGER_NEGATIVE",
+        "NUMBER",
+        "PERCENTAGE",
+        "UNIT_INTERVAL",
+    }:
+        return f"Value could not be converted to DHIS2 {data_type} format and was discarded."
+    return "Value could not be normalized for DHIS2 and was discarded."
+
+
+def default_import_log_path(input_path: Optional[Path] = None) -> Path:
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    if input_path is not None:
+        return input_path.with_name(f"{input_path.stem}_dhis2_import_log_{timestamp}.csv")
+    return Path(__file__).resolve().with_name(f"dhis2_import_log_{timestamp}.csv")
+
+
+def write_import_value_log(path: Path, issues: Sequence[ImportValueIssue]) -> None:
+    fieldnames = [
+        "record_id",
+        "patient",
+        "program",
+        "stage",
+        "column",
+        "field_name",
+        "field_id",
+        "value",
+        "reason",
+    ]
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer.writeheader()
+        for issue in issues:
+            writer.writerow(
+                {
+                    "record_id": issue.record_id,
+                    "patient": issue.patient,
+                    "program": issue.program,
+                    "stage": issue.stage,
+                    "column": issue.column,
+                    "field_name": issue.field_name,
+                    "field_id": issue.field_id,
+                    "value": issue.value,
+                    "reason": issue.reason,
+                }
+            )
+
+
+def format_dhis2_error(exc: Exception) -> str:
+    if isinstance(exc, Dhis2RequestError):
+        payload = exc.payload
+        if isinstance(payload, (dict, list)):
+            return json.dumps(payload, ensure_ascii=True)
+        return str(payload)
+    return str(exc)
+
+
+def build_attribute_payload(
+    config: ProgramConfig,
+    row: Dict[str, str],
+    issues: Optional[List[ImportValueIssue]] = None,
+) -> List[Dict[str, str]]:
     values_by_attribute: Dict[str, str] = {
         config.record_id_attribute_id: extract_row_value(row, "Record ID")
     }
 
     for header, field in config.attributes.items():
+        raw_value = extract_row_value(row, header)
+        discarded_parts: List[str] = []
         value = normalize_import_value(
-            extract_row_value(row, header),
+            raw_value,
             field.data_type,
             field.options_text,
             header,
+            discarded_parts=discarded_parts,
         )
+        for discarded in discarded_parts:
+            add_import_value_issue(
+                issues,
+                row,
+                config,
+                "Tracked Entity Attributes",
+                header,
+                field.attribute_name,
+                field.attribute_id,
+                discarded,
+                invalid_value_reason(field.data_type, field.options_text),
+            )
+        if raw_value and not value and not discarded_parts:
+            add_import_value_issue(
+                issues,
+                row,
+                config,
+                "Tracked Entity Attributes",
+                header,
+                field.attribute_name,
+                field.attribute_id,
+                raw_value,
+                invalid_value_reason(field.data_type, field.options_text),
+            )
         if not value:
             continue
         values_by_attribute[field.attribute_id] = value
@@ -517,20 +684,53 @@ def build_stage_payloads(
     config: ProgramConfig,
     row: Dict[str, str],
     default_date: str,
+    issues: Optional[List[ImportValueIssue]] = None,
 ) -> List[Dict[str, object]]:
     payloads: List[Dict[str, object]] = []
     for stage_name, stage_fields in config.stages.items():
         data_values = []
+        data_value_fields = {}
         for field in stage_fields:
+            raw_value = extract_row_value(row, field.header)
+            discarded_parts: List[str] = []
             value = normalize_import_value(
-                extract_row_value(row, field.header),
+                raw_value,
                 field.data_type,
                 field.options_text,
                 field.header,
+                discarded_parts=discarded_parts,
             )
+            for discarded in discarded_parts:
+                add_import_value_issue(
+                    issues,
+                    row,
+                    config,
+                    stage_name,
+                    field.header,
+                    field.data_element_name,
+                    field.data_element_id,
+                    discarded,
+                    invalid_value_reason(field.data_type, field.options_text),
+                )
+            if raw_value and not value and not discarded_parts:
+                add_import_value_issue(
+                    issues,
+                    row,
+                    config,
+                    stage_name,
+                    field.header,
+                    field.data_element_name,
+                    field.data_element_id,
+                    raw_value,
+                    invalid_value_reason(field.data_type, field.options_text),
+                )
             if not value:
                 continue
             data_values.append({"dataElement": field.data_element_id, "value": value})
+            data_value_fields[field.data_element_id] = {
+                "column": field.header,
+                "field_name": field.data_element_name,
+            }
 
         if not data_values:
             continue
@@ -541,6 +741,7 @@ def build_stage_payloads(
                 "programStage": stage_fields[0].stage_id,
                 "eventDate": default_date,
                 "dataValues": data_values,
+                "data_value_fields": data_value_fields,
             }
         )
     return payloads
@@ -595,18 +796,76 @@ class Dhis2Client:
     @staticmethod
     def _extract_conflicting_data_elements(error: Dhis2RequestError) -> List[str]:
         payload = error.payload if isinstance(error.payload, dict) else {}
-        response = payload.get("response") or {}
-        summaries = response.get("importSummaries") or payload.get("importSummaries") or []
         conflicts: List[Dict] = []
-        for summary in summaries:
-            conflicts.extend(summary.get("conflicts") or [])
+
+        def collect_conflicts(value: object) -> None:
+            if isinstance(value, dict):
+                if any(
+                    key in value
+                    for key in (
+                        "object",
+                        "uid",
+                        "dataElement",
+                        "attribute",
+                        "message",
+                        "errorMessage",
+                        "errorCode",
+                    )
+                ):
+                    conflicts.append(value)
+                nested = value.get("conflicts")
+                if isinstance(nested, list):
+                    conflicts.extend(item for item in nested if isinstance(item, dict))
+                for key in (
+                    "response",
+                    "importSummaries",
+                    "importSummary",
+                    "validationReport",
+                    "validationReports",
+                    "trackerTypeReport",
+                    "objectReports",
+                    "errorReports",
+                ):
+                    if key in value:
+                        collect_conflicts(value[key])
+            elif isinstance(value, list):
+                for item in value:
+                    collect_conflicts(item)
+
+        collect_conflicts(payload)
 
         data_elements: List[str] = []
         for conflict in conflicts:
-            object_id = str(conflict.get("object") or "").strip()
-            value_code = str(conflict.get("value") or "").strip().casefold()
-            if looks_like_uid(object_id) and value_code.startswith("value_not_valid"):
-                data_elements.append(object_id)
+            object_id = str(
+                conflict.get("object")
+                or conflict.get("uid")
+                or conflict.get("dataElement")
+                or conflict.get("attribute")
+                or ""
+            ).strip()
+            value_code = str(
+                conflict.get("value")
+                or conflict.get("message")
+                or conflict.get("errorMessage")
+                or conflict.get("errorCode")
+                or ""
+            ).strip().casefold()
+            value_rejected = (
+                value_code.startswith("value_not_valid")
+                or "not valid" in value_code
+                or "invalid" in value_code
+                or "option" in value_code
+                or "value_type" in value_code
+            )
+            if value_rejected:
+                candidates = [object_id]
+                candidates.extend(re.findall(r"\b[A-Za-z][A-Za-z0-9]{10}\b", value_code))
+                args = conflict.get("args")
+                if isinstance(args, list):
+                    candidates.extend(str(item or "").strip() for item in args)
+                for candidate in candidates:
+                    if looks_like_uid(candidate):
+                        data_elements.append(candidate)
         return data_elements
 
     def resolve_org_unit(self, org_unit_code: str) -> str:
@@ -678,6 +937,43 @@ class Dhis2Client:
         instances = payload.get("trackedEntityInstances") or []
         return instances[0] if instances else None
 
+    def _discard_conflicting_attributes(
+        self,
+        error: Dhis2RequestError,
+        attributes: List[Dict[str, str]],
+        config: ProgramConfig,
+        row: Optional[Dict[str, str]] = None,
+        issues: Optional[List[ImportValueIssue]] = None,
+    ) -> List[Dict[str, str]]:
+        conflicting_ids = set(self._extract_conflicting_data_elements(error))
+        conflicting_ids.discard(config.record_id_attribute_id)
+        if not conflicting_ids:
+            return attributes
+
+        attribute_fields = {field.attribute_id: field for field in config.attributes.values()}
+        for item in attributes:
+            attribute_id = str(item.get("attribute") or "")
+            if attribute_id not in conflicting_ids or row is None:
+                continue
+            field = attribute_fields.get(attribute_id)
+            add_import_value_issue(
+                issues,
+                row,
+                config,
+                "Tracked Entity Attributes",
+                field.header if field else attribute_id,
+                field.attribute_name if field else attribute_id,
+                attribute_id,
+                str(item.get("value") or ""),
+                "DHIS2 rejected this attribute value during import, so the value was discarded and the tracked entity was retried.",
+            )
+
+        return [
+            item
+            for item in attributes
+            if str(item.get("attribute") or "") not in conflicting_ids
+        ]
+
     def get_tracked_entity(self, tei_id: str) -> Dict:
         return self._request(
             "GET",
@@ -695,16 +991,34 @@ class Dhis2Client:
         config: ProgramConfig,
         org_unit_id: str,
         attributes: List[Dict[str, str]],
+        row: Optional[Dict[str, str]] = None,
+        issues: Optional[List[ImportValueIssue]] = None,
     ) -> str:
-        payload = self._request(
-            "POST",
-            "trackedEntityInstances",
-            json={
-                "trackedEntityType": config.tracked_entity_type,
-                "orgUnit": org_unit_id,
-                "attributes": attributes,
-            },
-        )
+        submitted_attributes = list(attributes)
+        while True:
+            try:
+                payload = self._request(
+                    "POST",
+                    "trackedEntityInstances",
+                    json={
+                        "trackedEntityType": config.tracked_entity_type,
+                        "orgUnit": org_unit_id,
+                        "attributes": submitted_attributes,
+                    },
+                )
+                break
+            except Dhis2RequestError as exc:
+                filtered = self._discard_conflicting_attributes(
+                    error=exc,
+                    attributes=submitted_attributes,
+                    config=config,
+                    row=row,
+                    issues=issues,
+                )
+                if len(filtered) == len(submitted_attributes):
+                    raise
+                submitted_attributes = filtered
+
         created_id = self._extract_import_reference(payload)
         if created_id:
             return created_id
@@ -729,17 +1043,34 @@ class Dhis2Client:
         config: ProgramConfig,
         org_unit_id: str,
         attributes: List[Dict[str, str]],
+        row: Optional[Dict[str, str]] = None,
+        issues: Optional[List[ImportValueIssue]] = None,
     ) -> None:
-        self._request(
-            "PUT",
-            f"trackedEntityInstances/{tei_id}",
-            json={
-                "trackedEntityInstance": tei_id,
-                "trackedEntityType": config.tracked_entity_type,
-                "orgUnit": org_unit_id,
-                "attributes": attributes,
-            },
-        )
+        submitted_attributes = list(attributes)
+        while True:
+            try:
+                self._request(
+                    "PUT",
+                    f"trackedEntityInstances/{tei_id}",
+                    json={
+                        "trackedEntityInstance": tei_id,
+                        "trackedEntityType": config.tracked_entity_type,
+                        "orgUnit": org_unit_id,
+                        "attributes": submitted_attributes,
+                    },
+                )
+                return
+            except Dhis2RequestError as exc:
+                filtered = self._discard_conflicting_attributes(
+                    error=exc,
+                    attributes=submitted_attributes,
+                    config=config,
+                    row=row,
+                    issues=issues,
+                )
+                if len(filtered) == len(submitted_attributes):
+                    raise
+                submitted_attributes = filtered
 
     def ensure_enrollment(
         self,
@@ -782,7 +1113,10 @@ class Dhis2Client:
         event_payload: Dict[str, object],
         existing_enrollment: Dict,
         program_uid: str,
-    ) -> None:
+        config: Optional[ProgramConfig] = None,
+        row: Optional[Dict[str, str]] = None,
+        issues: Optional[List[ImportValueIssue]] = None,
+    ) -> bool:
         existing_events = existing_enrollment.get("events") or []
         matching_events = [
             event
@@ -801,6 +1135,7 @@ class Dhis2Client:
             "status": "ACTIVE",
         }
         data_values = list(event_payload["dataValues"])
+        data_value_fields = event_payload.get("data_value_fields") or {}
 
         while data_values:
             try:
@@ -814,24 +1149,66 @@ class Dhis2Client:
                             "dataValues": data_values,
                         },
                     )
-                    return
+                    return True
 
                 self._request(
                     "POST",
                     "events",
                     json={**base_payload, "dataValues": data_values},
                 )
-                return
+                return True
             except Dhis2RequestError as exc:
                 conflicting_ids = set(self._extract_conflicting_data_elements(exc))
                 if not conflicting_ids:
-                    raise
+                    if config and row is not None:
+                        for item in data_values:
+                            data_element_id = str(item.get("dataElement") or "")
+                            field_info = (
+                                data_value_fields.get(data_element_id)
+                                if isinstance(data_value_fields, dict)
+                                else {}
+                            ) or {}
+                            add_import_value_issue(
+                                issues,
+                                row,
+                                config,
+                                str(event_payload.get("stage_name") or ""),
+                                str(field_info.get("column") or data_element_id),
+                                str(field_info.get("field_name") or data_element_id),
+                                data_element_id,
+                                str(item.get("value") or ""),
+                                "DHIS2 rejected the event but did not identify a single bad value; this value was not synced.",
+                            )
+                    return False
+                for item in data_values:
+                    data_element_id = str(item.get("dataElement") or "")
+                    if data_element_id not in conflicting_ids or not config or row is None:
+                        continue
+                    field_info = (
+                        data_value_fields.get(data_element_id)
+                        if isinstance(data_value_fields, dict)
+                        else {}
+                    ) or {}
+                    add_import_value_issue(
+                        issues,
+                        row,
+                        config,
+                        str(event_payload.get("stage_name") or ""),
+                        str(field_info.get("column") or data_element_id),
+                        str(field_info.get("field_name") or data_element_id),
+                        data_element_id,
+                        str(item.get("value") or ""),
+                        "DHIS2 rejected this value during import, so the value was discarded and the event was retried.",
+                    )
                 filtered = [
                     item for item in data_values if str(item.get("dataElement") or "") not in conflicting_ids
                 ]
                 if len(filtered) == len(data_values):
                     raise
                 data_values = filtered
+                continue
+
+        return False
 
 
 def import_rows(
@@ -839,7 +1216,8 @@ def import_rows(
     username: str,
     password: str,
     input_path: Path,
-) -> Dict[str, int]:
+    log_path: Optional[Path] = None,
+) -> Dict[str, object]:
     raise_csv_field_limit()
     configs = build_program_configs()
     client = Dhis2Client(base_url=base_url, username=username, password=password)
@@ -852,8 +1230,11 @@ def import_rows(
         "updated_entities": 0,
         "created_enrollments": 0,
         "upserted_events": 0,
+        "unsynced_values": 0,
+        "row_errors": 0,
         "skipped": 0,
     }
+    value_issues: List[ImportValueIssue] = []
 
     with input_path.open("r", newline="", encoding="utf-8-sig") as handle:
         reader = csv.DictReader(handle)
@@ -879,48 +1260,84 @@ def import_rows(
                 counts["skipped"] += 1
                 continue
 
-            org_unit_id = client.resolve_org_unit(extract_row_value(row, "org_unit"))
-            attributes = build_attribute_payload(config, row)
-            enrollment_date = import_date
-            stage_payloads = build_stage_payloads(config, row, import_date)
+            try:
+                org_unit_id = client.resolve_org_unit(extract_row_value(row, "org_unit"))
+                attributes = build_attribute_payload(config, row, issues=value_issues)
+                enrollment_date = import_date
+                stage_payloads = build_stage_payloads(config, row, import_date, issues=value_issues)
 
-            existing = client.search_tracked_entity(
-                record_attribute_id=config.record_id_attribute_id,
-                record_id=record_id,
-                tracked_entity_type=config.tracked_entity_type,
-            )
-
-            if existing:
-                tei_id = str(existing.get("trackedEntityInstance") or "").strip()
-                client.update_tracked_entity(tei_id, config, org_unit_id, attributes)
-                tei = client.get_tracked_entity(tei_id)
-                counts["updated_entities"] += 1
-            else:
-                tei_id = client.create_tracked_entity(config, org_unit_id, attributes)
-                tei = client.get_tracked_entity(tei_id)
-                counts["created_entities"] += 1
-
-            had_enrollment = any(
-                reference_id(enrollment.get("program")) == config.program_uid
-                for enrollment in (tei.get("enrollments") or [])
-            )
-            enrollment = client.ensure_enrollment(tei, config, org_unit_id, enrollment_date)
-            if not had_enrollment:
-                counts["created_enrollments"] += 1
-
-            for event_payload in stage_payloads:
-                client.upsert_event(
-                    tei_id=tei_id,
-                    enrollment_id=reference_id(enrollment.get("enrollment")),
-                    org_unit_id=org_unit_id,
-                    event_payload=event_payload,
-                    existing_enrollment=enrollment,
-                    program_uid=config.program_uid,
+                existing = client.search_tracked_entity(
+                    record_attribute_id=config.record_id_attribute_id,
+                    record_id=record_id,
+                    tracked_entity_type=config.tracked_entity_type,
                 )
-                counts["upserted_events"] += 1
 
-            counts["processed"] += 1
+                if existing:
+                    tei_id = str(existing.get("trackedEntityInstance") or "").strip()
+                    client.update_tracked_entity(
+                        tei_id,
+                        config,
+                        org_unit_id,
+                        attributes,
+                        row=row,
+                        issues=value_issues,
+                    )
+                    tei = client.get_tracked_entity(tei_id)
+                    counts["updated_entities"] += 1
+                else:
+                    tei_id = client.create_tracked_entity(
+                        config,
+                        org_unit_id,
+                        attributes,
+                        row=row,
+                        issues=value_issues,
+                    )
+                    tei = client.get_tracked_entity(tei_id)
+                    counts["created_entities"] += 1
 
+                had_enrollment = any(
+                    reference_id(enrollment.get("program")) == config.program_uid
+                    for enrollment in (tei.get("enrollments") or [])
+                )
+                enrollment = client.ensure_enrollment(tei, config, org_unit_id, enrollment_date)
+                if not had_enrollment:
+                    counts["created_enrollments"] += 1
+
+                for event_payload in stage_payloads:
+                    event_upserted = client.upsert_event(
+                        tei_id=tei_id,
+                        enrollment_id=reference_id(enrollment.get("enrollment")),
+                        org_unit_id=org_unit_id,
+                        event_payload=event_payload,
+                        existing_enrollment=enrollment,
+                        program_uid=config.program_uid,
+                        config=config,
+                        row=row,
+                        issues=value_issues,
+                    )
+                    if event_upserted:
+                        counts["upserted_events"] += 1
+
+                counts["processed"] += 1
+            except Exception as exc:
+                counts["row_errors"] += 1
+                add_import_value_issue(
+                    value_issues,
+                    row,
+                    config,
+                    "Row",
+                    "Record ID",
+                    "Record ID",
+                    config.record_id_attribute_id,
+                    record_id,
+                    f"Row could not be fully imported: {format_dhis2_error(exc)}",
+                )
+                continue
+
+    resolved_log_path = log_path or default_import_log_path(input_path)
+    write_import_value_log(resolved_log_path, value_issues)
+    counts["unsynced_values"] = len(value_issues)
+    counts["log_file"] = str(resolved_log_path)
     return counts
 
 
@@ -1053,6 +1470,10 @@ class ImportApp:
                     self.log(f"Tracked entities updated: {counts['updated_entities']}")
                     self.log(f"Enrollments created: {counts['created_enrollments']}")
                     self.log(f"Events created or updated: {counts['upserted_events']}")
+                    self.log(f"Values discarded: {counts['unsynced_values']}")
+                    if counts["row_errors"]:
+                        self.log(f"Rows with import errors: {counts['row_errors']}")
+                    self.log(f"Import value log: {counts['log_file']}")
                     if counts["skipped"]:
                         self.log(f"Rows skipped: {counts['skipped']}")
                     self.set_busy(False)
