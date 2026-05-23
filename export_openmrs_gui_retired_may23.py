@@ -155,17 +155,11 @@ def extract_obs_display_value(obs: Dict, concept: str) -> str:
         return ""
 
     if concept and display.casefold().startswith(concept.casefold()):
-        remainder = display[len(concept):].strip()
-        if remainder.startswith(":") or remainder.startswith("="):
-            return remainder[1:].strip()
-        if not remainder:
-            # display is exactly the concept name with no value
+        value = display[len(concept) :].strip()
+        if value.startswith(":") or value.startswith("="):
+            return value[1:].strip()
+        if not value:
             return ""
-        # The concept name is only a prefix of a longer concept name (e.g. "Blood Pressure"
-        # matching "Blood Pressure Systolic: 120"). Do NOT fall through to split_obs_display
-        # here — that would extract the value of the wrong concept. Return empty and let
-        # extract_obs_value fall back to the structured obs.get("value") field instead.
-        return ""
 
     _display_concept, display_value = split_obs_display(obs)
     return display_value
