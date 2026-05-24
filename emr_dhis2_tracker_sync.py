@@ -14,6 +14,7 @@ from export_openmrs_gui import (
     DETAIL_COLUMNS,
     ApiClient,
     build_patient_row,
+    clean_csv_cell,
     determine_program_from_visit_type,
     get_patients_by_visit_type,
     normalize_base_url,
@@ -242,12 +243,12 @@ def fetch_openmrs_export_rows(
                     all_obs_columns.append(column)
             buffered_rows.append((fixed_row, obs_values))
 
-    headers = DETAIL_COLUMNS + all_obs_columns
+    headers = [clean_csv_cell(column) for column in DETAIL_COLUMNS + all_obs_columns]
     rows: List[Dict[str, str]] = []
     for fixed_row, obs_values in buffered_rows:
-        row_values = list(fixed_row)
+        row_values = [clean_csv_cell(value) for value in fixed_row]
         for column in all_obs_columns:
-            row_values.append(obs_values.get(column, ""))
+            row_values.append(clean_csv_cell(obs_values.get(column, "")))
         rows.append(dict(zip(headers, row_values)))
 
     return headers, rows

@@ -197,12 +197,14 @@ FIELD_RULES: Dict[str, Dict[str, object]] = {
     "Delivery summary :: birth outcome newborn 4": {"aliases": {"Alive": ["HEIF Alive"]}},
 }
 
-VALUE_MAPPING_PATH = (
-    Path(__file__).resolve().with_name("Resources")
-    / "EMR-DHIS2 Tracker Value Mappings.csv"
-)
+RESOURCES_DIR = Path(__file__).resolve().with_name("Resources")
+VALUE_MAPPING_PATH = RESOURCES_DIR / "EMR-DHIS2 Tracker Value Mappings.csv"
+PROGRAM_VALUE_MAPPING_PATHS = {
+    "maternal inpatient data": RESOURCES_DIR / "EMR-DHIS2 Tracker Maternal Value Mappings.csv",
+    "neonatal care form": RESOURCES_DIR / "EMR-DHIS2 Tracker Neonatal Value Mappings.csv",
+}
 SUPPORTED_EXTERNAL_TRANSFORMS = {"date", "time", "datetime"}
-_EXTERNAL_VALUE_RULES_CACHE: Tuple[Optional[float], List[Dict[str, str]]] = (None, [])
+_EXTERNAL_VALUE_RULES_CACHE: Dict[Path, Tuple[Optional[float], List[Dict[str, str]]]] = {}
 
 
 INFERRED_OPTION_ALIASES: Dict[FrozenSet[str], Dict[str, Sequence[str]]] = {
@@ -262,19 +264,31 @@ def normalize_target_key(value: object) -> str:
     return normalize_rule_text(value)
 
 
-def load_external_value_rules() -> List[Dict[str, str]]:
+def value_mapping_path_for_program(program: str = "") -> Path:
+    program_key = normalize_program_key(program)
+    return PROGRAM_VALUE_MAPPING_PATHS.get(program_key, VALUE_MAPPING_PATH)
+
+
+def load_external_value_rules(program: str = "") -> List[Dict[str, str]]:
     global _EXTERNAL_VALUE_RULES_CACHE
 
-    if not VALUE_MAPPING_PATH.exists():
-        _EXTERNAL_VALUE_RULES_CACHE = (None, [])
+    value_mapping_path = value_mapping_path_for_program(program)
+    if not value_mapping_path.exists() and value_mapping_path != VALUE_MAPPING_PATH:
+        value_mapping_path = VALUE_MAPPING_PATH
+
+    if not value_mapping_path.exists():
+        _EXTERNAL_VALUE_RULES_CACHE[value_mapping_path] = (None, [])
         return []
 
-    modified_time = VALUE_MAPPING_PATH.stat().st_mtime
-    cached_modified_time, cached_rules = _EXTERNAL_VALUE_RULES_CACHE
+    modified_time = value_mapping_path.stat().st_mtime
+    cached_modified_time, cached_rules = _EXTERNAL_VALUE_RULES_CACHE.get(
+        value_mapping_path,
+        (None, []),
+    )
     if cached_modified_time == modified_time:
         return cached_rules
 
-    with VALUE_MAPPING_PATH.open("r", newline="", encoding="utf-8-sig") as handle:
+    with value_mapping_path.open("r", newline="", encoding="utf-8-sig") as handle:
         reader = csv.DictReader(handle)
         rules: List[Dict[str, str]] = []
         for row in reader:
@@ -302,7 +316,7 @@ def load_external_value_rules() -> List[Dict[str, str]]:
                     "transform": transform,
                 }
             )
-    _EXTERNAL_VALUE_RULES_CACHE = (modified_time, rules)
+    _EXTERNAL_VALUE_RULES_CACHE[value_mapping_path] = (modified_time, rules)
     return rules
 
 
@@ -314,7 +328,7 @@ def external_rule_matches(rule: Dict[str, str], target_header: str, program: str
 
 
 def get_external_field_transform(target_header: str, program: str = "") -> str:
-    for rule in load_external_value_rules():
+    for rule in load_external_value_rules(program):
         if not external_rule_matches(rule, target_header, program):
             continue
         transform = str(rule.get("transform") or "").strip().lower()
@@ -332,7 +346,7 @@ def resolve_external_value_mapping(
     if not normalized_value:
         return ""
 
-    for rule in load_external_value_rules():
+    for rule in load_external_value_rules(program):
         if not external_rule_matches(rule, target_header, program):
             continue
         source_value = str(rule.get("source_value") or "").strip()
