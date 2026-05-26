@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import calendar
+import csv
+import tempfile
 import threading
 import tkinter as tk
 from collections import OrderedDict
@@ -254,6 +256,18 @@ def fetch_openmrs_export_rows(
         rows.append(dict(zip(headers, row_values)))
 
     return headers, rows
+
+
+def write_temporary_export_csv(
+    path: Path,
+    headers: Sequence[str],
+    rows: Sequence[Dict[str, str]],
+) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(headers), quoting=csv.QUOTE_ALL)
+        writer.writeheader()
+        writer.writerows(rows)
 
 
 def transform_export_records(
@@ -1077,17 +1091,25 @@ class UnifiedApp:
                     log=self.log,
                 )
                 self.log(f"Fetched {len(export_rows)} EMR row(s). Transforming in memory...")
-                transformed_rows, transform_counts, missing = transform_export_records(headers, export_rows)
-                self.log(f"Transformed {len(transformed_rows)} row(s). Importing to DHIS2...")
-                for program, fields in missing.items():
-                    if fields:
-                        self.log(f"{program}: {len(fields)} mapped field(s) could not be matched.")
-                counts = import_transformed_records(
-                    dhis2_url,
-                    dhis2_username,
-                    dhis2_password,
-                    transformed_rows,
-                )
+                with tempfile.TemporaryDirectory(prefix="emr_dhis2_sync_") as temp_dir:
+                    temp_path = Path(temp_dir)
+                    export_path = temp_path / "openmrs_export.csv"
+                    transformed_path = temp_path / "dhis2_tracker_import.csv"
+                    write_temporary_export_csv(export_path, headers, export_rows)
+                    row_count, transform_counts, missing = transform_rows(
+                        export_path,
+                        transformed_path,
+                    )
+                    self.log(f"Transformed {row_count} row(s). Importing to DHIS2...")
+                    for program, fields in missing.items():
+                        if fields:
+                            self.log(f"{program}: {len(fields)} mapped field(s) could not be matched.")
+                    counts = import_rows(
+                        dhis2_url,
+                        dhis2_username,
+                        dhis2_password,
+                        transformed_path,
+                    )
 
                 def done() -> None:
                     self.api = api
