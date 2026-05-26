@@ -97,6 +97,20 @@ FIELD_RULES: Dict[str, Dict[str, object]] = {
         "preferred_sources": ["Date & Time [PICU Medication Administration Sheet]"],
         "transform": "date",
     },
+    "Physicians Medication Order :: Medication order date": {
+        "preferred_sources": [
+            "Medication order date [Physicians Medication Order]",
+            "Date [Physicians Medication Order]",
+            "Date & Time [Physicians Medication Order]",
+        ],
+        "strict_preferred_sources": True,
+        "transform": "date",
+    },
+    "Medication Administration record :: Diagnosis": {
+        "preferred_sources": ["Diagnosis Notes [Maternal Medication Administration Record]"],
+        "strict_preferred_sources": True,
+        "suppress_values": ["Primary", "Secondary", "Confirmed", "Presumed", "false", "true"],
+    },
     "MGSO4 follow up :: MGSO4 Followup event date": {
         "preferred_sources": ["Date & Time [MGSO4 follow up]"],
         "transform": "date",
@@ -384,6 +398,21 @@ def get_field_rule(target_header: str) -> Dict[str, object]:
 def get_preferred_source_headers(target_header: str) -> List[str]:
     rule = get_field_rule(target_header)
     return list(rule.get("preferred_sources", []))
+
+
+def uses_strict_preferred_sources(target_header: str) -> bool:
+    return bool(get_field_rule(target_header).get("strict_preferred_sources"))
+
+
+def should_suppress_value(value: str, target_header: str) -> bool:
+    normalized = normalize_rule_text(value)
+    if not normalized:
+        return False
+
+    suppress_values = get_field_rule(target_header).get("suppress_values", [])
+    if not isinstance(suppress_values, (list, tuple, set)):
+        return False
+    return normalized in {normalize_rule_text(item) for item in suppress_values}
 
 
 def get_field_transform(target_header: str) -> str:

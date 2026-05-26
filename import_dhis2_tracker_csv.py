@@ -18,6 +18,7 @@ from tracker_mapping_rules import (
     apply_field_alias,
     get_field_transform,
     resolve_configured_option_value,
+    should_suppress_value,
 )
 from transform_export_to_dhis2_csv import (
     BLANK_MARKERS,
@@ -441,6 +442,8 @@ def normalize_import_value(
 ) -> str:
     text = blank_to_empty(value)
     if not text:
+        return ""
+    if should_suppress_value(text, target_header):
         return ""
 
     configured_transform = get_field_transform(target_header)

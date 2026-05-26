@@ -42,6 +42,8 @@ from transform_export_to_dhis2_csv import (
     NEONATAL_PROGRAM,
     PROGRAM_SPECS,
     SPECIAL_COLUMNS,
+    MATERNAL_COMPUTED_DIAGNOSIS_HEADERS,
+    apply_maternal_diagnosis_transform,
     blank_to_empty,
     deduplicate,
     load_program_fields,
@@ -277,7 +279,6 @@ def transform_export_records(
             f"{first_row.get('program', '')!r}."
         )
 
-    selected_org_unit = blank_to_empty(first_row.get("org_unit", ""))
     program_fields = load_program_fields([selected_program])
     resolved_fields, missing_fields = resolve_program_sources(
         program_fields,
@@ -287,6 +288,10 @@ def transform_export_records(
     ordered_target_headers = deduplicate(
         field.target_header for field in program_fields[selected_program]
     )
+    if selected_program == MATERNAL_PROGRAM:
+        ordered_target_headers = deduplicate(
+            tuple(ordered_target_headers) + MATERNAL_COMPUTED_DIAGNOSIS_HEADERS
+        )
 
     transformed_rows: List[Dict[str, str]] = []
     for row in input_rows:
@@ -294,6 +299,8 @@ def transform_export_records(
         if program_value not in resolved_fields:
             counts["skipped"] += 1
             continue
+
+        row_org_unit = blank_to_empty(row.get("org_unit", ""))
 
         transformed_row: "OrderedDict[str, str]" = OrderedDict()
         for column in SPECIAL_COLUMNS:
@@ -304,7 +311,7 @@ def transform_export_records(
         for target_header in ordered_target_headers:
             field = select_mapping_field(
                 resolved_fields[program_value],
-                selected_org_unit,
+                row_org_unit,
                 target_header,
             )
             if not field:
@@ -316,6 +323,9 @@ def transform_export_records(
                 target_header=field.target_header,
                 program=program_value,
             )
+
+        if program_value == MATERNAL_PROGRAM:
+            apply_maternal_diagnosis_transform(transformed_row, row)
 
         transformed_rows.append(dict(transformed_row))
         counts[program_value] += 1

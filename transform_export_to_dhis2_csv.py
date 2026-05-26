@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import csv
 import re
 import sys
@@ -31,6 +32,8 @@ from tracker_mapping_rules import (
     get_preferred_source_headers,
     resolve_configured_option_value,
     resolve_external_value_mapping,
+    should_suppress_value,
+    uses_strict_preferred_sources,
 )
 
 
@@ -59,6 +62,28 @@ FIELD_SOURCE_ALIASES = {
     "neonate mrn": "patient_id",
     "neonate sex": "gender",
 }
+
+MATERNAL_DIAGNOSIS_SOURCE_HEADERS = ("diagnoses",)
+DIAGNOSIS_OBSTETRIC_COMPLICATIONS_HEADER = "Diagnosis :: Obstetric complications"
+DIAGNOSIS_AMNIOTIC_FLUID_HEADER = "Diagnosis :: Amniotic fluid abnormalities"
+DIAGNOSIS_OBSTETRIC_COMPLICATIONS_OTHER_HEADER = "Diagnosis :: Obstetric complications Others"
+MATERNAL_COMPUTED_DIAGNOSIS_HEADERS = (
+    DIAGNOSIS_OBSTETRIC_COMPLICATIONS_HEADER,
+    DIAGNOSIS_AMNIOTIC_FLUID_HEADER,
+    DIAGNOSIS_OBSTETRIC_COMPLICATIONS_OTHER_HEADER,
+)
+DIAGNOSIS_METADATA_VALUES = {
+    "primary",
+    "secondary",
+    "confirmed",
+    "presumed",
+    "false",
+    "true",
+}
+UUID_PATTERN = re.compile(
+    r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+    re.IGNORECASE,
+)
 
 
 @dataclass
@@ -424,6 +449,7 @@ def find_exact_header(candidate: str, header_info: Sequence[HeaderInfo]) -> str:
         return ""
     candidate = candidate.strip()
     candidate_base = strip_bracket_suffix(candidate)
+    candidate_label = normalize_label(extract_bracket_label(candidate))
     candidate_norm = normalize_label(candidate)
     candidate_base_norm = normalize_label(candidate_base)
 
@@ -434,6 +460,17 @@ def find_exact_header(candidate: str, header_info: Sequence[HeaderInfo]) -> str:
     exact_base = [item.header for item in header_info if item.base_name == candidate_base]
     if len(exact_base) == 1:
         return exact_base[0]
+    # When multiple headers share the same base name (e.g. same concept from two different
+    # forms), use the bracket label to pick the right one instead of returning "" and falling
+    # through to fuzzy matching, which would pick whichever scored higher by chance.
+    if len(exact_base) > 1 and candidate_label:
+        label_match = [
+            item.header
+            for item in header_info
+            if item.base_name == candidate_base and item.source_label == candidate_label
+        ]
+        if len(label_match) == 1:
+            return label_match[0]
 
     normalized = [
         item.header
@@ -442,6 +479,19 @@ def find_exact_header(candidate: str, header_info: Sequence[HeaderInfo]) -> str:
     ]
     if len(normalized) == 1:
         return normalized[0]
+    # Same tie-break for normalised matches
+    if len(normalized) > 1 and candidate_label:
+        label_match = [
+            item.header
+            for item in header_info
+            if (
+                item.normalized_header == candidate_norm
+                or item.normalized_base == candidate_base_norm
+            )
+            and item.source_label == candidate_label
+        ]
+        if len(label_match) == 1:
+            return label_match[0]
 
     return ""
 
@@ -489,10 +539,13 @@ def score_header_match(
 
 def resolve_source_header(field: MappingField, header_info: Sequence[HeaderInfo]) -> str:
     preferred_candidates = deduplicate(get_preferred_source_headers(field.target_header))
+    strict_preferred_sources = uses_strict_preferred_sources(field.target_header)
     for candidate in preferred_candidates:
         exact = find_exact_header(candidate, header_info)
         if exact:
             return exact
+    if strict_preferred_sources:
+        return ""
 
     preferred_best_header = ""
     preferred_best_score = 0.0
@@ -798,6 +851,8 @@ def normalize_tracker_value(
     value = str(raw_value or "").strip()
     if not value or value.casefold() in BLANK_MARKERS:
         return ""
+    if should_suppress_value(value, target_header):
+        return ""
 
     external_value = resolve_external_value_mapping(value, target_header, program)
     if external_value:
@@ -840,6 +895,91 @@ def normalize_tracker_value(
         return configured_text
 
     return normalize_text_value(value)
+
+
+def is_diagnosis_metadata_value(value: str) -> bool:
+    cleaned = str(value or "").strip()
+    if not cleaned:
+        return True
+    normalized = normalize_label(cleaned)
+    return normalized in DIAGNOSIS_METADATA_VALUES or bool(UUID_PATTERN.fullmatch(cleaned))
+
+
+def split_diagnosis_values(raw_value: str) -> List[str]:
+    values: List[str] = []
+    for part in str(raw_value or "").split(" | "):
+        value = blank_to_empty(part)
+        if not value or is_diagnosis_metadata_value(value):
+            continue
+        values.append(value)
+    return values
+
+
+def get_maternal_diagnosis_source(row: Dict[str, str]) -> str:
+    for header in MATERNAL_DIAGNOSIS_SOURCE_HEADERS:
+        value = row.get(header, "")
+        if blank_to_empty(value):
+            return value
+    return ""
+
+
+def append_deduped(values: List[str], value: str) -> None:
+    if value and value not in values:
+        values.append(value)
+
+
+def map_maternal_diagnosis_values(raw_value: str) -> Tuple[str, str, str]:
+    obstetric_complications: List[str] = []
+    amniotic_fluid_abnormalities: List[str] = []
+    other_values: List[str] = []
+
+    for value in split_diagnosis_values(raw_value):
+        normalized = normalize_label(value)
+        recognized = False
+
+        if re.search(r"\bgdm\b", normalized):
+            append_deduped(obstetric_complications, "GDM")
+            recognized = True
+        if re.search(r"\baph\b", normalized):
+            append_deduped(obstetric_complications, "APH")
+            recognized = True
+        if re.search(r"\bprom\b", normalized):
+            append_deduped(obstetric_complications, "PROM")
+            recognized = True
+        if "oligohydramnio" in normalized:
+            append_deduped(obstetric_complications, "Amniotic fluid abnormalities")
+            append_deduped(amniotic_fluid_abnormalities, "Oligohydramnios")
+            recognized = True
+        if "polyhydramnio" in normalized:
+            append_deduped(obstetric_complications, "Amniotic fluid abnormalities")
+            append_deduped(amniotic_fluid_abnormalities, "Polyhydramnios")
+            recognized = True
+
+        if not recognized:
+            append_deduped(other_values, value)
+
+    if other_values:
+        append_deduped(obstetric_complications, "Others (specify)")
+
+    return (
+        ";".join(obstetric_complications),
+        ";".join(amniotic_fluid_abnormalities),
+        "; ".join(other_values),
+    )
+
+
+def apply_maternal_diagnosis_transform(
+    transformed_row: "OrderedDict[str, str]",
+    source_row: Dict[str, str],
+) -> None:
+    raw_diagnoses = get_maternal_diagnosis_source(source_row)
+    if not blank_to_empty(raw_diagnoses):
+        return
+
+    complications, amniotic_abnormalities, others = map_maternal_diagnosis_values(raw_diagnoses)
+    transformed_row[DIAGNOSIS_OBSTETRIC_COMPLICATIONS_HEADER] = complications
+    transformed_row[DIAGNOSIS_AMNIOTIC_FLUID_HEADER] = amniotic_abnormalities
+    transformed_row[DIAGNOSIS_OBSTETRIC_COMPLICATIONS_OTHER_HEADER] = others
 
 
 def load_program_fields(programs: Sequence[str] | None = None) -> Dict[str, List[MappingField]]:
@@ -912,7 +1052,11 @@ def transform_rows(
         if first_row is None:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             with output_path.open("w", newline="", encoding="utf-8") as handle:
-                writer = csv.DictWriter(handle, fieldnames=SPECIAL_COLUMNS)
+                writer = csv.DictWriter(
+                    handle,
+                    fieldnames=SPECIAL_COLUMNS,
+                    quoting=csv.QUOTE_ALL,
+                )
                 writer.writeheader()
             return 0, {MATERNAL_PROGRAM: 0, NEONATAL_PROGRAM: 0, "skipped": 0}, {}
 
@@ -922,8 +1066,6 @@ def transform_rows(
                 "The first data row has an unknown program value: "
                 f"{first_row.get('program', '')!r}."
             )
-        selected_org_unit = blank_to_empty(first_row.get("org_unit", ""))
-
         program_fields = load_program_fields([selected_program])
         resolved_fields, missing_fields = resolve_program_sources(
             program_fields,
@@ -935,12 +1077,19 @@ def transform_rows(
         ordered_target_headers = deduplicate(
             field.target_header for field in program_fields[selected_program]
         )
+        if selected_program == MATERNAL_PROGRAM:
+            ordered_target_headers = deduplicate(
+                tuple(ordered_target_headers) + MATERNAL_COMPUTED_DIAGNOSIS_HEADERS
+            )
 
         for row in chain([first_row], reader):
             program_value = normalize_program_value(row.get("program", ""))
             if program_value not in resolved_fields:
                 counts["skipped"] += 1
                 continue
+
+            # Read org_unit per row so mixed-facility exports select the correct source mapping.
+            row_org_unit = blank_to_empty(row.get("org_unit", ""))
 
             transformed_row: "OrderedDict[str, str]" = OrderedDict()
             for column in SPECIAL_COLUMNS:
@@ -951,7 +1100,7 @@ def transform_rows(
             for target_header in ordered_target_headers:
                 field = select_mapping_field(
                     resolved_fields[program_value],
-                    selected_org_unit,
+                    row_org_unit,
                     target_header,
                 )
                 if not field:
@@ -966,12 +1115,19 @@ def transform_rows(
                     program=program_value,
                 )
 
+            if program_value == MATERNAL_PROGRAM:
+                apply_maternal_diagnosis_transform(transformed_row, row)
+
             rows_to_write.append(transformed_row)
             counts[program_value] += 1
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=SPECIAL_COLUMNS + ordered_target_headers)
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=SPECIAL_COLUMNS + ordered_target_headers,
+            quoting=csv.QUOTE_ALL,
+        )
         writer.writeheader()
         writer.writerows(rows_to_write)
 
@@ -1133,7 +1289,29 @@ class TransformApp:
         messagebox.showerror(title, str(exc))
 
 
+def run_cli(argv: Sequence[str]) -> int:
+    parser = argparse.ArgumentParser(
+        description="Transform an OpenMRS export CSV into a DHIS2 tracker import CSV."
+    )
+    parser.add_argument("input_csv", type=Path, help="OpenMRS export CSV to transform.")
+    parser.add_argument("output_csv", type=Path, help="Destination DHIS2 tracker CSV.")
+    args = parser.parse_args(argv)
+
+    row_count, counts, missing_fields = transform_rows(args.input_csv, args.output_csv)
+    print(f"Transformation complete. {row_count} row(s) written to {args.output_csv}")
+    print(f"Maternal rows transformed: {counts[MATERNAL_PROGRAM]}")
+    print(f"Neonatal rows transformed: {counts[NEONATAL_PROGRAM]}")
+    if counts["skipped"]:
+        print(f"Rows skipped because program was missing or unknown: {counts['skipped']}")
+    for program, missing in missing_fields.items():
+        if missing:
+            print(f"{program}: {len(missing)} mapped target field(s) could not be matched.")
+    return 0
+
+
 def main() -> None:
+    if len(sys.argv) > 1:
+        raise SystemExit(run_cli(sys.argv[1:]))
     if tk is None:
         raise RuntimeError("Tkinter is not installed. Install python3-tk to use the GUI.")
     root = tk.Tk()
