@@ -35,11 +35,13 @@ from import_dhis2_tracker_csv import (
     format_dhis2_error,
     add_import_value_issue,
     import_rows,
+    infer_enrollment_date,
     reference_id,
     today_date,
     write_import_value_log,
 )
 from transform_export_to_dhis2_csv import (
+    CONTEXT_COLUMNS,
     MATERNAL_PROGRAM,
     NEONATAL_PROGRAM,
     PROGRAM_SPECS,
@@ -236,8 +238,9 @@ def fetch_openmrs_export_rows(
                 display,
                 org_unit_code,
                 program_value,
+                visit_date,
             ): (patient_uuid, display)
-            for patient_uuid, display in patients
+            for patient_uuid, display, visit_date in patients
         }
         for future in as_completed(futures):
             fixed_row, obs_values = future.result()
@@ -319,6 +322,9 @@ def transform_export_records(
         transformed_row: "OrderedDict[str, str]" = OrderedDict()
         for column in SPECIAL_COLUMNS:
             transformed_row[column] = blank_to_empty(row.get(column, ""))
+        for column in CONTEXT_COLUMNS:
+            if column in input_headers:
+                transformed_row[column] = blank_to_empty(row.get(column, ""))
         for target_header in ordered_target_headers:
             transformed_row[target_header] = ""
 
@@ -385,7 +391,13 @@ def import_transformed_records(
         try:
             org_unit_id = client.resolve_org_unit(extract_row_value(row, "org_unit"))
             attributes = build_attribute_payload(config, row, issues=value_issues)
-            stage_payloads = build_stage_payloads(config, row, import_date, issues=value_issues)
+            enrollment_date = infer_enrollment_date(config, row)
+            stage_payloads = build_stage_payloads(
+                config,
+                row,
+                enrollment_date or import_date,
+                issues=value_issues,
+            )
             existing = client.search_tracked_entity(
                 record_attribute_id=config.record_id_attribute_id,
                 record_id=record_id,
@@ -419,7 +431,12 @@ def import_transformed_records(
                 reference_id(enrollment.get("program")) == config.program_uid
                 for enrollment in (tei.get("enrollments") or [])
             )
-            enrollment = client.ensure_enrollment(tei, config, org_unit_id, import_date)
+            enrollment = client.ensure_enrollment(
+                tei,
+                config,
+                org_unit_id,
+                enrollment_date or import_date,
+            )
             if not had_enrollment:
                 counts["created_enrollments"] += 1
 

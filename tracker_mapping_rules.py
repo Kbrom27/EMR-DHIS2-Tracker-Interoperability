@@ -102,9 +102,26 @@ FIELD_RULES: Dict[str, Dict[str, object]] = {
             "Medication order date [Physicians Medication Order]",
             "Date [Physicians Medication Order]",
             "Date & Time [Physicians Medication Order]",
+            "visit_date",
         ],
         "strict_preferred_sources": True,
         "transform": "date",
+    },
+    "Laboratory :: Laboratory event date": {
+        "preferred_sources": ["visit_date"],
+        "transform": "date",
+    },
+    "Physicians Medication Order :: Physician Medication order event date": {
+        "preferred_sources": ["visit_date"],
+        "transform": "date",
+    },
+    "Physicians Medication Order :: Ordered medication name": {
+        "preferred_sources": ["medications"],
+        "transform": "all_text",
+    },
+    "Investigation sheet :: other inv n": {
+        "preferred_sources": ["lab_results"],
+        "transform": "all_text",
     },
     "Medication Administration record :: Diagnosis": {
         "preferred_sources": ["Diagnosis Notes [Maternal Medication Administration Record]"],
@@ -217,7 +234,7 @@ PROGRAM_VALUE_MAPPING_PATHS = {
     "maternal inpatient data": RESOURCES_DIR / "EMR-DHIS2 Tracker Maternal Value Mappings.csv",
     "neonatal care form": RESOURCES_DIR / "EMR-DHIS2 Tracker Neonatal Value Mappings.csv",
 }
-SUPPORTED_EXTERNAL_TRANSFORMS = {"date", "time", "datetime"}
+SUPPORTED_EXTERNAL_TRANSFORMS = {"date", "time", "datetime", "all_text"}
 _EXTERNAL_VALUE_RULES_CACHE: Dict[Path, Tuple[Optional[float], List[Dict[str, str]]]] = {}
 
 

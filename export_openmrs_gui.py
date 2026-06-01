@@ -64,7 +64,9 @@ DETAIL_COLUMNS = [
     "payment_method",
     "cbhi_id",
     "expiry_date",
+    "visit_date",
     "diagnoses",
+    "lab_results",
     "orders",
     "medications",
 ]
@@ -633,26 +635,45 @@ def describe_order(order: Dict) -> Tuple[Optional[str], Optional[str]]:
     order_text = " ".join(part for part in order_parts if part).strip()
 
     is_drug_order = bool(drug_name) or "drug" in order_type.lower()
+    order_type_lower = order_type.lower()
+    is_lab_order = any(
+        marker in order_type_lower
+        for marker in ("lab", "test", "radiology", "imaging", "pathology", "specimen")
+    )
+
     if is_drug_order:
-        return (None, medication_text or display or None)
-    return (order_text or display or None, None)
+        return (None, medication_text or display or None, None)
+    if is_lab_order:
+        lab_parts = [concept_name or display]
+        if instructions:
+            lab_parts.append(f"instructions:{instructions}")
+        if comment:
+            lab_parts.append(f"comment:{comment}")
+        lab_text = " ".join(part for part in lab_parts if part).strip()
+        return (None, None, lab_text or display or None)
+    return (order_text or display or None, None, None)
 
 
 def collect_orders_and_medications(
     direct_orders: Sequence[Dict], encounters: Sequence[Dict]
-) -> Tuple[List[str], List[str]]:
+) -> Tuple[List[str], List[str], List[str]]:
     orders: List[str] = []
     medications: List[str] = []
+    lab_results: List[str] = []
     seen_orders = set()
     seen_meds = set()
+    seen_labs = set()
 
-    def add(order_text: Optional[str], med_text: Optional[str]) -> None:
+    def add(order_text: Optional[str], med_text: Optional[str], lab_text: Optional[str] = None) -> None:
         if order_text and order_text not in seen_orders:
             seen_orders.add(order_text)
             orders.append(order_text)
         if med_text and med_text not in seen_meds:
             seen_meds.add(med_text)
             medications.append(med_text)
+        if lab_text and lab_text not in seen_labs:
+            seen_labs.add(lab_text)
+            lab_results.append(lab_text)
 
     for order in direct_orders:
         add(*describe_order(order))
@@ -661,7 +682,7 @@ def collect_orders_and_medications(
         for order in encounter.get("orders") or []:
             add(*describe_order(order))
 
-    return orders, medications
+    return orders, medications, lab_results
 
 
 def get_patients_by_visit_type(
@@ -669,8 +690,8 @@ def get_patients_by_visit_type(
     visit_type_uuid: str,
     visit_start_date: Optional[str],
     visit_end_date: Optional[str],
-) -> List[Tuple[str, str]]:
-    patients: List[Tuple[str, str]] = []
+) -> List[Tuple[str, str, str]]:
+    patients: List[Tuple[str, str, str]] = []
     seen = set()
 
     for visit in visits:
@@ -682,7 +703,9 @@ def get_patients_by_visit_type(
         patient_uuid = patient.get("uuid")
         if patient_uuid and patient_uuid not in seen:
             seen.add(patient_uuid)
-            patients.append((patient_uuid, patient.get("display", "")))
+            raw_date = visit.get("startDatetime") or visit.get("startDate") or ""
+            visit_date = raw_date[:10] if isinstance(raw_date, str) else ""
+            patients.append((patient_uuid, patient.get("display", ""), visit_date))
 
     return patients
 
@@ -693,6 +716,7 @@ def build_patient_row(
     display: str,
     org_unit_code: str,
     program_value: str,
+    visit_date: str = "",
 ) -> Tuple[List[str], Dict[str, str]]:
     patient_id = display.split(" - ", 1)[0].strip()
     record_id = build_record_id(org_unit_code, patient_id)
@@ -712,7 +736,7 @@ def build_patient_row(
 
     combined_obs_entries = encounter_obs_entries + standalone_obs_entries
     diagnoses = extract_diagnoses(combined_obs_entries)
-    orders, medications = collect_orders_and_medications(direct_orders, encounters)
+    orders, medications, lab_results = collect_orders_and_medications(direct_orders, encounters)
 
     preferred_name = person.get("preferredName") or {}
     preferred_address = person.get("preferredAddress") or {}
@@ -763,7 +787,9 @@ def build_patient_row(
         attr_value(person, "Payment Method"),
         attr_value(person, "CBHI ID"),
         attr_value(person, "Expiry Date"),
+        visit_date,
         " | ".join(diagnoses),
+        " | ".join(lab_results),
         " | ".join(orders),
         " | ".join(medications),
     ]
@@ -777,7 +803,7 @@ def build_patient_row(
 
 def write_patients_csv(
     api: ApiClient,
-    patients: Sequence[Tuple[str, str]],
+    patients: Sequence[Tuple[str, str, str]],
     output_filename: Path,
     org_unit_code: str,
     program_value: str,
@@ -796,8 +822,9 @@ def write_patients_csv(
                 display,
                 org_unit_code,
                 program_value,
+                visit_date,
             ): (patient_uuid, display)
-            for patient_uuid, display in patients
+            for patient_uuid, display, visit_date in patients
         }
 
         for future in as_completed(futures):

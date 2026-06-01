@@ -40,6 +40,7 @@ from tracker_mapping_rules import (
 MATERNAL_PROGRAM = "Maternal Inpatient Data/aLoraiFNkng"
 NEONATAL_PROGRAM = "Neonatal Care Form/QYJKpoUeg9F"
 SPECIAL_COLUMNS = ["org_unit", "program", "Record ID"]
+CONTEXT_COLUMNS = ["visit_date"]
 HEADER_SEPARATOR = " :: "
 BLANK_MARKERS = {"", "none", "null", "nan", "n/a"}
 STOPWORDS = {"a", "an", "at", "for", "in", "n", "of", "on", "the", "to"}
@@ -54,6 +55,20 @@ PROGRAM_SPECS = {
         "mapping_path": RESOURCES_DIR / "EMR-DHIS2 Tracker Neonatal Mapping.xlsx",
         "dictionary_path": RESOURCES_DIR / "NCF data disctionary.xlsx",
     },
+}
+
+TARGETED_DICTIONARY_STAGE_FALLBACKS = {
+    MATERNAL_PROGRAM: {"Laboratory", "Physicians Medication Order"},
+    NEONATAL_PROGRAM: {"Investigation sheet"},
+}
+
+AGGREGATE_SOURCE_OVERRIDES = {
+    (MATERNAL_PROGRAM, "Laboratory", "Laboratory event date"): "visit_date",
+    (MATERNAL_PROGRAM, "Laboratory", "Other Laboratory Investigations"): "lab_results",
+    (MATERNAL_PROGRAM, "Physicians Medication Order", "Physician Medication order event date"): "visit_date",
+    (MATERNAL_PROGRAM, "Physicians Medication Order", "Medication order date"): "visit_date",
+    (MATERNAL_PROGRAM, "Physicians Medication Order", "Ordered medication name"): "medications",
+    (NEONATAL_PROGRAM, "Investigation sheet", "other inv n"): "lab_results",
 }
 
 FIELD_SOURCE_ALIASES = {
@@ -442,6 +457,49 @@ def read_mapping_fields(path: Path, dictionary_fields: Dict[Tuple[str, str], Dic
             )
 
     return mapping_fields
+
+
+def add_dictionary_stage_fallbacks(
+    program: str,
+    mapping_fields: List[MappingField],
+    dictionary_fields: Dict[Tuple[str, str], DictionaryField],
+) -> List[MappingField]:
+    fallback_stages = TARGETED_DICTIONARY_STAGE_FALLBACKS.get(program, set())
+    if not fallback_stages:
+        return mapping_fields
+
+    fields = list(mapping_fields)
+    seen = {
+        (field.target_header, field.org_unit, field.source_name)
+        for field in fields
+    }
+    for (stage_name, data_element_name), dictionary_field in dictionary_fields.items():
+        if stage_name not in fallback_stages:
+            continue
+        source_name = AGGREGATE_SOURCE_OVERRIDES.get(
+            (program, stage_name, data_element_name),
+            dictionary_field.form_name or data_element_name,
+        )
+        if not source_name:
+            continue
+        target_header = f"{stage_name}{HEADER_SEPARATOR}{data_element_name}"
+        key = (target_header, "", source_name)
+        if key in seen:
+            continue
+        seen.add(key)
+        fields.append(
+            MappingField(
+                stage_name=stage_name,
+                data_element_name=data_element_name,
+                target_header=target_header,
+                source_name=source_name,
+                form_name=dictionary_field.form_name,
+                data_type=dictionary_field.data_type,
+                options_text=dictionary_field.options_text,
+            )
+        )
+
+    return fields
 
 
 def find_exact_header(candidate: str, header_info: Sequence[HeaderInfo]) -> str:
@@ -865,6 +923,8 @@ def normalize_tracker_value(
         return normalize_time(value)
     if configured_transform == "datetime":
         return normalize_datetime_value(value)
+    if configured_transform == "all_text":
+        return value
 
     if options_text:
         return normalize_option_value(value, data_type, options_text, target_header)
@@ -988,7 +1048,12 @@ def load_program_fields(programs: Sequence[str] | None = None) -> Dict[str, List
     for program in selected_programs:
         spec = PROGRAM_SPECS[program]
         dictionary_fields = read_dictionary_fields(spec["dictionary_path"])
-        program_fields[program] = read_mapping_fields(spec["mapping_path"], dictionary_fields)
+        mapping_fields = read_mapping_fields(spec["mapping_path"], dictionary_fields)
+        program_fields[program] = add_dictionary_stage_fallbacks(
+            program,
+            mapping_fields,
+            dictionary_fields,
+        )
     return program_fields
 
 
@@ -1094,6 +1159,9 @@ def transform_rows(
             transformed_row: "OrderedDict[str, str]" = OrderedDict()
             for column in SPECIAL_COLUMNS:
                 transformed_row[column] = blank_to_empty(row.get(column, ""))
+            for column in CONTEXT_COLUMNS:
+                if column in input_headers:
+                    transformed_row[column] = blank_to_empty(row.get(column, ""))
             for target_header in ordered_target_headers:
                 transformed_row[target_header] = ""
 
@@ -1125,7 +1193,9 @@ def transform_rows(
     with output_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(
             handle,
-            fieldnames=SPECIAL_COLUMNS + ordered_target_headers,
+            fieldnames=SPECIAL_COLUMNS
+            + [column for column in CONTEXT_COLUMNS if any(column in row for row in rows_to_write)]
+            + ordered_target_headers,
             quoting=csv.QUOTE_ALL,
         )
         writer.writeheader()

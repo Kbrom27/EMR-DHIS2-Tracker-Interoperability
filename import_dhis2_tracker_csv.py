@@ -511,6 +511,10 @@ def infer_stage_date(stage_fields: Sequence[StageField], row: Dict[str, str], fa
 
 
 def infer_enrollment_date(config: ProgramConfig, row: Dict[str, str]) -> str:
+    visit_date = normalize_date(extract_row_value(row, "visit_date"))
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", visit_date):
+        return visit_date
+
     dates: List[str] = []
     for stage_fields in config.stages.values():
         stage_date = infer_stage_date(stage_fields, row, "")
@@ -1266,8 +1270,13 @@ def import_rows(
             try:
                 org_unit_id = client.resolve_org_unit(extract_row_value(row, "org_unit"))
                 attributes = build_attribute_payload(config, row, issues=value_issues)
-                enrollment_date = import_date
-                stage_payloads = build_stage_payloads(config, row, import_date, issues=value_issues)
+                enrollment_date = infer_enrollment_date(config, row)
+                stage_payloads = build_stage_payloads(
+                    config,
+                    row,
+                    enrollment_date or import_date,
+                    issues=value_issues,
+                )
 
                 existing = client.search_tracked_entity(
                     record_attribute_id=config.record_id_attribute_id,
