@@ -1,0 +1,105 @@
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Dict, Optional
+
+RESOURCES_DIR = Path(__file__).resolve().with_name("Resources")
+
+MATERNAL_PROGRAM = "Maternal Inpatient Data/aLoraiFNkng"
+NEONATAL_PROGRAM = "Neonatal Care Form/QYJKpoUeg9F"
+PROGRAM_LABELS = (MATERNAL_PROGRAM, NEONATAL_PROGRAM)
+
+SPECIAL_COLUMNS = ["org_unit", "program", "Record ID"]
+CONTEXT_COLUMNS = ["visit_date"]
+HEADER_SEPARATOR = " :: "
+BLANK_MARKERS = {"", "none", "null", "nan", "n/a"}
+STOPWORDS = {"a", "an", "at", "for", "in", "n", "of", "on", "the", "to"}
+
+DETAIL_COLUMNS = [
+    "patient_uuid",
+    "patient_display",
+    "patient_id",
+    "org_unit",
+    "Record ID",
+    "program",
+    "first_name",
+    "family_name",
+    "age",
+    "gender",
+    "birth_date",
+    "death_date",
+    "cause_of_death",
+    "address1",
+    "address2",
+    "address3",
+    "city_village",
+    "state_province",
+    "county_district",
+    "registration_date",
+    "name_in_local_language",
+    "family_name_local",
+    "middle_name_local",
+    "caste",
+    "class",
+    "education_details",
+    "occupation",
+    "primary_contact",
+    "secondary_contact",
+    "fathers_husbands_name",
+    "secondary_identifier",
+    "land_holding_acres",
+    "debt_rs",
+    "distance_from_center_km",
+    "urban",
+    "cluster",
+    "ration_card_type",
+    "family_income_per_month_rs",
+    "email_address",
+    "payment_method",
+    "cbhi_id",
+    "expiry_date",
+    "visit_date",
+    "diagnoses",
+    "lab_results",
+    "orders",
+    "medications",
+]
+
+DEFAULT_PROGRAM_SPECS = {
+    MATERNAL_PROGRAM: {
+        "mapping_path": RESOURCES_DIR / "EMR-DHIS2 Tracker Maternal Mapping.xlsx",
+        "dictionary_path": RESOURCES_DIR / "MID data disctionary.xlsx",
+    },
+    NEONATAL_PROGRAM: {
+        "mapping_path": RESOURCES_DIR / "EMR-DHIS2 Tracker Neonatal Mapping.xlsx",
+        "dictionary_path": RESOURCES_DIR / "NCF data disctionary.xlsx",
+    },
+}
+
+PROGRAM_SPECS: Dict[str, Dict[str, Path]] = dict(DEFAULT_PROGRAM_SPECS)
+
+MATERNAL_COMPUTED_DIAGNOSIS_HEADERS = (
+    "Diagnosis :: Obstetric complications",
+    "Diagnosis :: Amniotic fluid abnormalities",
+    "Diagnosis :: Obstetric complications Others",
+)
+
+DIAGNOSIS_OBSTETRIC_COMPLICATIONS_HEADER = "Diagnosis :: Obstetric complications"
+DIAGNOSIS_AMNIOTIC_FLUID_HEADER = "Diagnosis :: Amniotic fluid abnormalities"
+DIAGNOSIS_OBSTETRIC_COMPLICATIONS_OTHER_HEADER = "Diagnosis :: Obstetric complications Others"
+
+MATERNAL_DIAGNOSIS_SOURCE_HEADERS = ("diagnoses",)
+
+DIAGNOSIS_METADATA_VALUES = {
+    "primary", "secondary", "confirmed", "presumed", "false", "true",
+}
+
+
+def normalize_program_value(value: str) -> str:
+    cleaned = " ".join(str(value or "").strip().split())
+    lower = cleaned.casefold()
+    if "aloraifnkng" in lower or "maternal inpatient data" in lower:
+        return MATERNAL_PROGRAM
+    if "qyjkpoueg9f" in lower or "neonatal care form" in lower:
+        return NEONATAL_PROGRAM
+    return cleaned

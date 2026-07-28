@@ -9,6 +9,12 @@ hidden_imports = (
     + collect_submodules('idna')
     + collect_submodules('requests')
     + collect_submodules('urllib3')
+    + collect_submodules('clients')
+    + collect_submodules('export')
+    + collect_submodules('transform')
+    + collect_submodules('import_')
+    + collect_submodules('ui')
+    + collect_submodules('rules')
 )
 
 a = Analysis(
