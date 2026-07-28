@@ -25,7 +25,6 @@ from transform_export_to_dhis2_csv import (
     HEADER_SEPARATOR,
     MATERNAL_PROGRAM,
     NEONATAL_PROGRAM,
-    PROGRAM_SPECS,
     SPECIAL_COLUMNS,
     blank_to_empty,
     normalize_date,
@@ -1353,11 +1352,11 @@ def import_rows(
     return counts
 
 
-class ImportApp:
-    def __init__(self, root: tk.Tk) -> None:
-        self.root = root
-        self.root.title("DHIS2 Tracker CSV Import")
-        self.root.geometry("920x700")
+class ImportPage(ttk.Frame):
+    def __init__(self, parent, on_back_to_menu):
+        super().__init__(parent)
+        self.parent = parent
+        self.on_back_to_menu = on_back_to_menu
 
         self.url_var = tk.StringVar()
         self.username_var = tk.StringVar()
@@ -1370,8 +1369,29 @@ class ImportApp:
 
         self._build_ui()
 
-    def _build_ui(self) -> None:
-        container = ttk.Frame(self.root, padding=16)
+    def _build_ui(self):
+        # Header with Back button
+        header = ttk.Frame(self, style="Header.TFrame", padding=(22, 18))
+        header.pack(fill="x")
+        
+        back_btn = ttk.Button(header, text="← Back to Main Menu", command=self.go_back)
+        back_btn.pack(side="left")
+        
+        ttk.Label(
+            header,
+            text="Import to DHIS2",
+            style="Header.TLabel",
+            font=("Segoe UI", 22, "bold"),
+        ).pack(anchor="center")
+        
+        ttk.Label(
+            header,
+            text="Import a transformed tracker CSV into DHIS2.",
+            style="Header.TLabel",
+            font=("Segoe UI", 10),
+        ).pack(anchor="center", pady=(4, 0))
+
+        container = ttk.Frame(self, padding=16)
         container.pack(fill="both", expand=True)
         container.columnconfigure(1, weight=1)
 
@@ -1429,6 +1449,10 @@ class ImportApp:
         scrollbar.grid(row=0, column=1, sticky="ns")
         self.log_text.configure(yscrollcommand=scrollbar.set)
 
+    def go_back(self):
+        self.on_back_to_menu()
+        self.destroy()
+
     def log(self, message: str) -> None:
         self.log_text.configure(state="normal")
         self.log_text.insert("end", message + "\n")
@@ -1467,8 +1491,8 @@ class ImportApp:
 
         def worker() -> None:
             self.import_in_progress = True
-            self.root.after(0, lambda: self.set_busy(True))
-            self.root.after(0, lambda: self.status_var.set("Importing tracker data into DHIS2..."))
+            self.after(0, lambda: self.set_busy(True))
+            self.after(0, lambda: self.status_var.set("Importing tracker data into DHIS2..."))
             try:
                 counts = import_rows(base_url, username, password, input_path)
 
@@ -1495,9 +1519,9 @@ class ImportApp:
                         f"Processed {counts['processed']} row(s) from:\n{input_path}",
                     )
 
-                self.root.after(0, on_success)
+                self.after(0, on_success)
             except Exception as exc:
-                self.root.after(0, lambda exc=exc: self._handle_error("Import failed", exc))
+                self.after(0, lambda exc=exc: self._handle_error("Import failed", exc))
 
         threading.Thread(target=worker, daemon=True).start()
 
@@ -1511,13 +1535,7 @@ class ImportApp:
 
 def main() -> None:
     root = tk.Tk()
-    app = ImportApp(root)
-    app.log(
-        "This importer uses Record ID to find existing tracker records and updates them when they already exist."
-    )
-    app.log(
-        "org_unit values in the CSV are treated as DHIS2 organisation unit codes and resolved to real org unit UIDs."
-    )
+    app = ImportPage(root, lambda: None)
     root.mainloop()
 
 

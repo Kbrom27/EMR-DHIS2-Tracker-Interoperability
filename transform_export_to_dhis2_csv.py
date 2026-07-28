@@ -32,6 +32,7 @@ from tracker_mapping_rules import (
     get_preferred_source_headers,
     resolve_configured_option_value,
     resolve_external_value_mapping,
+    set_value_mapping_path,
     should_suppress_value,
     uses_strict_preferred_sources,
 )
@@ -46,6 +47,7 @@ BLANK_MARKERS = {"", "none", "null", "nan", "n/a"}
 STOPWORDS = {"a", "an", "at", "for", "in", "n", "of", "on", "the", "to"}
 RESOURCES_DIR = Path(__file__).resolve().with_name("Resources")
 
+# Default program specs (for backward compatibility)
 PROGRAM_SPECS = {
     MATERNAL_PROGRAM: {
         "mapping_path": RESOURCES_DIR / "EMR-DHIS2 Tracker Maternal Mapping.xlsx",
@@ -56,6 +58,11 @@ PROGRAM_SPECS = {
         "dictionary_path": RESOURCES_DIR / "NCF data disctionary.xlsx",
     },
 }
+
+# User-provided mapping files
+_user_mapping_excel_path: Optional[Path] = None
+_user_dictionary_excel_path: Optional[Path] = None
+_user_value_mapping_csv_path: Optional[Path] = None
 
 TARGETED_DICTIONARY_STAGE_FALLBACKS = {
     MATERNAL_PROGRAM: {"Laboratory", "Physicians Medication Order"},
@@ -99,6 +106,30 @@ UUID_PATTERN = re.compile(
     r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
     re.IGNORECASE,
 )
+
+
+def set_mapping_files(mapping_excel_path: Path, dictionary_excel_path: Path, value_mapping_csv_path: Optional[Path] = None) -> None:
+    """Set user-provided mapping files"""
+    global _user_mapping_excel_path, _user_dictionary_excel_path, _user_value_mapping_csv_path, PROGRAM_SPECS
+    _user_mapping_excel_path = mapping_excel_path
+    _user_dictionary_excel_path = dictionary_excel_path
+    _user_value_mapping_csv_path = value_mapping_csv_path
+    
+    # Use the same files for both programs (the program is auto-detected from CSV)
+    PROGRAM_SPECS = {
+        MATERNAL_PROGRAM: {
+            "mapping_path": mapping_excel_path,
+            "dictionary_path": dictionary_excel_path,
+        },
+        NEONATAL_PROGRAM: {
+            "mapping_path": mapping_excel_path,
+            "dictionary_path": dictionary_excel_path,
+        },
+    }
+    
+    # Set value mapping path if provided
+    if value_mapping_csv_path:
+        set_value_mapping_path(value_mapping_csv_path)
 
 
 @dataclass
@@ -518,9 +549,6 @@ def find_exact_header(candidate: str, header_info: Sequence[HeaderInfo]) -> str:
     exact_base = [item.header for item in header_info if item.base_name == candidate_base]
     if len(exact_base) == 1:
         return exact_base[0]
-    # When multiple headers share the same base name (e.g. same concept from two different
-    # forms), use the bracket label to pick the right one instead of returning "" and falling
-    # through to fuzzy matching, which would pick whichever scored higher by chance.
     if len(exact_base) > 1 and candidate_label:
         label_match = [
             item.header
@@ -537,7 +565,6 @@ def find_exact_header(candidate: str, header_info: Sequence[HeaderInfo]) -> str:
     ]
     if len(normalized) == 1:
         return normalized[0]
-    # Same tie-break for normalised matches
     if len(normalized) > 1 and candidate_label:
         label_match = [
             item.header
@@ -664,7 +691,7 @@ def select_mapping_field(
     fields: Sequence[MappingField],
     org_unit: str,
     target_header: str,
-) -> MappingField | None:
+) -> Optional[MappingField]:
     candidates = [
         field for field in fields if field.target_header == target_header and field.source_header
     ]
@@ -1153,7 +1180,6 @@ def transform_rows(
                 counts["skipped"] += 1
                 continue
 
-            # Read org_unit per row so mixed-facility exports select the correct source mapping.
             row_org_unit = blank_to_empty(row.get("org_unit", ""))
 
             transformed_row: "OrderedDict[str, str]" = OrderedDict()
@@ -1204,25 +1230,49 @@ def transform_rows(
     return len(rows_to_write), counts, missing_fields
 
 
-class TransformApp:
-    def __init__(self, root: tk.Tk) -> None:
-        self.root = root
-        self.root.title("EMR Export to DHIS2 Tracker CSV")
-        self.root.geometry("920x680")
+class TransformPage(ttk.Frame):
+    def __init__(self, parent, on_back_to_menu):
+        super().__init__(parent)
+        self.parent = parent
+        self.on_back_to_menu = on_back_to_menu
 
         self.input_var = tk.StringVar()
         self.output_var = tk.StringVar(
             value=str(Path(__file__).resolve().with_name("dhis2_tracker_import.csv"))
         )
+        self.mapping_var = tk.StringVar()
+        self.dict_var = tk.StringVar()
+        self.value_mapping_var = tk.StringVar()
         self.status_var = tk.StringVar(
-            value="Choose the OpenMRS export CSV, then transform it for DHIS2 tracker import."
+            value="Select mapping files, choose the OpenMRS export CSV, then transform."
         )
         self.transform_in_progress = False
 
         self._build_ui()
 
-    def _build_ui(self) -> None:
-        container = ttk.Frame(self.root, padding=16)
+    def _build_ui(self):
+        # Header with Back button
+        header = ttk.Frame(self, style="Header.TFrame", padding=(22, 18))
+        header.pack(fill="x")
+        
+        back_btn = ttk.Button(header, text="← Back to Main Menu", command=self.go_back)
+        back_btn.pack(side="left")
+        
+        ttk.Label(
+            header,
+            text="Transform CSV",
+            style="Header.TLabel",
+            font=("Segoe UI", 22, "bold"),
+        ).pack(anchor="center")
+        
+        ttk.Label(
+            header,
+            text="Convert an OpenMRS export CSV into DHIS2 tracker CSV using mapping files.",
+            style="Header.TLabel",
+            font=("Segoe UI", 10),
+        ).pack(anchor="center", pady=(4, 0))
+
+        container = ttk.Frame(self, padding=16)
         container.pack(fill="both", expand=True)
         container.columnconfigure(1, weight=1)
 
@@ -1235,6 +1285,42 @@ class TransformApp:
         input_frame.columnconfigure(0, weight=1)
         ttk.Entry(input_frame, textvariable=self.input_var).grid(row=0, column=0, sticky="ew")
         ttk.Button(input_frame, text="Browse", command=self.browse_input).grid(
+            row=0, column=1, padx=(8, 0)
+        )
+
+        row += 1
+        ttk.Label(container, text="Mapping Excel File").grid(
+            row=row, column=0, sticky="w", pady=4
+        )
+        mapping_frame = ttk.Frame(container)
+        mapping_frame.grid(row=row, column=1, sticky="ew", pady=4)
+        mapping_frame.columnconfigure(0, weight=1)
+        ttk.Entry(mapping_frame, textvariable=self.mapping_var).grid(row=0, column=0, sticky="ew")
+        ttk.Button(mapping_frame, text="Browse", command=self.browse_mapping).grid(
+            row=0, column=1, padx=(8, 0)
+        )
+
+        row += 1
+        ttk.Label(container, text="Dictionary Excel File").grid(
+            row=row, column=0, sticky="w", pady=4
+        )
+        dict_frame = ttk.Frame(container)
+        dict_frame.grid(row=row, column=1, sticky="ew", pady=4)
+        dict_frame.columnconfigure(0, weight=1)
+        ttk.Entry(dict_frame, textvariable=self.dict_var).grid(row=0, column=0, sticky="ew")
+        ttk.Button(dict_frame, text="Browse", command=self.browse_dictionary).grid(
+            row=0, column=1, padx=(8, 0)
+        )
+
+        row += 1
+        ttk.Label(container, text="Value Mapping CSV (Optional)").grid(
+            row=row, column=0, sticky="w", pady=4
+        )
+        value_frame = ttk.Frame(container)
+        value_frame.grid(row=row, column=1, sticky="ew", pady=4)
+        value_frame.columnconfigure(0, weight=1)
+        ttk.Entry(value_frame, textvariable=self.value_mapping_var).grid(row=0, column=0, sticky="ew")
+        ttk.Button(value_frame, text="Browse", command=self.browse_value_mapping).grid(
             row=0, column=1, padx=(8, 0)
         )
 
@@ -1274,6 +1360,10 @@ class TransformApp:
         scrollbar.grid(row=0, column=1, sticky="ns")
         self.log_text.configure(yscrollcommand=scrollbar.set)
 
+    def go_back(self):
+        self.on_back_to_menu()
+        self.destroy()
+
     def log(self, message: str) -> None:
         self.log_text.configure(state="normal")
         self.log_text.insert("end", message + "\n")
@@ -1294,6 +1384,30 @@ class TransformApp:
             if not self.output_var.get().strip():
                 self.output_var.set(str(input_path.with_name(f"{input_path.stem}_dhis2.csv")))
 
+    def browse_mapping(self) -> None:
+        selected = filedialog.askopenfilename(
+            title="Select Mapping Excel File (contains both Maternal and Neonatal mappings)",
+            filetypes=[("Excel files", "*.xlsx"), ("All files", "*.*")],
+        )
+        if selected:
+            self.mapping_var.set(selected)
+
+    def browse_dictionary(self) -> None:
+        selected = filedialog.askopenfilename(
+            title="Select Dictionary Excel File",
+            filetypes=[("Excel files", "*.xlsx"), ("All files", "*.*")],
+        )
+        if selected:
+            self.dict_var.set(selected)
+
+    def browse_value_mapping(self) -> None:
+        selected = filedialog.askopenfilename(
+            title="Select Value Mapping CSV File (optional)",
+            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")],
+        )
+        if selected:
+            self.value_mapping_var.set(selected)
+
     def browse_output(self) -> None:
         selected = filedialog.asksaveasfilename(
             title="Choose transformed CSV file",
@@ -1308,8 +1422,18 @@ class TransformApp:
         if self.transform_in_progress:
             return
 
+        mapping_path = Path(self.mapping_var.get().strip())
+        dict_path = Path(self.dict_var.get().strip())
         input_path = Path(self.input_var.get().strip())
         output_path = Path(self.output_var.get().strip())
+        value_mapping_path = Path(self.value_mapping_var.get().strip()) if self.value_mapping_var.get().strip() else None
+
+        if not mapping_path.is_file():
+            messagebox.showerror("Mapping file required", "Please select a valid mapping Excel file.")
+            return
+        if not dict_path.is_file():
+            messagebox.showerror("Dictionary file required", "Please select a valid dictionary Excel file.")
+            return
         if not input_path.is_file():
             messagebox.showerror("Input file required", "Choose a valid OpenMRS export CSV file.")
             return
@@ -1317,10 +1441,20 @@ class TransformApp:
             messagebox.showerror("Output file required", "Choose where to save the transformed CSV.")
             return
 
+        # Set the mapping files globally
+        set_mapping_files(mapping_path, dict_path, value_mapping_path)
+        
+        if value_mapping_path and value_mapping_path.exists():
+            self.log(f"Loaded value mappings from: {value_mapping_path}")
+        elif value_mapping_path:
+            self.log(f"Warning: Value mapping file not found at {value_mapping_path}")
+        else:
+            self.log("No value mapping file provided (optional)")
+
         def worker() -> None:
             self.transform_in_progress = True
-            self.root.after(0, lambda: self.set_busy(True))
-            self.root.after(0, lambda: self.status_var.set("Transforming CSV for DHIS2 tracker..."))
+            self.after(0, lambda: self.set_busy(True))
+            self.after(0, lambda: self.status_var.set("Transforming CSV for DHIS2 tracker..."))
             try:
                 row_count, counts, missing_fields = transform_rows(input_path, output_path)
 
@@ -1345,9 +1479,9 @@ class TransformApp:
                         f"Transformed {row_count} row(s) into:\n{output_path}",
                     )
 
-                self.root.after(0, on_success)
+                self.after(0, on_success)
             except Exception as exc:
-                self.root.after(0, lambda exc=exc: self._handle_error("Transformation failed", exc))
+                self.after(0, lambda exc=exc: self._handle_error("Transformation failed", exc))
 
         threading.Thread(target=worker, daemon=True).start()
 
@@ -1365,8 +1499,12 @@ def run_cli(argv: Sequence[str]) -> int:
     )
     parser.add_argument("input_csv", type=Path, help="OpenMRS export CSV to transform.")
     parser.add_argument("output_csv", type=Path, help="Destination DHIS2 tracker CSV.")
+    parser.add_argument("--mapping", type=Path, required=True, help="Mapping Excel file")
+    parser.add_argument("--dictionary", type=Path, required=True, help="Dictionary Excel file")
+    parser.add_argument("--value-mapping", type=Path, help="Value mapping CSV file (optional)")
     args = parser.parse_args(argv)
 
+    set_mapping_files(args.mapping, args.dictionary, args.value_mapping)
     row_count, counts, missing_fields = transform_rows(args.input_csv, args.output_csv)
     print(f"Transformation complete. {row_count} row(s) written to {args.output_csv}")
     print(f"Maternal rows transformed: {counts[MATERNAL_PROGRAM]}")
@@ -1385,13 +1523,7 @@ def main() -> None:
     if tk is None:
         raise RuntimeError("Tkinter is not installed. Install python3-tk to use the GUI.")
     root = tk.Tk()
-    app = TransformApp(root)
-    app.log(
-        "This tool keeps only the mapped DHIS2 tracker fields plus org_unit, program, and Record ID."
-    )
-    app.log(
-        "When a mapping workbook source column is blank, the transformer falls back to concept/form-name matching."
-    )
+    app = TransformPage(root, lambda: None)
     root.mainloop()
 
 

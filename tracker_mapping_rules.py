@@ -5,13 +5,6 @@ from typing import Dict, FrozenSet, List, Optional, Sequence, Tuple
 
 
 # Central place for EMR -> DHIS2 tracker overrides.
-# Use FIELD_RULES for:
-# - preferred_sources: exact or approximate export column names to prefer
-# - transform: date, time, or datetime extraction from the chosen source value
-# - aliases: source value spelling/code variants mapped to the desired tracker value
-#
-# For mappings you want to edit without changing Python code, use:
-# Resources/EMR-DHIS2 Tracker Value Mappings.csv
 FIELD_RULES: Dict[str, Dict[str, object]] = {
     "Delivery summary :: Date of Delivery": {
         "preferred_sources": ["Date and Time of Birth [Delivery Summary]"],
@@ -230,10 +223,10 @@ FIELD_RULES: Dict[str, Dict[str, object]] = {
 
 RESOURCES_DIR = Path(__file__).resolve().with_name("Resources")
 VALUE_MAPPING_PATH = RESOURCES_DIR / "EMR-DHIS2 Tracker Value Mappings.csv"
-PROGRAM_VALUE_MAPPING_PATHS = {
-    "maternal inpatient data": RESOURCES_DIR / "EMR-DHIS2 Tracker Maternal Value Mappings.csv",
-    "neonatal care form": RESOURCES_DIR / "EMR-DHIS2 Tracker Neonatal Value Mappings.csv",
-}
+
+# Dynamic value mapping path (can be set by user)
+_user_value_mapping_path: Optional[Path] = None
+
 SUPPORTED_EXTERNAL_TRANSFORMS = {"date", "time", "datetime", "all_text"}
 _EXTERNAL_VALUE_RULES_CACHE: Dict[Path, Tuple[Optional[float], List[Dict[str, str]]]] = {}
 
@@ -271,6 +264,23 @@ INFERRED_OPTION_ALIASES: Dict[FrozenSet[str], Dict[str, Sequence[str]]] = {
 }
 
 
+def set_value_mapping_path(value_mapping_path: Optional[Path]) -> None:
+    """Set user-provided value mapping CSV file path (single file for all programs)"""
+    global _user_value_mapping_path
+    _user_value_mapping_path = value_mapping_path
+    # Clear cache when path changes
+    _EXTERNAL_VALUE_RULES_CACHE.clear()
+
+
+def set_value_mapping_paths(maternal_path: Optional[Path] = None, neonatal_path: Optional[Path] = None) -> None:
+    """Alias for set_value_mapping_path for backward compatibility"""
+    # Use maternal_path as the primary value mapping file (single file for all programs)
+    if maternal_path is not None:
+        set_value_mapping_path(maternal_path)
+    elif neonatal_path is not None:
+        set_value_mapping_path(neonatal_path)
+
+
 def normalize_rule_text(value: object) -> str:
     text = (
         str(value or "")
@@ -296,17 +306,16 @@ def normalize_target_key(value: object) -> str:
 
 
 def value_mapping_path_for_program(program: str = "") -> Path:
-    program_key = normalize_program_key(program)
-    return PROGRAM_VALUE_MAPPING_PATHS.get(program_key, VALUE_MAPPING_PATH)
+    # Use user-provided path if available, otherwise use default
+    if _user_value_mapping_path is not None:
+        return _user_value_mapping_path
+    return VALUE_MAPPING_PATH
 
 
 def load_external_value_rules(program: str = "") -> List[Dict[str, str]]:
     global _EXTERNAL_VALUE_RULES_CACHE
 
     value_mapping_path = value_mapping_path_for_program(program)
-    if not value_mapping_path.exists() and value_mapping_path != VALUE_MAPPING_PATH:
-        value_mapping_path = VALUE_MAPPING_PATH
-
     if not value_mapping_path.exists():
         _EXTERNAL_VALUE_RULES_CACHE[value_mapping_path] = (None, [])
         return []

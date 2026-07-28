@@ -161,12 +161,7 @@ def extract_obs_display_value(obs: Dict, concept: str) -> str:
         if remainder.startswith(":") or remainder.startswith("="):
             return remainder[1:].strip()
         if not remainder:
-            # display is exactly the concept name with no value
             return ""
-        # The concept name is only a prefix of a longer concept name (e.g. "Blood Pressure"
-        # matching "Blood Pressure Systolic: 120"). Do NOT fall through to split_obs_display
-        # here — that would extract the value of the wrong concept. Return empty and let
-        # extract_obs_value fall back to the structured obs.get("value") field instead.
         return ""
 
     _display_concept, display_value = split_obs_display(obs)
@@ -849,11 +844,11 @@ def write_patients_csv(
     return len(buffered_rows)
 
 
-class ExportApp:
-    def __init__(self, root: tk.Tk) -> None:
-        self.root = root
-        self.root.title("OpenMRS Patient Export")
-        self.root.geometry("860x620")
+class ExportPage(ttk.Frame):
+    def __init__(self, parent, on_back_to_menu):
+        super().__init__(parent)
+        self.parent = parent
+        self.on_back_to_menu = on_back_to_menu
 
         self.api: Optional[ApiClient] = None
         self.visit_types: List[Dict] = []
@@ -874,8 +869,29 @@ class ExportApp:
 
         self._build_ui()
 
-    def _build_ui(self) -> None:
-        container = ttk.Frame(self.root, padding=16)
+    def _build_ui(self):
+        # Header with Back button
+        header = ttk.Frame(self, style="Header.TFrame", padding=(22, 18))
+        header.pack(fill="x")
+        
+        back_btn = ttk.Button(header, text="← Back to Main Menu", command=self.go_back)
+        back_btn.pack(side="left")
+        
+        ttk.Label(
+            header,
+            text="EMR Data Export",
+            style="Header.TLabel",
+            font=("Segoe UI", 22, "bold"),
+        ).pack(anchor="center")
+        
+        ttk.Label(
+            header,
+            text="Export OpenMRS patient data by visit type and date range.",
+            style="Header.TLabel",
+            font=("Segoe UI", 10),
+        ).pack(anchor="center", pady=(4, 0))
+
+        container = ttk.Frame(self, padding=16)
         container.pack(fill="both", expand=True)
         container.columnconfigure(1, weight=1)
 
@@ -969,6 +985,10 @@ class ExportApp:
         scrollbar.grid(row=0, column=1, sticky="ns")
         self.log_text.configure(yscrollcommand=scrollbar.set)
 
+    def go_back(self):
+        self.on_back_to_menu()
+        self.destroy()
+
     def log(self, message: str) -> None:
         self.log_text.configure(state="normal")
         self.log_text.insert("end", message + "\n")
@@ -1016,11 +1036,11 @@ class ExportApp:
             return
 
         def worker() -> None:
-            self.root.after(
+            self.after(
                 0,
                 lambda: self.status_var.set("Connecting to OpenMRS and loading visit types..."),
             )
-            self.root.after(0, lambda: self.set_busy(True))
+            self.after(0, lambda: self.set_busy(True))
             try:
                 api = self._create_api()
                 visit_types = sorted(
@@ -1043,9 +1063,9 @@ class ExportApp:
                     self.log(f"Loaded {len(visit_type_names)} visit types from OpenMRS.")
                     self.set_busy(False)
 
-                self.root.after(0, on_success)
+                self.after(0, on_success)
             except Exception as exc:
-                self.root.after(
+                self.after(
                     0,
                     lambda exc=exc: self._handle_error("Connection failed", exc),
                 )
@@ -1085,8 +1105,8 @@ class ExportApp:
 
         def worker() -> None:
             self.export_in_progress = True
-            self.root.after(0, lambda: self.set_busy(True))
-            self.root.after(0, lambda: self.status_var.set("Export in progress..."))
+            self.after(0, lambda: self.set_busy(True))
+            self.after(0, lambda: self.status_var.set("Export in progress..."))
             try:
                 api = self.api or self._create_api()
                 if not self.visit_types:
@@ -1105,7 +1125,7 @@ class ExportApp:
                         f"Visit type '{visit_type_name}' was not found on the current server."
                     )
 
-                self.root.after(
+                self.after(
                     0,
                     lambda: self.log(
                         f"Loading visits for '{visit_type_name}'"
@@ -1127,7 +1147,7 @@ class ExportApp:
                         "No patients matched the selected visit type and date range."
                     )
 
-                self.root.after(
+                self.after(
                     0,
                     lambda: self.log(
                         f"Matched {len(patients)} patients with visit type '{visit_type_name}'. "
@@ -1159,9 +1179,9 @@ class ExportApp:
                         f"Exported {exported_count} patients to:\n{output_path}",
                     )
 
-                self.root.after(0, on_success)
+                self.after(0, on_success)
             except Exception as exc:
-                self.root.after(
+                self.after(
                     0,
                     lambda exc=exc: self._handle_error("Export failed", exc),
                 )
@@ -1178,15 +1198,7 @@ class ExportApp:
 
 def main() -> None:
     root = tk.Tk()
-    app = ExportApp(root)
-    app.log(
-        "This exporter filters patients by the selected visit type and date range, then merges the patient's "
-        "available observations, diagnoses, medications, and orders into one CSV row."
-    )
-    app.log(
-        "Observation columns are labeled with the outermost observation form/template concept set when it can "
-        "be inferred from the grouped obs data, for example 'BP [Maternal History]'."
-    )
+    app = ExportPage(root, lambda: None)
     root.mainloop()
 
 
