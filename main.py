@@ -7,6 +7,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from ui.export_page import ExportPage
+from ui.o3_page import O3Page
 from ui.transform_page import TransformPage
 from ui.import_page import ImportPage
 from ui.sync_page import SyncPage
@@ -68,7 +69,7 @@ class MainApplication:
         main_frame = ttk.Frame(self.main_menu_frame, padding=40)
         main_frame.pack(fill="both", expand=True)
         main_frame.columnconfigure((0, 1), weight=1, uniform="menu")
-        main_frame.rowconfigure((0, 1), weight=1, uniform="menu")
+        main_frame.rowconfigure((0, 1, 2), weight=1, uniform="menu")
 
         items = [
             ("\U0001f4e4 EMR Data Export", "Fetch OpenMRS patient data by visit type and date.", "#0f766e", self.show_export),
@@ -79,6 +80,12 @@ class MainApplication:
                 "Fetch, transform using mapping files, and import directly without creating an export file.",
                 "#dc2626",
                 self.show_sync,
+            ),
+            (
+                "\U0001f4e6 OpenMRS 3 Workflow",
+                "Export O3 patient data, generate O3 mapping files, transform, import, or run the full O3 sync.",
+                "#0d9488",
+                self.show_o3,
             ),
         ]
 
@@ -157,6 +164,14 @@ class MainApplication:
             self.main_menu_frame.destroy()
             self.main_menu_frame = None
         self.current_page = SyncPage(self.root, self.show_main_menu)
+        self.current_page.pack(fill="both", expand=True)
+
+    def show_o3(self):
+        self.clear_page()
+        if self.main_menu_frame:
+            self.main_menu_frame.destroy()
+            self.main_menu_frame = None
+        self.current_page = O3Page(self.root, self.show_main_menu)
         self.current_page.pack(fill="both", expand=True)
 
 

@@ -18,7 +18,7 @@ hidden_imports = (
 )
 
 a = Analysis(
-    ['emr_dhis2_tracker_sync.py'],
+    ['main.py'],
     pathex=[],
     binaries=[],
     datas=[('Resources', 'Resources')],

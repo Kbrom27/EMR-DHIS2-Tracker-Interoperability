@@ -176,13 +176,17 @@ def append_unique_value(values: Dict[str, str], key: str, value: str) -> None:
         values[key] = f"{existing} | {value}"
 
 
-def collect_group_member_uuids(obs: Dict) -> set[str]:
+def collect_group_member_uuids(obs: object) -> set[str]:
     uuids: set[str] = set()
+    if not isinstance(obs, dict):
+        return uuids
     group_members = obs.get("groupMembers")
     if not isinstance(group_members, list):
         return uuids
 
     for member in group_members:
+        if not isinstance(member, dict):
+            continue
         member_uuid = str(member.get("uuid") or "").strip()
         if member_uuid:
             uuids.add(member_uuid)
@@ -191,22 +195,23 @@ def collect_group_member_uuids(obs: Dict) -> set[str]:
     return uuids
 
 
-def get_root_obs(obs_list: Sequence[Dict]) -> List[Dict]:
+def get_root_obs(obs_list: Sequence[object]) -> List[Dict]:
     child_uuids: set[str] = set()
     for obs in obs_list:
         child_uuids.update(collect_group_member_uuids(obs))
 
+    dict_obs = [obs for obs in obs_list if isinstance(obs, dict)]
     if not child_uuids:
-        return list(obs_list)
+        return dict_obs
 
     roots: List[Dict] = []
-    for obs in obs_list:
+    for obs in dict_obs:
         obs_uuid = str(obs.get("uuid") or "").strip()
         if obs_uuid and obs_uuid in child_uuids:
             continue
         roots.append(obs)
 
-    return roots or list(obs_list)
+    return roots or dict_obs
 
 
 def flatten_obs(
@@ -220,6 +225,8 @@ def flatten_obs(
         inherited_encounter: Optional[Dict],
         template_label: str = "",
     ) -> None:
+        if not isinstance(obs, dict):
+            return
         encounter = obs.get("encounter")
         if not isinstance(encounter, dict) or not encounter:
             encounter = inherited_encounter
@@ -404,11 +411,15 @@ def collect_orders_and_medications(
             lab_results.append(lab_text)
 
     for order in direct_orders:
-        add(*describe_order(order))
+        if isinstance(order, dict):
+            add(*describe_order(order))
 
     for encounter in encounters:
+        if not isinstance(encounter, dict):
+            continue
         for order in encounter.get("orders") or []:
-            add(*describe_order(order))
+            if isinstance(order, dict):
+                add(*describe_order(order))
 
     return orders, medications, lab_results
 

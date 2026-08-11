@@ -261,34 +261,34 @@ def find_exact_header(candidate: str, header_info: Sequence[HeaderInfo]) -> str:
     if len(exact) == 1:
         return exact[0]
 
-    exact_base = [item.header for item in header_info if item.base_name == candidate_base]
-    if len(exact_base) == 1:
-        return exact_base[0]
-    if len(exact_base) > 1 and candidate_label:
+    exact_base_items = [item for item in header_info if item.base_name == candidate_base]
+    if len(exact_base_items) == 1:
+        item = exact_base_items[0]
+        if not candidate_label or not item.source_label or item.source_label == candidate_label:
+            return item.header
+    if len(exact_base_items) > 1 and candidate_label:
         label_match = [
             item.header
-            for item in header_info
-            if item.base_name == candidate_base and item.source_label == candidate_label
+            for item in exact_base_items
+            if item.source_label == candidate_label
         ]
         if len(label_match) == 1:
             return label_match[0]
 
-    normalized = [
-        item.header
+    normalized_items = [
+        item
         for item in header_info
         if item.normalized_header == candidate_norm or item.normalized_base == candidate_base_norm
     ]
-    if len(normalized) == 1:
-        return normalized[0]
-    if len(normalized) > 1 and candidate_label:
+    if len(normalized_items) == 1:
+        item = normalized_items[0]
+        if not candidate_label or not item.source_label or item.source_label == candidate_label:
+            return item.header
+    if len(normalized_items) > 1 and candidate_label:
         label_match = [
             item.header
-            for item in header_info
-            if (
-                item.normalized_header == candidate_norm
-                or item.normalized_base == candidate_base_norm
-            )
-            and item.source_label == candidate_label
+            for item in normalized_items
+            if item.source_label == candidate_label
         ]
         if len(label_match) == 1:
             return label_match[0]

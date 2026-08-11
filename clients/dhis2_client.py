@@ -120,7 +120,7 @@ def split_option_parts(value: str, multi_value: bool) -> List[str]:
         return []
     if not multi_value:
         return [text]
-    parts = re.split(r"\s*\|\s*|;", text)
+    parts = re.split(r"\s*[|;,]\s*", text)
     return [part.strip() for part in parts if part.strip()]
 
 
@@ -396,6 +396,54 @@ class Dhis2Client:
                     if looks_like_uid(candidate):
                         data_elements.append(candidate)
         return data_elements
+
+    @staticmethod
+    def _extract_conflict_messages(error: Dhis2RequestError) -> List[str]:
+        payload = error.payload if isinstance(error.payload, dict) else {}
+        messages: List[str] = []
+
+        def collect_conflicts(value: object) -> None:
+            if isinstance(value, dict):
+                conflict_value = str(value.get("value") or "").strip()
+                message = str(
+                    value.get("message")
+                    or value.get("errorMessage")
+                    or value.get("errorCode")
+                    or ""
+                ).strip()
+                if conflict_value and (
+                    "option" in conflict_value.casefold()
+                    or "value" in conflict_value.casefold()
+                    or "invalid" in conflict_value.casefold()
+                    or "not valid" in conflict_value.casefold()
+                ):
+                    messages.append(conflict_value)
+                elif message:
+                    messages.append(message)
+                nested = value.get("conflicts")
+                if isinstance(nested, list):
+                    for item in nested:
+                        collect_conflicts(item)
+                for key in (
+                    "response", "importSummaries", "importSummary",
+                    "validationReport", "validationReports",
+                    "trackerTypeReport", "objectReports", "errorReports",
+                ):
+                    if key in value:
+                        collect_conflicts(value[key])
+            elif isinstance(value, list):
+                for item in value:
+                    collect_conflicts(item)
+
+        collect_conflicts(payload)
+
+        seen: set[str] = set()
+        unique: List[str] = []
+        for message in messages:
+            if message and message.casefold() not in seen:
+                seen.add(message.casefold())
+                unique.append(message)
+        return unique
 
     def resolve_org_unit(self, org_unit_code: str) -> str:
         code = blank_to_empty(org_unit_code)
@@ -688,6 +736,10 @@ class Dhis2Client:
                 return True
             except Dhis2RequestError as exc:
                 conflicting_ids = set(self._extract_conflicting_data_elements(exc))
+                conflict_messages = self._extract_conflict_messages(exc)
+                reason_detail = (
+                    " ".join(conflict_messages) if conflict_messages else format_dhis2_error(exc)
+                )
                 if not conflicting_ids:
                     if config and row is not None:
                         for item in data_values:
@@ -706,7 +758,7 @@ class Dhis2Client:
                                 str(field_info.get("field_name") or data_element_id),
                                 data_element_id,
                                 str(item.get("value") or ""),
-                                "DHIS2 rejected the event but did not identify a single bad value; this value was not synced.",
+                                f"DHIS2 rejected the event but did not identify a single bad value; this value was not synced. ({reason_detail})",
                             )
                     return False
                 for item in data_values:
@@ -727,7 +779,7 @@ class Dhis2Client:
                         str(field_info.get("field_name") or data_element_id),
                         data_element_id,
                         str(item.get("value") or ""),
-                        "DHIS2 rejected this value during import, so the value was discarded and the event was retried.",
+                        f"DHIS2 rejected this value during import, so the value was discarded and the event was retried. ({reason_detail})",
                     )
                 filtered = [
                     item for item in data_values if str(item.get("dataElement") or "") not in conflicting_ids

@@ -4,7 +4,7 @@ import csv
 from collections import OrderedDict
 from itertools import chain
 from pathlib import Path
-from typing import Dict, List, Sequence
+from typing import Dict, List, Optional, Sequence
 
 from config import (
     CONTEXT_COLUMNS,
@@ -37,6 +37,63 @@ UUID_PATTERN = __import__("re").compile(
 DIAGNOSIS_OBSTETRIC_COMPLICATIONS_HEADER = "Diagnosis :: Obstetric complications"
 DIAGNOSIS_AMNIOTIC_FLUID_HEADER = "Diagnosis :: Amniotic fluid abnormalities"
 DIAGNOSIS_OBSTETRIC_COMPLICATIONS_OTHER_HEADER = "Diagnosis :: Obstetric complications Others"
+
+MISSING_FIELDS_REPORT_SUFFIX = "_missing_fields.csv"
+
+
+def write_missing_fields_report(
+    output_path: Path,
+    program: str,
+    missing_targets: Sequence[str],
+    fields: Sequence[MappingField],
+) -> Optional[Path]:
+    if not missing_targets:
+        return None
+    missing_set = set(missing_targets)
+    rows: List[Dict[str, str]] = []
+    seen_targets = set()
+    for field in fields:
+        if field.target_header not in missing_set:
+            continue
+        if field.target_header in seen_targets:
+            continue
+        seen_targets.add(field.target_header)
+        rows.append(
+            {
+                "program": program,
+                "stage_name": field.stage_name,
+                "data_element_name": field.data_element_name,
+                "target_header": field.target_header,
+                "source_name": field.source_name,
+                "form_name": field.form_name,
+                "data_type": field.data_type,
+                "org_unit": field.org_unit,
+                "reason": "No matching export column found in the same program stage/form.",
+            }
+        )
+    if not rows:
+        return None
+    report_path = output_path.with_name(output_path.stem + MISSING_FIELDS_REPORT_SUFFIX)
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    with report_path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=[
+                "program",
+                "stage_name",
+                "data_element_name",
+                "target_header",
+                "source_name",
+                "form_name",
+                "data_type",
+                "org_unit",
+                "reason",
+            ],
+            quoting=csv.QUOTE_ALL,
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
 
 
 def is_diagnosis_metadata_value(value: str) -> bool:
@@ -171,6 +228,12 @@ def transform_rows(
             program_fields,
             input_headers,
             [selected_program],
+        )
+        write_missing_fields_report(
+            output_path,
+            selected_program,
+            missing_fields[selected_program],
+            program_fields[selected_program],
         )
         rows_to_write: List[OrderedDict[str, str]] = []
         counts = {MATERNAL_PROGRAM: 0, NEONATAL_PROGRAM: 0, "skipped": 0}

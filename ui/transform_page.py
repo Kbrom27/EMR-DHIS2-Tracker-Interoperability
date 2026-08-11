@@ -243,6 +243,9 @@ class TransformPage(ttk.Frame):
                     for program, fields in missing_fields.items():
                         if fields:
                             self.log(f"{program}: {len(fields)} mapped field(s) could not be matched.")
+                    report_path = output_path.with_name(output_path.stem + "_missing_fields.csv")
+                    if report_path.exists():
+                        self.log(f"Unmatched fields report saved to: {report_path}")
                     self.set_busy(False)
                     self.transform_in_progress = False
                     messagebox.showinfo(

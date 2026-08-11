@@ -62,6 +62,18 @@ def score_header_match(
     return score
 
 
+def in_same_stage(source_label: str, header: HeaderInfo) -> bool:
+    if not header.source_label:
+        return False
+    normalized_source = normalize_label(source_label)
+    normalized_header = normalize_label(header.source_label)
+    if not normalized_source or not normalized_header:
+        return False
+    if normalized_source == normalized_header:
+        return True
+    return SequenceMatcher(None, normalized_source, normalized_header).ratio() >= 0.85
+
+
 def resolve_alias_source_header(field: MappingField, header_info: Sequence[HeaderInfo]) -> str:
     alias = FIELD_SOURCE_ALIASES.get(normalize_label(field.data_element_name))
     if not alias:
@@ -79,10 +91,36 @@ def resolve_source_header(field: MappingField, header_info: Sequence[HeaderInfo]
     if strict_preferred_sources:
         return ""
 
+    if field.source_name:
+        exact_source = find_exact_header(field.source_name, header_info)
+        if exact_source:
+            return exact_source
+
+    source_label = extract_bracket_label(field.source_name)
+    if not source_label:
+        candidates = deduplicate(
+            value
+            for value in (
+                field.source_name,
+                field.form_name,
+                field.data_element_name,
+            )
+            if value
+        )
+        for candidate in candidates:
+            exact = find_exact_header(candidate, header_info)
+            if exact:
+                return exact
+        return ""
+
+    eligible_headers = [header for header in header_info if in_same_stage(source_label, header)]
+    if not eligible_headers:
+        return ""
+
     preferred_best_header = ""
     preferred_best_score = 0.0
     for candidate in preferred_candidates:
-        for header in header_info:
+        for header in eligible_headers:
             score = score_header_match(
                 candidate=candidate,
                 header=header,
@@ -111,14 +149,14 @@ def resolve_source_header(field: MappingField, header_info: Sequence[HeaderInfo]
     )
 
     for candidate in candidates:
-        exact = find_exact_header(candidate, header_info)
+        exact = find_exact_header(candidate, eligible_headers)
         if exact:
             return exact
 
     best_header = ""
     best_score = 0.0
     for candidate in candidates:
-        for header in header_info:
+        for header in eligible_headers:
             score = score_header_match(
                 candidate=candidate,
                 header=header,

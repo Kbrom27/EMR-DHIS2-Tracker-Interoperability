@@ -181,7 +181,7 @@ def split_option_parts(value: str, multi_value: bool) -> List[str]:
         return []
     if not multi_value:
         return [text]
-    parts = re.split(r"\s*\|\s*|;", text)
+    parts = re.split(r"\s*[|;,]\s*", text)
     return [part.strip() for part in parts if part.strip()]
 
 
@@ -266,7 +266,7 @@ def normalize_import_option_value(
 
     if not deduped:
         return ""
-    return ";".join(deduped) if multi_value else deduped[-1]
+    return ",".join(deduped) if multi_value else deduped[-1]
 
 
 def normalize_import_value(
