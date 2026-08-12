@@ -12,6 +12,8 @@ from clients.openmrs_client import ApiClient, normalize_base_url
 from config import (
     BLANK_MARKERS,
     DETAIL_COLUMNS,
+    FACILITIES,
+    FACILITY_CODES,
     MATERNAL_PROGRAM,
     NEONATAL_PROGRAM,
 )
@@ -45,6 +47,7 @@ class SyncPage(ttk.Frame):
         self.emr_url_var = tk.StringVar()
         self.emr_username_var = tk.StringVar(value="superman")
         self.emr_password_var = tk.StringVar(value="Admin123")
+        self.facility_var = tk.StringVar(value=FACILITIES[0][0])
         self.start_date_var = tk.StringVar()
         self.end_date_var = tk.StringVar()
         self.visit_type_var = tk.StringVar()
@@ -219,17 +222,20 @@ class SyncPage(ttk.Frame):
             "EMR Password",
             ttk.Entry(parent, textvariable=self.emr_password_var, show="*"),
         )
+        self.facility_combo = ttk.Combobox(parent, textvariable=self.facility_var, state="readonly")
+        self.facility_combo["values"] = [name for name, _code in FACILITIES]
+        self.add_field(parent, start_row + 3, "Facility", self.facility_combo)
         load_button = ttk.Button(parent, text="Connect and Load Visit Types", command=self.load_visit_types)
-        load_button.grid(row=start_row + 3, column=1, sticky="w", pady=(4, 10))
+        load_button.grid(row=start_row + 4, column=1, sticky="w", pady=(4, 10))
         self.buttons.append(load_button)
 
-        self.add_field(parent, start_row + 4, "Start Date", DatePicker(parent, self.start_date_var))
-        self.add_field(parent, start_row + 5, "End Date", DatePicker(parent, self.end_date_var))
+        self.add_field(parent, start_row + 5, "Start Date", DatePicker(parent, self.start_date_var))
+        self.add_field(parent, start_row + 6, "End Date", DatePicker(parent, self.end_date_var))
 
         self.visit_type_combo = ttk.Combobox(parent, textvariable=self.visit_type_var, state="readonly")
         self.visit_type_combo["values"] = [item.get("name", "") for item in self.visit_types if item.get("name")]
-        self.add_field(parent, start_row + 6, "Visit Type", self.visit_type_combo)
-        return start_row + 7
+        self.add_field(parent, start_row + 7, "Visit Type", self.visit_type_combo)
+        return start_row + 8
 
     def common_dhis2_fields(self, parent: ttk.Frame, start_row: int = 0) -> int:
         parent.columnconfigure(1, weight=1)
@@ -294,6 +300,10 @@ class SyncPage(ttk.Frame):
                 self.after(0, lambda exc=exc: self.handle_error("Connection failed", exc))
 
         threading.Thread(target=worker, daemon=True).start()
+
+    def _selected_facility_code(self) -> str:
+        facility_name = self.facility_var.get().strip()
+        return FACILITY_CODES.get(facility_name, facility_name)
 
     def create_openmrs_api(self, base_url: str, username: str, password: str) -> ApiClient:
         api = ApiClient(base_url=normalize_base_url(base_url), username=username, password=password)
@@ -388,7 +398,7 @@ class SyncPage(ttk.Frame):
                     visit_type_name=visit_type_name,
                     start_date=start_date,
                     end_date=end_date,
-                    org_unit_code=self.emr_username_var.get().strip(),
+                    org_unit_code=self._selected_facility_code(),
                 )
                 self.log(f"Fetched {len(export_rows)} EMR row(s). Transforming in memory...")
                 with tempfile.TemporaryDirectory(prefix="emr_dhis2_sync_") as temp_dir:

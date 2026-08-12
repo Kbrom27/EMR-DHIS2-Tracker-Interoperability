@@ -1,0 +1,3 @@
+record_id,patient,program,stage,column,field_name,field_id,value,reason
+TEST0000010001,TEST0000010001,Neonatal Care Form/QYJKpoUeg9F,Row,Record ID,Record ID,Xam97lYmJB7,TEST0000010001,Row could not be fully imported: No DHIS2 organisation unit was found for org_unit code 'TEST'.
+TEST0000100038,TEST0000100038,Neonatal Care Form/QYJKpoUeg9F,Row,Record ID,Record ID,Xam97lYmJB7,TEST0000100038,Row could not be fully imported: No DHIS2 organisation unit was found for org_unit code 'TEST'.

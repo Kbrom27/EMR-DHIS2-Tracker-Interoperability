@@ -7,6 +7,7 @@ from tkinter import filedialog, messagebox, ttk
 from typing import Dict, List, Optional
 
 from clients.openmrs_client import ApiClient, normalize_base_url
+from config import FACILITIES, FACILITY_CODES
 from export.extractors import (
     determine_program_from_visit_type,
     get_patients_by_visit_type,
@@ -31,6 +32,7 @@ class ExportPage(ttk.Frame):
         self.base_url_var = tk.StringVar()
         self.username_var = tk.StringVar(value="superman")
         self.password_var = tk.StringVar(value="Admin123")
+        self.facility_var = tk.StringVar(value=FACILITIES[0][0])
         self.start_date_var = tk.StringVar()
         self.end_date_var = tk.StringVar()
         self.visit_type_var = tk.StringVar()
@@ -85,6 +87,17 @@ class ExportPage(ttk.Frame):
         ttk.Entry(container, textvariable=self.password_var, show="*", width=30).grid(
             row=row, column=1, sticky="w", pady=4
         )
+
+        row += 1
+        ttk.Label(container, text="Facility").grid(row=row, column=0, sticky="w", pady=4)
+        self.facility_combo = ttk.Combobox(
+            container,
+            textvariable=self.facility_var,
+            state="readonly",
+            width=57,
+            values=[name for name, _code in FACILITIES],
+        )
+        self.facility_combo.grid(row=row, column=1, sticky="w", pady=4)
 
         row += 1
         button_row = ttk.Frame(container)
@@ -186,6 +199,10 @@ class ExportPage(ttk.Frame):
         if selected:
             self.output_var.set(selected)
 
+    def _selected_facility_code(self) -> str:
+        facility_name = self.facility_var.get().strip()
+        return FACILITY_CODES.get(facility_name, facility_name)
+
     def _create_api(self) -> ApiClient:
         base_url = normalize_base_url(self.base_url_var.get())
         username = self.username_var.get().strip()
@@ -269,7 +286,7 @@ class ExportPage(ttk.Frame):
             )
             return
 
-        org_unit_code = self.username_var.get().strip()
+        org_unit_code = self._selected_facility_code()
         program_value = determine_program_from_visit_type(visit_type_name)
 
         def worker() -> None:

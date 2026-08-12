@@ -78,6 +78,22 @@ DEFAULT_PROGRAM_SPECS = {
 
 PROGRAM_SPECS: Dict[str, Dict[str, Path]] = dict(DEFAULT_PROGRAM_SPECS)
 
+FACILITIES = (
+    ("Adama Teaching Hospital", "ADMT"),
+    ("Olenchity Primary Hospital", "OLC"),
+    ("Meki Primary Hospital", "MKP"),
+    ("Batu Primary Hospital", "BT"),
+    ("Adare GH", "ADR"),
+    ("Tula Primary Hospital", "TUL"),
+    ("Karamara Primary Hospital", "KRM"),
+    ("Dubti General Hospital", "DUB"),
+    ("Axum referral hospital", "AxRH"),
+    ("Mulu Assefa Primary hospital", "MASPH"),
+    ("Test", "Test"),
+)
+
+FACILITY_CODES = dict(FACILITIES)
+
 MATERNAL_COMPUTED_DIAGNOSIS_HEADERS = (
     "Diagnosis :: Obstetric complications",
     "Diagnosis :: Amniotic fluid abnormalities",

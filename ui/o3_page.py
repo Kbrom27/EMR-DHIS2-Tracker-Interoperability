@@ -8,7 +8,7 @@ from tkinter import filedialog, messagebox, ttk
 from typing import Dict, List, Optional, Tuple
 
 from clients.openmrs_client import ApiClient, normalize_base_url
-from config import MATERNAL_PROGRAM, NEONATAL_PROGRAM, RESOURCES_DIR
+from config import FACILITIES, FACILITY_CODES, MATERNAL_PROGRAM, NEONATAL_PROGRAM, RESOURCES_DIR
 from import_.importer import import_rows
 from o3.extract import (
     determine_program_from_visit_type,
@@ -47,6 +47,7 @@ class O3Page(ttk.Frame):
         self.base_url_var = tk.StringVar()
         self.username_var = tk.StringVar(value="superman")
         self.password_var = tk.StringVar(value="Admin123")
+        self.facility_var = tk.StringVar(value=FACILITIES[0][0])
         self.start_date_var = tk.StringVar()
         self.end_date_var = tk.StringVar()
         self.visit_type_var = tk.StringVar()
@@ -185,6 +186,15 @@ class O3Page(ttk.Frame):
         )
         widget.grid(row=row, column=1, sticky="ew", pady=5)
 
+    def _facility_field(self, parent: ttk.Frame, row: int) -> None:
+        combo = ttk.Combobox(parent, textvariable=self.facility_var, state="readonly", width=44)
+        combo["values"] = [name for name, _code in FACILITIES]
+        self._field(parent, row, "Facility", combo)
+
+    def _selected_facility_code(self) -> str:
+        facility_name = self.facility_var.get().strip()
+        return FACILITY_CODES.get(facility_name, facility_name)
+
     def _browse_field(self, parent: ttk.Frame, row: int, label: str, var: tk.StringVar, command) -> None:
         frame = ttk.Frame(parent)
         frame.columnconfigure(0, weight=1)
@@ -200,7 +210,9 @@ class O3Page(ttk.Frame):
         self._field(view, 1, "EMR Username", ttk.Entry(view, textvariable=self.username_var, width=30))
         self._field(view, 2, "EMR Password", ttk.Entry(view, textvariable=self.password_var, show="*", width=30))
 
-        row = 3
+        self._facility_field(view, 3)
+
+        row = 4
         connect_frame = ttk.Frame(view)
         connect_frame.columnconfigure(1, weight=1)
         ttk.Button(connect_frame, text="Connect and Load Visit Types", command=self.connect_and_load).grid(
@@ -303,7 +315,9 @@ class O3Page(ttk.Frame):
         self._field(view, 1, "EMR Username", ttk.Entry(view, textvariable=self.username_var, width=30))
         self._field(view, 2, "EMR Password", ttk.Entry(view, textvariable=self.password_var, show="*", width=30))
 
-        row = 3
+        self._facility_field(view, 3)
+
+        row = 4
         connect_frame = ttk.Frame(view)
         connect_frame.columnconfigure(1, weight=1)
         ttk.Button(connect_frame, text="Connect and Load Visit Types", command=self.connect_and_load).grid(
@@ -505,7 +519,7 @@ class O3Page(ttk.Frame):
             registry=registry,
             patients=patients,
             output_filename=output_path,
-            org_unit_code=self.username_var.get().strip(),
+            org_unit_code=self._selected_facility_code(),
             program_value=program_value,
             fetch_concurrency=4,
         )
