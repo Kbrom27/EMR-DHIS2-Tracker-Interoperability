@@ -101,10 +101,12 @@ class O3Page(ttk.Frame):
             btn.pack(side="left", padx=4)
             self._nav_buttons[key] = btn
 
-        self._views["export"] = self._build_export_view(self)
-        self._views["transform"] = self._build_transform_view(self)
-        self._views["import"] = self._build_import_view(self)
-        self._views["sync"] = self._build_sync_view(self)
+        self._build_scroll_area()
+
+        self._views["export"] = self._build_export_view(self.scroll_inner)
+        self._views["transform"] = self._build_transform_view(self.scroll_inner)
+        self._views["import"] = self._build_import_view(self.scroll_inner)
+        self._views["sync"] = self._build_sync_view(self.scroll_inner)
 
         ttk.Label(self, textvariable=self.status_var, foreground="#1f4e79").pack(
             fill="x", padx=16, pady=(6, 0)
@@ -112,6 +114,44 @@ class O3Page(ttk.Frame):
 
         self.log_panel = LogPanel(self, "OpenMRS 3 Workflow Log")
         self.log_panel.pack(fill="both", expand=True, padx=16, pady=(6, 14))
+
+    def _build_scroll_area(self) -> None:
+        self.scroll_canvas = tk.Canvas(self, bg="#eef4f8", highlightthickness=0)
+        self.scroll_canvas.pack(fill="both", expand=True)
+        self.scrollbar = ttk.Scrollbar(self, orient="vertical", command=self.scroll_canvas.yview)
+        self.scrollbar.pack(side="right", fill="y")
+        self.scroll_canvas.configure(yscrollcommand=self.scrollbar.set)
+
+        self.scroll_inner = ttk.Frame(self.scroll_canvas)
+        self.scroll_window_id = self.scroll_canvas.create_window(
+            (0, 0), window=self.scroll_inner, anchor="nw"
+        )
+        self.scroll_inner.bind(
+            "<Configure>",
+            lambda event: self.scroll_canvas.configure(
+                scrollregion=self.scroll_canvas.bbox("all")
+            ),
+        )
+        self.scroll_canvas.bind(
+            "<Configure>",
+            lambda event: self.scroll_canvas.itemconfigure(
+                self.scroll_window_id, width=event.width
+            ),
+        )
+        self.scroll_inner.bind("<Enter>", self._bind_mousewheel)
+        self.scroll_inner.bind("<Leave>", self._unbind_mousewheel)
+        self.scroll_canvas.bind("<Enter>", self._bind_mousewheel)
+        self.scroll_canvas.bind("<Leave>", self._unbind_mousewheel)
+
+    def _bind_mousewheel(self, _event) -> None:
+        self.scroll_canvas.bind_all("<MouseWheel>", self._on_mousewheel)
+
+    def _unbind_mousewheel(self, _event) -> None:
+        self.scroll_canvas.unbind_all("<MouseWheel>")
+
+    def _on_mousewheel(self, event) -> None:
+        if event.delta:
+            self.scroll_canvas.yview_scroll(int(-event.delta / 120), "units")
 
     def _make_nav_button(self, parent, label: str, command) -> tk.Button:
         return tk.Button(
