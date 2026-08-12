@@ -13,6 +13,10 @@ from config import DETAIL_COLUMNS, MATERNAL_PROGRAM, NEONATAL_PROGRAM
 from utils import clean_csv_cell
 
 
+def safe_dict(value: object) -> Dict:
+    return value if isinstance(value, dict) else {}
+
+
 def normalize_date_filter(raw: str) -> Optional[str]:
     trimmed = raw.strip()
     if not trimmed:
@@ -298,7 +302,7 @@ def attr_value(person: Dict, key: str) -> str:
         return ""
 
     for attribute in attributes:
-        attribute_type = str(attribute.get("attributeType", {}).get("display", ""))
+        attribute_type = str(safe_dict(attribute.get("attributeType")).get("display", ""))
         if attribute_type.lower() != key.lower():
             continue
         value = attribute.get("value")
@@ -318,22 +322,22 @@ def attr_value(person: Dict, key: str) -> str:
 
 def describe_order(order: Dict) -> Tuple[Optional[str], Optional[str]]:
     order_type = str(
-        order.get("orderType", {}).get("display")
+        safe_dict(order.get("orderType")).get("display")
         or order.get("type")
         or order.get("typeOfOrder")
         or ""
     ).strip()
-    concept_name = str(order.get("concept", {}).get("display") or "").strip()
-    drug_name = str(order.get("drug", {}).get("display") or "").strip()
+    concept_name = str(safe_dict(order.get("concept")).get("display") or "").strip()
+    drug_name = str(safe_dict(order.get("drug")).get("display") or "").strip()
     instructions = str(order.get("instructions") or "").strip()
     comment = str(order.get("commentToFulfiller") or "").strip()
     action = str(order.get("action") or "").strip()
-    frequency = str(order.get("frequency", {}).get("display") or "").strip()
-    route = str(order.get("route", {}).get("display") or "").strip()
+    frequency = str(safe_dict(order.get("frequency")).get("display") or "").strip()
+    route = str(safe_dict(order.get("route")).get("display") or "").strip()
     dose = str(order.get("dose") or "").strip()
-    dose_units = str(order.get("doseUnits", {}).get("display") or "").strip()
+    dose_units = str(safe_dict(order.get("doseUnits")).get("display") or "").strip()
     duration = str(order.get("duration") or "").strip()
-    duration_units = str(order.get("durationUnits", {}).get("display") or "").strip()
+    duration_units = str(safe_dict(order.get("durationUnits")).get("display") or "").strip()
     quantity = str(order.get("quantity") or "").strip()
     display = str(order.get("display") or "").strip()
 
@@ -434,7 +438,7 @@ def get_patients_by_visit_type(
     seen = set()
 
     for visit in visits:
-        if visit.get("visitType", {}).get("uuid") != visit_type_uuid:
+        if safe_dict(visit.get("visitType")).get("uuid") != visit_type_uuid:
             continue
         if not visit_matches_date_range(visit, visit_start_date, visit_end_date):
             continue
@@ -503,7 +507,7 @@ def build_patient_row(
         str(preferred_address.get("cityVillage", "")),
         str(preferred_address.get("stateProvince", "")),
         str(preferred_address.get("countyDistrict", "")),
-        str(person.get("auditInfo", {}).get("dateCreated", "")),
+        str(safe_dict(person.get("auditInfo")).get("dateCreated", "")),
         attr_value(person, "givenNameLocal"),
         attr_value(person, "familyNameLocal"),
         attr_value(person, "middleNameLocal"),

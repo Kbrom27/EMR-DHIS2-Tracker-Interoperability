@@ -22,6 +22,7 @@ from export.extractors import (
     extract_obs_value,
     get_root_obs,
     normalize_date_filter,
+    safe_dict,
     sanitize_filename,
     validate_date_range,
 )
@@ -61,7 +62,7 @@ def get_patients_by_visit_type(
     seen = set()
 
     for visit in visits:
-        if visit.get("visitType", {}).get("uuid") != visit_type_uuid:
+        if safe_dict(visit.get("visitType")).get("uuid") != visit_type_uuid:
             continue
         if not visit_matches_date_range(visit, visit_start_date, visit_end_date):
             continue
@@ -230,7 +231,7 @@ def build_o3_patient_row(
         str(preferred_address.get("cityVillage", "")),
         str(preferred_address.get("stateProvince", "")),
         str(preferred_address.get("countyDistrict", "")),
-        str(person.get("auditInfo", {}).get("dateCreated", "")),
+        str(safe_dict(person.get("auditInfo")).get("dateCreated", "")),
         attr_value(person, "givenNameLocal"),
         attr_value(person, "familyNameLocal"),
         attr_value(person, "middleNameLocal"),
