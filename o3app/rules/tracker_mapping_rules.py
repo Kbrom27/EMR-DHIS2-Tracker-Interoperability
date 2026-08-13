@@ -3,7 +3,7 @@ import re
 from pathlib import Path
 from typing import Dict, FrozenSet, List, Optional, Sequence, Tuple
 
-from config import RESOURCES_DIR
+from o3app.config import RESOURCES_DIR
 
 
 FIELD_RULES: Dict[str, Dict[str, object]] = {
@@ -111,10 +111,6 @@ FIELD_RULES: Dict[str, Dict[str, object]] = {
     },
     "Physicians Medication Order :: Ordered medication name": {
         "preferred_sources": ["medications"],
-        "transform": "all_text",
-    },
-    "Investigation sheet :: other inv n": {
-        "preferred_sources": ["lab_results"],
         "transform": "all_text",
     },
     "Medication Administration record :: Diagnosis": {
@@ -288,7 +284,7 @@ def normalize_rule_text(value: object) -> str:
         .lower()
     )
     text = re.sub(r"'s\b", "", text)
-    text = re.sub(r"[^a-z0-9]+", " ", text)
+    text = re.sub(r"[^a-z0-9+-]+", " ", text)
     return " ".join(text.split())
 
 

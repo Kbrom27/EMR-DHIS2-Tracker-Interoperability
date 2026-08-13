@@ -3,13 +3,13 @@ from __future__ import annotations
 from difflib import SequenceMatcher
 from typing import Dict, List, Optional, Sequence, Tuple
 
-from config import HEADER_SEPARATOR
-from models import HeaderInfo, MappingField
-from rules.tracker_mapping_rules import (
+from o3app.config import HEADER_SEPARATOR
+from o3app.models import HeaderInfo, MappingField
+from o3app.rules.tracker_mapping_rules import (
     get_preferred_source_headers,
     uses_strict_preferred_sources,
 )
-from utils import (
+from o3app.utils import (
     build_header_info,
     deduplicate,
     extract_bracket_label,
@@ -62,6 +62,18 @@ def score_header_match(
     return score
 
 
+def in_same_stage(source_label: str, header: HeaderInfo) -> bool:
+    if not header.source_label:
+        return False
+    normalized_source = normalize_label(source_label)
+    normalized_header = normalize_label(header.source_label)
+    if not normalized_source or not normalized_header:
+        return False
+    if normalized_source == normalized_header:
+        return True
+    return SequenceMatcher(None, normalized_source, normalized_header).ratio() >= 0.85
+
+
 def resolve_alias_source_header(field: MappingField, header_info: Sequence[HeaderInfo]) -> str:
     alias = FIELD_SOURCE_ALIASES.get(normalize_label(field.data_element_name))
     if not alias:
@@ -79,10 +91,59 @@ def resolve_source_header(field: MappingField, header_info: Sequence[HeaderInfo]
     if strict_preferred_sources:
         return ""
 
+    if field.source_name:
+        exact_source = find_exact_header(field.source_name, header_info)
+        if exact_source:
+            return exact_source
+
+    source_label = extract_bracket_label(field.source_name)
+    if not source_label:
+        candidates = deduplicate(
+            value
+            for value in (
+                field.source_name,
+                field.form_name,
+                field.data_element_name,
+            )
+            if value
+        )
+        for candidate in candidates:
+            exact = find_exact_header(candidate, header_info)
+            if exact:
+                return exact
+        return ""
+
+    eligible_headers = [
+        header
+        for header in header_info
+        if in_same_stage(source_label, header)
+        or (
+            field.stage_name
+            and header.source_label
+            and normalize_label(field.stage_name) == normalize_label(header.source_label)
+        )
+    ]
+    if not eligible_headers:
+        return ""
+
+    exact_candidates = deduplicate(
+        value
+        for value in (
+            field.source_name,
+            field.form_name,
+            field.data_element_name,
+        )
+        if value
+    )
+    for candidate in exact_candidates:
+        exact = find_exact_header(candidate, eligible_headers)
+        if exact:
+            return exact
+
     preferred_best_header = ""
     preferred_best_score = 0.0
     for candidate in preferred_candidates:
-        for header in header_info:
+        for header in eligible_headers:
             score = score_header_match(
                 candidate=candidate,
                 header=header,
@@ -111,14 +172,14 @@ def resolve_source_header(field: MappingField, header_info: Sequence[HeaderInfo]
     )
 
     for candidate in candidates:
-        exact = find_exact_header(candidate, header_info)
+        exact = find_exact_header(candidate, eligible_headers)
         if exact:
             return exact
 
     best_header = ""
     best_score = 0.0
     for candidate in candidates:
-        for header in header_info:
+        for header in eligible_headers:
             score = score_header_match(
                 candidate=candidate,
                 header=header,
@@ -134,32 +195,40 @@ def resolve_source_header(field: MappingField, header_info: Sequence[HeaderInfo]
     return best_header if best_score >= threshold else ""
 
 
+def order_mapping_fields(
+    fields: Sequence[MappingField],
+    org_unit: str,
+    target_header: str,
+) -> List[MappingField]:
+    candidates = [
+        field for field in fields if field.target_header == target_header and field.source_header
+    ]
+    if not candidates:
+        return []
+
+    normalized_org = str(org_unit or "").strip().casefold()
+    normalized_org_label = normalize_label(org_unit)
+
+    def org_rank(field: MappingField) -> int:
+        if normalized_org and (
+            field.org_unit.casefold() == normalized_org
+            or normalize_label(field.org_unit) == normalized_org_label
+        ):
+            return 0
+        if not field.org_unit:
+            return 1
+        return 2
+
+    return sorted(candidates, key=org_rank)
+
+
 def select_mapping_field(
     fields: Sequence[MappingField],
     org_unit: str,
     target_header: str,
 ) -> Optional[MappingField]:
-    candidates = [
-        field for field in fields if field.target_header == target_header and field.source_header
-    ]
-    if not candidates:
-        return None
-
-    normalized_org = str(org_unit or "").strip().casefold()
-    normalized_org_label = normalize_label(org_unit)
-    if normalized_org:
-        for field in candidates:
-            if (
-                field.org_unit.casefold() == normalized_org
-                or normalize_label(field.org_unit) == normalized_org_label
-            ):
-                return field
-
-    for field in candidates:
-        if not field.org_unit:
-            return field
-
-    return candidates[0]
+    ordered = order_mapping_fields(fields, org_unit, target_header)
+    return ordered[0] if ordered else None
 
 
 def resolve_program_sources(

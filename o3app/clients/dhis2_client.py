@@ -2,16 +2,33 @@ from __future__ import annotations
 
 import json
 import re
+import time
 from typing import Dict, List, Optional, Sequence
 
 import requests
 import urllib3
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
-from config import BLANK_MARKERS
-from models import ImportValueIssue, ProgramConfig
-from utils import blank_to_empty, normalize_date
+from o3app.config import BLANK_MARKERS
+from o3app.models import ImportValueIssue, ProgramConfig
+from o3app.utils import blank_to_empty, normalize_date
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+def _install_connection_retries(session: requests.Session) -> None:
+    retry = Retry(
+        total=5,
+        connect=5,
+        read=5,
+        backoff_factor=1.0,
+        status_forcelist=(500, 502, 503, 504),
+        allowed_methods=frozenset({"GET", "HEAD", "OPTIONS", "TRACE", "PUT", "DELETE"}),
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
 
 
 EVENT_DATE_HINTS = (
@@ -120,7 +137,7 @@ def split_option_parts(value: str, multi_value: bool) -> List[str]:
         return []
     if not multi_value:
         return [text]
-    parts = re.split(r"\s*\|\s*|;", text)
+    parts = re.split(r"\s*[|;,]\s*", text)
     return [part.strip() for part in parts if part.strip()]
 
 
@@ -293,6 +310,7 @@ class Dhis2Client:
         self.session.verify = False
         self.session.auth = (username, password)
         self.org_unit_cache: Dict[str, str] = {}
+        _install_connection_retries(self.session)
 
     def _request(self, method: str, path: str, **kwargs) -> Dict:
         url = f"{self.base_url}/{path.lstrip('/')}"
@@ -312,6 +330,35 @@ class Dhis2Client:
 
     def validate_credentials(self) -> None:
         self._request("GET", "me.json", params={"fields": "id,displayName,username"})
+
+    def _request_retry_connection(
+        self,
+        method: str,
+        path: str,
+        *,
+        verify,
+        attempts: int = 3,
+        backoff: float = 1.5,
+        **kwargs,
+    ) -> object:
+        last_error: Optional[requests.ConnectionError] = None
+        for attempt in range(attempts):
+            try:
+                return self._request(method, path, **kwargs)
+            except requests.ConnectionError as exc:
+                last_error = exc
+                if attempt == attempts - 1:
+                    break
+                applied = None
+                try:
+                    applied = verify()
+                except requests.ConnectionError:
+                    applied = None
+                if applied:
+                    return applied
+                time.sleep(backoff * (attempt + 1))
+        assert last_error is not None
+        raise last_error
 
     @staticmethod
     def _extract_import_reference(payload: Dict) -> str:
@@ -396,6 +443,54 @@ class Dhis2Client:
                     if looks_like_uid(candidate):
                         data_elements.append(candidate)
         return data_elements
+
+    @staticmethod
+    def _extract_conflict_messages(error: Dhis2RequestError) -> List[str]:
+        payload = error.payload if isinstance(error.payload, dict) else {}
+        messages: List[str] = []
+
+        def collect_conflicts(value: object) -> None:
+            if isinstance(value, dict):
+                conflict_value = str(value.get("value") or "").strip()
+                message = str(
+                    value.get("message")
+                    or value.get("errorMessage")
+                    or value.get("errorCode")
+                    or ""
+                ).strip()
+                if conflict_value and (
+                    "option" in conflict_value.casefold()
+                    or "value" in conflict_value.casefold()
+                    or "invalid" in conflict_value.casefold()
+                    or "not valid" in conflict_value.casefold()
+                ):
+                    messages.append(conflict_value)
+                elif message:
+                    messages.append(message)
+                nested = value.get("conflicts")
+                if isinstance(nested, list):
+                    for item in nested:
+                        collect_conflicts(item)
+                for key in (
+                    "response", "importSummaries", "importSummary",
+                    "validationReport", "validationReports",
+                    "trackerTypeReport", "objectReports", "errorReports",
+                ):
+                    if key in value:
+                        collect_conflicts(value[key])
+            elif isinstance(value, list):
+                for item in value:
+                    collect_conflicts(item)
+
+        collect_conflicts(payload)
+
+        seen: set[str] = set()
+        unique: List[str] = []
+        for message in messages:
+            if message and message.casefold() not in seen:
+                seen.add(message.casefold())
+                unique.append(message)
+        return unique
 
     def resolve_org_unit(self, org_unit_code: str) -> str:
         code = blank_to_empty(org_unit_code)
@@ -524,11 +619,26 @@ class Dhis2Client:
         issues: Optional[List[ImportValueIssue]] = None,
     ) -> str:
         submitted_attributes = list(attributes)
+        record_id = next(
+            value["value"]
+            for value in attributes
+            if value["attribute"] == config.record_id_attribute_id
+        )
+
+        def _already_created() -> str:
+            created = self.search_tracked_entity(
+                record_attribute_id=config.record_id_attribute_id,
+                record_id=record_id,
+                tracked_entity_type=config.tracked_entity_type,
+            )
+            return str(created.get("trackedEntityInstance") or "").strip() if created else ""
+
         while True:
             try:
-                payload = self._request(
+                payload = self._request_retry_connection(
                     "POST",
                     "trackedEntityInstances",
+                    verify=_already_created,
                     json={
                         "trackedEntityType": config.tracked_entity_type,
                         "orgUnit": org_unit_id,
@@ -552,11 +662,6 @@ class Dhis2Client:
         if created_id:
             return created_id
 
-        record_id = next(
-            value["value"]
-            for value in attributes
-            if value["attribute"] == config.record_id_attribute_id
-        )
         created = self.search_tracked_entity(
             record_attribute_id=config.record_id_attribute_id,
             record_id=record_id,
@@ -613,9 +718,17 @@ class Dhis2Client:
             if reference_id(enrollment.get("program")) == config.program_uid:
                 return enrollment
 
-        self._request(
+        def _already_enrolled() -> Optional[Dict]:
+            refreshed = self.get_tracked_entity(tei["trackedEntityInstance"])
+            for enrollment in refreshed.get("enrollments") or []:
+                if reference_id(enrollment.get("program")) == config.program_uid:
+                    return enrollment
+            return None
+
+        self._request_retry_connection(
             "POST",
             "enrollments",
+            verify=_already_enrolled,
             json={
                 "trackedEntityInstance": tei["trackedEntityInstance"],
                 "program": config.program_uid,
@@ -654,6 +767,15 @@ class Dhis2Client:
         ]
         existing_event = matching_events[-1] if matching_events else None
 
+        def _event_applied() -> bool:
+            current = self.get_tracked_entity(tei_id)
+            for enrollment in current.get("enrollments") or []:
+                if reference_id(enrollment.get("program")) == program_uid:
+                    for event in enrollment.get("events") or []:
+                        if reference_id(event.get("programStage")) == str(event_payload["programStage"]):
+                            return True
+            return False
+
         base_payload = {
             "program": program_uid,
             "programStage": event_payload["programStage"],
@@ -680,14 +802,19 @@ class Dhis2Client:
                     )
                     return True
 
-                self._request(
+                self._request_retry_connection(
                     "POST",
                     "events",
+                    verify=_event_applied,
                     json={**base_payload, "dataValues": data_values},
                 )
                 return True
             except Dhis2RequestError as exc:
                 conflicting_ids = set(self._extract_conflicting_data_elements(exc))
+                conflict_messages = self._extract_conflict_messages(exc)
+                reason_detail = (
+                    " ".join(conflict_messages) if conflict_messages else format_dhis2_error(exc)
+                )
                 if not conflicting_ids:
                     if config and row is not None:
                         for item in data_values:
@@ -706,7 +833,7 @@ class Dhis2Client:
                                 str(field_info.get("field_name") or data_element_id),
                                 data_element_id,
                                 str(item.get("value") or ""),
-                                "DHIS2 rejected the event but did not identify a single bad value; this value was not synced.",
+                                f"DHIS2 rejected the event but did not identify a single bad value; this value was not synced. ({reason_detail})",
                             )
                     return False
                 for item in data_values:
@@ -727,7 +854,7 @@ class Dhis2Client:
                         str(field_info.get("field_name") or data_element_id),
                         data_element_id,
                         str(item.get("value") or ""),
-                        "DHIS2 rejected this value during import, so the value was discarded and the event was retried.",
+                        f"DHIS2 rejected this value during import, so the value was discarded and the event was retried. ({reason_detail})",
                     )
                 filtered = [
                     item for item in data_values if str(item.get("dataElement") or "") not in conflicting_ids

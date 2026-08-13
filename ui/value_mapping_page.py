@@ -10,7 +10,8 @@ from typing import Dict, Iterable, List, Sequence, Tuple
 from config import HEADER_SEPARATOR, RESOURCES_DIR
 from models import Concept, ConceptOption, MappingTarget, Option
 from rules.tracker_mapping_rules import parse_ordered_options
-from utils import blank_to_empty, find_mapping_header, is_mapping_source_column, normalize_label, read_xlsx_rows, row_to_dict, source_column_org_unit, strip_bracket_suffix
+from transform.mapping import source_column_org_unit
+from utils import blank_to_empty, find_mapping_header, is_mapping_source_column, normalize_label, read_xlsx_rows, row_to_dict, strip_bracket_suffix
 
 
 DEFAULT_DICTIONARY = RESOURCES_DIR / "MID data disctionary.xlsx"

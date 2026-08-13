@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence
 
-from clients.dhis2_client import (
+from o3app.clients.dhis2_client import (
     EVENT_DATE_HINTS,
     add_import_value_issue,
     invalid_value_reason,
@@ -15,15 +15,15 @@ from clients.dhis2_client import (
     normalize_time_value,
     today_date,
 )
-from config import BLANK_MARKERS, HEADER_SEPARATOR, RESOURCES_DIR
-from models import AttributeField, ImportValueIssue, ProgramConfig, StageField
-from rules.tracker_mapping_rules import (
+from o3app.config import BLANK_MARKERS, HEADER_SEPARATOR, RESOURCES_DIR, normalize_stage_name
+from o3app.models import AttributeField, ImportValueIssue, ProgramConfig, StageField
+from o3app.rules.tracker_mapping_rules import (
     apply_field_alias,
     get_field_transform,
     resolve_configured_option_value,
     should_suppress_value,
 )
-from utils import blank_to_empty, normalize_date, normalize_label, read_xlsx_rows, row_to_dict
+from o3app.utils import blank_to_empty, normalize_date, normalize_label, read_xlsx_rows, row_to_dict
 
 
 METADATA_PATH = RESOURCES_DIR / "metadata.json"
@@ -60,7 +60,7 @@ def build_program_configs() -> Dict[str, ProgramConfig]:
     for stage in metadata.get("programStages", []):
         program = stage.get("program") or {}
         program_id = str(program.get("id") or "").strip()
-        stage_name = str(stage.get("name") or "").strip()
+        stage_name = normalize_stage_name(str(stage.get("name") or "").strip())
         stage_id = str(stage.get("id") or "").strip()
         if program_id and stage_name and stage_id:
             stages_by_program[program_id][stage_name] = stage_id
@@ -79,7 +79,7 @@ def build_program_configs() -> Dict[str, ProgramConfig]:
         record_id_attribute_id = ""
 
         for item in dictionary_rows:
-            stage_name = str(item.get("Stage Name", "")).strip()
+            stage_name = normalize_stage_name(str(item.get("Stage Name", "")).strip())
             data_element_name = str(item.get("Data Element Name", "")).strip()
             data_element_id = str(item.get("Data Element ID", "")).strip()
             data_type = str(item.get("Data Type", "")).strip()
@@ -134,7 +134,7 @@ def build_program_configs() -> Dict[str, ProgramConfig]:
 
 
 def extract_row_value(row: Dict[str, str], header: str) -> str:
-    return blank_to_empty(row.get(header, ""))
+    return str(row.get(header, "") or "").strip()
 
 
 def parse_option_codes(
@@ -181,7 +181,7 @@ def split_option_parts(value: str, multi_value: bool) -> List[str]:
         return []
     if not multi_value:
         return [text]
-    parts = re.split(r"\s*\|\s*|;", text)
+    parts = re.split(r"\s*[|;,]\s*", text)
     return [part.strip() for part in parts if part.strip()]
 
 
@@ -266,7 +266,15 @@ def normalize_import_option_value(
 
     if not deduped:
         return ""
-    return ";".join(deduped) if multi_value else deduped[-1]
+    return ",".join(deduped) if multi_value else deduped[-1]
+
+
+def _option_value_present(value: str, options_text: str) -> bool:
+    if not options_text:
+        return False
+    code_map, label_map, _ = parse_option_codes(options_text)
+    normalized = normalize_label(value)
+    return value.casefold() in code_map or normalized in label_map
 
 
 def normalize_import_value(
@@ -276,8 +284,10 @@ def normalize_import_value(
     target_header: str = "",
     discarded_parts: Optional[List[str]] = None,
 ) -> str:
-    text = blank_to_empty(value)
+    text = str(value or "").strip()
     if not text:
+        return ""
+    if text.casefold() in BLANK_MARKERS and not _option_value_present(text, options_text):
         return ""
     if should_suppress_value(text, target_header):
         return ""

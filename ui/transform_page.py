@@ -8,6 +8,7 @@ from tkinter import filedialog, messagebox, ttk
 from transform.mapping import set_mapping_files
 from transform.pipeline import transform_rows
 from ui.components import LogPanel
+from utils import require_value_mapping_csv, require_xlsx_file
 
 
 class TransformPage(ttk.Frame):
@@ -210,6 +211,15 @@ class TransformPage(ttk.Frame):
             return
         if not output_path.name:
             messagebox.showerror("Output file required", "Choose where to save the transformed CSV.")
+            return
+
+        try:
+            require_xlsx_file(mapping_path, "Mapping Excel File")
+            require_xlsx_file(dict_path, "Dictionary Excel File")
+            if value_mapping_path is not None:
+                require_value_mapping_csv(value_mapping_path)
+        except ValueError as exc:
+            messagebox.showerror("Mapping file required", str(exc))
             return
 
         set_mapping_files(mapping_path, dict_path, value_mapping_path)

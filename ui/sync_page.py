@@ -30,6 +30,7 @@ from import_.importer import import_rows
 from transform.mapping import set_mapping_files
 from transform.pipeline import transform_rows
 from ui.components import CalendarPopup, DatePicker, LogPanel
+from utils import require_value_mapping_csv, require_xlsx_file
 
 APP_TITLE = "EMR-DHIS2 Tracker interoperability"
 
@@ -365,6 +366,11 @@ class SyncPage(ttk.Frame):
                 raise ValueError("Please select a valid mapping Excel file.")
             if not dict_path.is_file():
                 raise ValueError("Please select a valid dictionary Excel file.")
+
+            require_xlsx_file(mapping_path, "Mapping Excel File")
+            require_xlsx_file(dict_path, "Dictionary Excel File")
+            if value_mapping_path is not None:
+                require_value_mapping_csv(value_mapping_path)
 
             set_mapping_files(mapping_path, dict_path, value_mapping_path)
 

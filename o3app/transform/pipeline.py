@@ -4,9 +4,9 @@ import csv
 from collections import OrderedDict
 from itertools import chain
 from pathlib import Path
-from typing import Dict, List, Sequence
+from typing import Dict, List, Optional, Sequence
 
-from config import (
+from o3app.config import (
     CONTEXT_COLUMNS,
     MATERNAL_COMPUTED_DIAGNOSIS_HEADERS,
     MATERNAL_DIAGNOSIS_SOURCE_HEADERS,
@@ -15,11 +15,15 @@ from config import (
     PROGRAM_SPECS,
     SPECIAL_COLUMNS,
 )
-from models import MappingField
-from transform.mapping import load_program_fields
-from transform.matcher import resolve_program_sources, select_mapping_field
-from transform.normalizers import normalize_tracker_value
-from utils import (
+from o3app.models import MappingField
+from o3app.transform.mapping import load_program_fields
+from o3app.transform.investigations import (
+    NEONATAL_INVESTIGATION_HEADERS,
+    apply_neonatal_investigation_transform,
+)
+from o3app.transform.matcher import order_mapping_fields, resolve_program_sources
+from o3app.transform.normalizers import normalize_tracker_value
+from o3app.utils import (
     blank_to_empty,
     deduplicate,
     normalize_label,
@@ -37,6 +41,63 @@ UUID_PATTERN = __import__("re").compile(
 DIAGNOSIS_OBSTETRIC_COMPLICATIONS_HEADER = "Diagnosis :: Obstetric complications"
 DIAGNOSIS_AMNIOTIC_FLUID_HEADER = "Diagnosis :: Amniotic fluid abnormalities"
 DIAGNOSIS_OBSTETRIC_COMPLICATIONS_OTHER_HEADER = "Diagnosis :: Obstetric complications Others"
+
+MISSING_FIELDS_REPORT_SUFFIX = "_missing_fields.csv"
+
+
+def write_missing_fields_report(
+    output_path: Path,
+    program: str,
+    missing_targets: Sequence[str],
+    fields: Sequence[MappingField],
+) -> Optional[Path]:
+    if not missing_targets:
+        return None
+    missing_set = set(missing_targets)
+    rows: List[Dict[str, str]] = []
+    seen_targets = set()
+    for field in fields:
+        if field.target_header not in missing_set:
+            continue
+        if field.target_header in seen_targets:
+            continue
+        seen_targets.add(field.target_header)
+        rows.append(
+            {
+                "program": program,
+                "stage_name": field.stage_name,
+                "data_element_name": field.data_element_name,
+                "target_header": field.target_header,
+                "source_name": field.source_name,
+                "form_name": field.form_name,
+                "data_type": field.data_type,
+                "org_unit": field.org_unit,
+                "reason": "No matching export column found in the same program stage/form.",
+            }
+        )
+    if not rows:
+        return None
+    report_path = output_path.with_name(output_path.stem + MISSING_FIELDS_REPORT_SUFFIX)
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    with report_path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=[
+                "program",
+                "stage_name",
+                "data_element_name",
+                "target_header",
+                "source_name",
+                "form_name",
+                "data_type",
+                "org_unit",
+                "reason",
+            ],
+            quoting=csv.QUOTE_ALL,
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
 
 
 def is_diagnosis_metadata_value(value: str) -> bool:
@@ -172,6 +233,12 @@ def transform_rows(
             input_headers,
             [selected_program],
         )
+        write_missing_fields_report(
+            output_path,
+            selected_program,
+            missing_fields[selected_program],
+            program_fields[selected_program],
+        )
         rows_to_write: List[OrderedDict[str, str]] = []
         counts = {MATERNAL_PROGRAM: 0, NEONATAL_PROGRAM: 0, "skipped": 0}
         ordered_target_headers = deduplicate(
@@ -180,6 +247,10 @@ def transform_rows(
         if selected_program == MATERNAL_PROGRAM:
             ordered_target_headers = deduplicate(
                 tuple(ordered_target_headers) + MATERNAL_COMPUTED_DIAGNOSIS_HEADERS
+            )
+        elif selected_program == NEONATAL_PROGRAM:
+            ordered_target_headers = deduplicate(
+                tuple(ordered_target_headers) + tuple(NEONATAL_INVESTIGATION_HEADERS)
             )
 
         for row in chain([first_row], reader):
@@ -200,25 +271,37 @@ def transform_rows(
                 transformed_row[target_header] = ""
 
             for target_header in ordered_target_headers:
-                field = select_mapping_field(
+                source_fields = order_mapping_fields(
                     resolved_fields[program_value],
                     row_org_unit,
                     target_header,
                 )
-                if not field:
+                if not source_fields:
                     continue
 
-                raw_value = row.get(field.source_header, "")
+                raw_value = ""
+                selected_field = source_fields[0]
+                for field in source_fields:
+                    candidate_value = str(row.get(field.source_header, "") or "").strip()
+                    if candidate_value:
+                        raw_value = candidate_value
+                        selected_field = field
+                        break
+
+                if not raw_value:
+                    continue
                 transformed_row[target_header] = normalize_tracker_value(
                     raw_value=raw_value,
-                    data_type=field.data_type,
-                    options_text=field.options_text,
-                    target_header=field.target_header,
+                    data_type=selected_field.data_type,
+                    options_text=selected_field.options_text,
+                    target_header=selected_field.target_header,
                     program=program_value,
                 )
 
             if program_value == MATERNAL_PROGRAM:
                 apply_maternal_diagnosis_transform(transformed_row, row)
+            elif program_value == NEONATAL_PROGRAM:
+                apply_neonatal_investigation_transform(transformed_row, row)
 
             rows_to_write.append(transformed_row)
             counts[program_value] += 1

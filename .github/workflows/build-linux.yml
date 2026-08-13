@@ -1,4 +1,4 @@
-name: Build Windows EXE
+name: Build Linux App
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -18,17 +18,19 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
+      - name: Install tkinter and dependencies
         run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-tk
           python -m pip install --upgrade pip
           pip install -r requirements-windows.txt
 
-      - name: Build EXE
+      - name: Build App
         run: |
           pyinstaller --clean --noconfirm EMR_DHIS2_Tracker_Interoperability_App_V101.spec
 
-      - name: Upload EXE artifact
+      - name: Upload App artifact
         uses: actions/upload-artifact@v4
         with:
-          name: EMR-DHIS2-Tracker-interoperability-App-V101
-          path: dist/EMR-DHIS2 Tracker interoperability App V101.exe
+          name: EMR-DHIS2-Tracker-interoperability-App-V101-Linux
+          path: dist/EMR-DHIS2 Tracker interoperability App V101

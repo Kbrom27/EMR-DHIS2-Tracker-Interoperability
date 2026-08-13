@@ -1,16 +1,30 @@
 #!/usr/bin/env python3
 """
 EMR-DHIS2 Tracker Interoperability - Main Application
+
+The app presents two completely separate workflows that do not share scripts:
+
+1. OpenMRS (Bahmni)  - the original workflow. Uses the imported/uploaded
+   mapping Excel files and dictionary that the user selects. Sub-menus:
+   EMR Data Export, Transform CSV, Import to DHIS2, EMR-DHIS2 Tracker Sync.
+   Backed by the self-contained modules in export/, transform/, import_/,
+   clients/, rules/, config.py, utils.py and models.py.
+
+2. OpenMRS 3 (O3)    - the OpenMRS 3 workflow. Does NOT ask the user to
+   upload mapping files; it uses stored/generated mapping files. Backed by
+   the self-contained o3app/ package (its own copies of config, utils,
+   models, clients, export, transform, import_, rules, plus the O3
+   extraction and mapping generation) and o3app/ui/o3_page.py.
 """
 
 import tkinter as tk
 from tkinter import ttk
 
 from ui.export_page import ExportPage
-from ui.o3_page import O3Page
 from ui.transform_page import TransformPage
 from ui.import_page import ImportPage
 from ui.sync_page import SyncPage
+from o3app.ui.o3_page import O3Page
 
 
 APP_TITLE = "EMR-DHIS2 Tracker interoperability"
@@ -24,9 +38,9 @@ class MainApplication:
         self.root.minsize(980, 680)
 
         self.current_page = None
-        self.main_menu_frame = None
+        self.menu_frame = None
         self.configure_style()
-        self.show_main_menu()
+        self.show_source_menu()
 
     def configure_style(self):
         style = ttk.Style()
@@ -45,55 +59,29 @@ class MainApplication:
             self.current_page.destroy()
         self.current_page = None
 
-    def show_main_menu(self):
-        self.clear_page()
+    def hide_menu(self):
+        if self.menu_frame:
+            self.menu_frame.destroy()
+            self.menu_frame = None
 
-        self.main_menu_frame = ttk.Frame(self.root)
-        self.main_menu_frame.pack(fill="both", expand=True)
-
-        header = ttk.Frame(self.main_menu_frame, style="Header.TFrame", padding=(22, 18))
+    def _build_header(self, parent, title, subtitle):
+        header = ttk.Frame(parent, style="Header.TFrame", padding=(22, 18))
         header.pack(fill="x")
         ttk.Label(
             header,
-            text=APP_TITLE,
+            text=title,
             style="Header.TLabel",
             font=("Segoe UI", 22, "bold"),
         ).pack(anchor="w")
         ttk.Label(
             header,
-            text="Export, transform, import, or run the full tracker sync in one place.",
+            text=subtitle,
             style="Header.TLabel",
             font=("Segoe UI", 10),
         ).pack(anchor="w", pady=(4, 0))
+        return header
 
-        main_frame = ttk.Frame(self.main_menu_frame, padding=40)
-        main_frame.pack(fill="both", expand=True)
-        main_frame.columnconfigure((0, 1), weight=1, uniform="menu")
-        main_frame.rowconfigure((0, 1, 2), weight=1, uniform="menu")
-
-        items = [
-            ("\U0001f4e4 EMR Data Export", "Fetch OpenMRS patient data by visit type and date.", "#0f766e", self.show_export),
-            ("\U0001f504 Transform CSV", "Convert an OpenMRS export CSV into DHIS2 tracker CSV.\nSelect mapping Excel file.", "#2563eb", self.show_transform),
-            ("\U0001f4e5 Import to DHIS2", "Import a transformed tracker CSV into DHIS2.", "#7c3aed", self.show_import),
-            (
-                "\u26a1 EMR-DHIS2 Tracker Sync",
-                "Fetch, transform using mapping files, and import directly without creating an export file.",
-                "#dc2626",
-                self.show_sync,
-            ),
-            (
-                "\U0001f4e6 OpenMRS 3 Workflow",
-                "Export O3 patient data, generate O3 mapping files, transform, import, or run the full O3 sync.",
-                "#0d9488",
-                self.show_o3,
-            ),
-        ]
-
-        for index, (title, subtitle, color, command) in enumerate(items):
-            row, column = divmod(index, 2)
-            self.create_card(main_frame, title, subtitle, color, command, row, column)
-
-    def create_card(self, parent, title, subtitle, color, command, row, col):
+    def create_tile(self, parent, title, subtitle, color, command, row, col):
         tile = tk.Frame(parent, bg=color, padx=20, pady=18, cursor="hand2")
         tile.grid(row=row, column=col, sticky="nsew", padx=10, pady=10)
         tile.columnconfigure(0, weight=1)
@@ -134,44 +122,114 @@ class MainApplication:
         button.grid(row=2, column=0, sticky="w")
         tile.bind("<Button-1>", lambda e, cmd=command: cmd())
 
+    def show_source_menu(self):
+        self.clear_page()
+        self.hide_menu()
+
+        self.menu_frame = ttk.Frame(self.root)
+        self.menu_frame.pack(fill="both", expand=True)
+
+        self._build_header(
+            self.menu_frame,
+            APP_TITLE,
+            "Choose the OpenMRS source. Each workflow runs its own independent scripts.",
+        )
+
+        main_frame = ttk.Frame(self.menu_frame, padding=40)
+        main_frame.pack(fill="both", expand=True)
+        main_frame.columnconfigure((0, 1), weight=1, uniform="menu")
+        main_frame.rowconfigure(0, weight=1)
+
+        items = [
+            (
+                "OpenMRS (Bahmni)",
+                "Original workflow. Export, transform using imported mapping\n"
+                "files and dictionary, import, or run the full tracker sync.",
+                "#0f766e",
+                self.show_bahmni_menu,
+            ),
+            (
+                "OpenMRS 3 (O3)",
+                "OpenMRS 3 workflow. Export O3 data, generate mapping files,\n"
+                "transform, import, or run the full O3 sync. No file upload needed.",
+                "#0d9488",
+                self.show_o3_page,
+            ),
+        ]
+        for index, (title, subtitle, color, command) in enumerate(items):
+            row, column = divmod(index, 2)
+            self.create_tile(main_frame, title, subtitle, color, command, row, column)
+
+    def show_bahmni_menu(self):
+        self.clear_page()
+        self.hide_menu()
+
+        self.menu_frame = ttk.Frame(self.root)
+        self.menu_frame.pack(fill="both", expand=True)
+
+        self._build_header(
+            self.menu_frame,
+            "OpenMRS (Bahmni) Workflow",
+            "Export, transform, import, or run the full tracker sync. These use the "
+            "imported mapping files and dictionary that you select.",
+        )
+
+        top_bar = ttk.Frame(self.menu_frame, padding=(22, 8))
+        top_bar.pack(fill="x")
+        back_btn = ttk.Button(top_bar, text="\u2190 Back to Source Selection", command=self.show_source_menu)
+        back_btn.pack(side="left")
+
+        main_frame = ttk.Frame(self.menu_frame, padding=40)
+        main_frame.pack(fill="both", expand=True)
+        main_frame.columnconfigure((0, 1), weight=1, uniform="menu")
+        main_frame.rowconfigure((0, 1, 2), weight=1, uniform="menu")
+
+        items = [
+            ("\U0001f4e4 EMR Data Export", "Fetch OpenMRS patient data by visit type and date.", "#0f766e", self.show_export),
+            ("\U0001f504 Transform CSV", "Convert an OpenMRS export CSV into DHIS2 tracker CSV.\nSelect mapping Excel file.", "#2563eb", self.show_transform),
+            ("\U0001f4e5 Import to DHIS2", "Import a transformed tracker CSV into DHIS2.", "#7c3aed", self.show_import),
+            (
+                "\u26a1 EMR-DHIS2 Tracker Sync",
+                "Fetch, transform using mapping files, and import directly without creating an export file.",
+                "#dc2626",
+                self.show_sync,
+            ),
+        ]
+        for index, (title, subtitle, color, command) in enumerate(items):
+            row, column = divmod(index, 2)
+            self.create_tile(main_frame, title, subtitle, color, command, row, column)
+
+        spacer = ttk.Frame(main_frame)
+        spacer.grid(row=2, column=1, sticky="nsew")
+
+    def show_o3_page(self):
+        self.clear_page()
+        self.hide_menu()
+        self.current_page = O3Page(self.root, self.show_source_menu)
+        self.current_page.pack(fill="both", expand=True)
+
     def show_export(self):
         self.clear_page()
-        if self.main_menu_frame:
-            self.main_menu_frame.destroy()
-            self.main_menu_frame = None
-        self.current_page = ExportPage(self.root, self.show_main_menu)
+        self.hide_menu()
+        self.current_page = ExportPage(self.root, self.show_bahmni_menu)
         self.current_page.pack(fill="both", expand=True)
 
     def show_transform(self):
         self.clear_page()
-        if self.main_menu_frame:
-            self.main_menu_frame.destroy()
-            self.main_menu_frame = None
-        self.current_page = TransformPage(self.root, self.show_main_menu)
+        self.hide_menu()
+        self.current_page = TransformPage(self.root, self.show_bahmni_menu)
         self.current_page.pack(fill="both", expand=True)
 
     def show_import(self):
         self.clear_page()
-        if self.main_menu_frame:
-            self.main_menu_frame.destroy()
-            self.main_menu_frame = None
-        self.current_page = ImportPage(self.root, self.show_main_menu)
+        self.hide_menu()
+        self.current_page = ImportPage(self.root, self.show_bahmni_menu)
         self.current_page.pack(fill="both", expand=True)
 
     def show_sync(self):
         self.clear_page()
-        if self.main_menu_frame:
-            self.main_menu_frame.destroy()
-            self.main_menu_frame = None
-        self.current_page = SyncPage(self.root, self.show_main_menu)
-        self.current_page.pack(fill="both", expand=True)
-
-    def show_o3(self):
-        self.clear_page()
-        if self.main_menu_frame:
-            self.main_menu_frame.destroy()
-            self.main_menu_frame = None
-        self.current_page = O3Page(self.root, self.show_main_menu)
+        self.hide_menu()
+        self.current_page = SyncPage(self.root, self.show_bahmni_menu)
         self.current_page.pack(fill="both", expand=True)
 
 

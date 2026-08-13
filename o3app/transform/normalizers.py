@@ -5,8 +5,8 @@ from decimal import Decimal, InvalidOperation
 from difflib import SequenceMatcher
 from typing import Dict, List, Optional, Sequence, Tuple
 
-from config import BLANK_MARKERS, HEADER_SEPARATOR
-from rules.tracker_mapping_rules import (
+from o3app.config import BLANK_MARKERS, HEADER_SEPARATOR
+from o3app.rules.tracker_mapping_rules import (
     apply_field_alias,
     get_external_field_transform,
     get_field_transform,
@@ -14,7 +14,7 @@ from rules.tracker_mapping_rules import (
     resolve_external_value_mapping,
     should_suppress_value,
 )
-from utils import (
+from o3app.utils import (
     blank_to_empty,
     deduplicate,
     normalize_label,
@@ -28,7 +28,7 @@ def split_export_values(raw_value: str) -> List[str]:
     text = str(raw_value or "").strip()
     if not text:
         return []
-    parts = [blank_to_empty(part) for part in text.split(" | ")]
+    parts = [part.strip() for part in text.split(" | ")]
     return [part for part in parts if part]
 
 
@@ -208,6 +208,17 @@ def normalize_date(raw_value: str) -> str:
             return datetime.strptime(value, fmt).strftime("%Y-%m-%d")
         except ValueError:
             continue
+    month_match = re.search(
+        r"(January|February|March|April|May|June|July|August|September|October|November|December)[a-z]*"
+        r"\s+\d{1,2}[;,]?\s+\d{4}",
+        value,
+        re.IGNORECASE,
+    )
+    if month_match:
+        try:
+            return datetime.strptime(month_match.group(0).replace(";", " "), "%B %d %Y").strftime("%Y-%m-%d")
+        except ValueError:
+            pass
     return value
 
 
@@ -237,6 +248,19 @@ def normalize_text_value(raw_value: str) -> str:
     return last_export_value(raw_value)
 
 
+def _is_configured_option(value: str, options_text: str) -> bool:
+    if not options_text:
+        return False
+    code_map, label_map, _ = parse_options(options_text)
+    raw = value.strip()
+    normalized = normalize_label(raw)
+    return (
+        raw.casefold() in code_map
+        or raw.casefold() in label_map
+        or normalized in label_map
+    )
+
+
 def normalize_tracker_value(
     raw_value: str,
     data_type: str,
@@ -245,7 +269,9 @@ def normalize_tracker_value(
     program: str = "",
 ) -> str:
     value = str(raw_value or "").strip()
-    if not value or value.casefold() in BLANK_MARKERS:
+    if not value:
+        return ""
+    if value.casefold() in BLANK_MARKERS and not _is_configured_option(value, options_text):
         return ""
     if should_suppress_value(value, target_header):
         return ""

@@ -3,17 +3,18 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-from config import (
+from o3app.config import (
     HEADER_SEPARATOR,
     MATERNAL_PROGRAM,
     NEONATAL_PROGRAM,
     PROGRAM_SPECS,
     RESOURCES_DIR,
     SPECIAL_COLUMNS,
+    normalize_stage_name,
 )
-from models import DictionaryField, MappingField
-from rules.tracker_mapping_rules import set_value_mapping_path
-from utils import (
+from o3app.models import DictionaryField, MappingField
+from o3app.rules.tracker_mapping_rules import set_value_mapping_path
+from o3app.utils import (
     blank_to_empty,
     extract_bracket_label,
     find_mapping_header,
@@ -27,7 +28,7 @@ from utils import (
 
 TARGETED_DICTIONARY_STAGE_FALLBACKS = {
     MATERNAL_PROGRAM: {"Laboratory", "Physicians Medication Order"},
-    NEONATAL_PROGRAM: {"Investigation sheet"},
+    NEONATAL_PROGRAM: set(),
 }
 
 AGGREGATE_SOURCE_OVERRIDES = {
@@ -36,7 +37,6 @@ AGGREGATE_SOURCE_OVERRIDES = {
     (MATERNAL_PROGRAM, "Physicians Medication Order", "Physician Medication order event date"): "visit_date",
     (MATERNAL_PROGRAM, "Physicians Medication Order", "Medication order date"): "visit_date",
     (MATERNAL_PROGRAM, "Physicians Medication Order", "Ordered medication name"): "medications",
-    (NEONATAL_PROGRAM, "Investigation sheet", "other inv n"): "lab_results",
 }
 
 FIELD_SOURCE_ALIASES = {
@@ -99,7 +99,7 @@ def read_dictionary_fields(path: Path) -> Dict[Tuple[str, str], DictionaryField]
     fields: Dict[Tuple[str, str], DictionaryField] = {}
     for row in rows[1:]:
         item = row_to_dict(row, headers)
-        stage_name = item.get("Stage Name", "").strip()
+        stage_name = normalize_stage_name(item.get("Stage Name", "").strip())
         data_element_name = item.get("Data Element Name", "").strip()
         if not stage_name or not data_element_name:
             continue

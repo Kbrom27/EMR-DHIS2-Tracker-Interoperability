@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
 from xml.etree import ElementTree as ET
 
-from config import BLANK_MARKERS
+from o3app.config import BLANK_MARKERS
 
 
 def raise_csv_field_limit() -> None:
