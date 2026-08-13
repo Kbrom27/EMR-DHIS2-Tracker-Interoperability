@@ -17,7 +17,11 @@ from config import (
 )
 from models import MappingField
 from transform.mapping import load_program_fields
-from transform.matcher import resolve_program_sources, select_mapping_field
+from transform.investigations import (
+    NEONATAL_INVESTIGATION_HEADERS,
+    apply_neonatal_investigation_transform,
+)
+from transform.matcher import order_mapping_fields, resolve_program_sources
 from transform.normalizers import normalize_tracker_value
 from utils import (
     blank_to_empty,
@@ -244,6 +248,10 @@ def transform_rows(
             ordered_target_headers = deduplicate(
                 tuple(ordered_target_headers) + MATERNAL_COMPUTED_DIAGNOSIS_HEADERS
             )
+        elif selected_program == NEONATAL_PROGRAM:
+            ordered_target_headers = deduplicate(
+                tuple(ordered_target_headers) + tuple(NEONATAL_INVESTIGATION_HEADERS)
+            )
 
         for row in chain([first_row], reader):
             program_value = normalize_program_value(row.get("program", ""))
@@ -263,25 +271,37 @@ def transform_rows(
                 transformed_row[target_header] = ""
 
             for target_header in ordered_target_headers:
-                field = select_mapping_field(
+                source_fields = order_mapping_fields(
                     resolved_fields[program_value],
                     row_org_unit,
                     target_header,
                 )
-                if not field:
+                if not source_fields:
                     continue
 
-                raw_value = row.get(field.source_header, "")
+                raw_value = ""
+                selected_field = source_fields[0]
+                for field in source_fields:
+                    candidate_value = str(row.get(field.source_header, "") or "").strip()
+                    if candidate_value:
+                        raw_value = candidate_value
+                        selected_field = field
+                        break
+
+                if not raw_value:
+                    continue
                 transformed_row[target_header] = normalize_tracker_value(
                     raw_value=raw_value,
-                    data_type=field.data_type,
-                    options_text=field.options_text,
-                    target_header=field.target_header,
+                    data_type=selected_field.data_type,
+                    options_text=selected_field.options_text,
+                    target_header=selected_field.target_header,
                     program=program_value,
                 )
 
             if program_value == MATERNAL_PROGRAM:
                 apply_maternal_diagnosis_transform(transformed_row, row)
+            elif program_value == NEONATAL_PROGRAM:
+                apply_neonatal_investigation_transform(transformed_row, row)
 
             rows_to_write.append(transformed_row)
             counts[program_value] += 1

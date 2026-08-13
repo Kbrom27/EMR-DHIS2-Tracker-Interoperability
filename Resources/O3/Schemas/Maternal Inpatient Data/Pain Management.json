@@ -1,0 +1,312 @@
+{
+  "name": "Pain Management",
+  "pages": [
+    {
+      "label": "Pain Management",
+      "sections": [
+        {
+          "label": "Pain Management",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Pain Management Entry",
+              "id": "painManagementEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "8f74cf60-f34f-4592-be4c-cb21223b853b",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "label": "Admission Diagnosis",
+                  "id": "admissionDiagnosis",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "5272442e-c4bb-43c8-be47-d5ded5967861"
+                  }
+                },
+                {
+                  "label": "Date",
+                  "id": "date",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "0bb410a7-e2ee-4e2d-a2cd-3a9071ab9143"
+                  }
+                },
+                {
+                  "label": "Time",
+                  "id": "time",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "71952a15-de31-4b02-b6e2-bc99ce56cf98"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "BP",
+                  "id": "bp",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "873f31a3-e449-4697-bcb5-6102272dd840"
+                  }
+                },
+                {
+                  "label": "PR",
+                  "id": "pr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "bb12b9b0-2459-4868-bff3-86b6876ef0a7"
+                  }
+                },
+                {
+                  "label": "RR",
+                  "id": "rr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "bce07e77-5f2a-4139-858e-773a56691727"
+                  }
+                },
+                {
+                  "label": "Temperature",
+                  "id": "temperature",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "f069d610-646a-4653-a2ed-f3dfc140664a"
+                  }
+                },
+                {
+                  "label": "Vaginal bleeding",
+                  "id": "vaginalBleeding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "07ab2df6-e236-47eb-9029-2ff6f296d11a",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Uterine conted",
+                  "id": "uterineConted",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "75523825-aa91-4658-ae9d-effe97e95b5e",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Fundal height",
+                  "id": "fundalHeight",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "261d831a-da46-451e-86c7-4bbf12421e12"
+                  }
+                },
+                {
+                  "label": "UOP",
+                  "id": "uop",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "c5623438-cec2-43e8-b1e1-ee1774a684e9"
+                  }
+                },
+                {
+                  "label": "Catheterized",
+                  "id": "catheterized",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "220c387b-95fc-403c-8b19-655dc395340c",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Foul smelling discharge",
+                  "id": "foulSmellingDischarge",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "672f01e4-7393-45dc-ad7b-a62fa0508774",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Modified pain score",
+                  "id": "modifiedPainScore",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "f3f73488-227c-4f81-960a-33a9903d2206",
+                    "answers": [
+                      {
+                        "concept": "ac44e9f2-30cf-4936-a924-739dc4bd85e2",
+                        "label": "Mild: 1-3"
+                      },
+                      {
+                        "concept": "9e65c95c-5e72-48dc-a578-0155bd3ec20b",
+                        "label": "Moderate: 4-6"
+                      },
+                      {
+                        "concept": "25ee5891-c680-42e5-8d47-9f5a375c7e57",
+                        "label": "Severe: 7-10"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Pain managed with",
+                  "id": "painManagedWith",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "17f708e6-ab97-4552-a336-1bb60d15e2fc",
+                    "answers": [
+                      {
+                        "concept": "aafdf999-4af3-46b4-b712-0c8af7b7d045",
+                        "label": "Morphine Q Hrs."
+                      },
+                      {
+                        "concept": "92721c09-6179-483f-8c09-5ab20a195b8f",
+                        "label": "Tramadol Q Hrs."
+                      },
+                      {
+                        "concept": "fb3ca90e-68fd-4e85-9f55-b73d77ae2138",
+                        "label": "Diclo Q 12 Hrs."
+                      },
+                      {
+                        "concept": "59717e4a-b264-48b0-b2b5-2d2e97100231",
+                        "label": "Pethidine"
+                      },
+                      {
+                        "concept": "9881091b-1802-4c62-8b80-a8fcb170b59f",
+                        "label": "Paracetamol"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "PR",
+                  "id": "pr2",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "4f1ff458-014e-4223-88b0-a5b733918606"
+                  }
+                },
+                {
+                  "label": "RR",
+                  "id": "rr2",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "72c433b5-d08a-40aa-a030-55147a204d74"
+                  }
+                },
+                {
+                  "label": "Temperature",
+                  "id": "temperature2",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "1ac4d037-a68c-432b-8e1f-fe2029330be0"
+                  }
+                },
+                {
+                  "label": "Breastfeeding",
+                  "id": "breastfeeding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "159f3ee0-7201-4bd6-a54c-710554508b92",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Cord tie",
+                  "id": "cordTie",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "56be53bd-d2f2-49d3-bc80-e5bab5df5999",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "01384d50-05b9-4fea-be96-9fb0d4ab51ee",
+  "description": "Pain Management",
+  "version": "1.0",
+  "repeatable": true
+}

@@ -1,0 +1,89 @@
+{
+  "name": "kick chart",
+  "pages": [
+    {
+      "label": "kick chart",
+      "sections": [
+        {
+          "label": "kick chart",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "kick chart Entry",
+              "id": "kickChartEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "df0cba4a-f1e2-427d-a063-7fdf813db9aa",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "label": "Kick chart event date",
+                  "id": "kickChartEventDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "fdc60324-392a-4fc4-8a84-54d5aa8eccb5"
+                  }
+                },
+                {
+                  "label": "kick count date",
+                  "id": "kickCountDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "d6d81061-a850-4b06-a0df-5b2353d8bdad"
+                  }
+                },
+                {
+                  "label": "kick count start time",
+                  "id": "kickCountStartTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "f5a30d67-2954-4792-8844-48e7dc65a56a"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "kick count end time",
+                  "id": "kickCountEndTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "bb6be5b7-eab2-458c-9405-30d16b22e9fc"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Number of kicks",
+                  "id": "numberOfKicks",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "ccb609ff-d06b-40a8-a941-19e24d47ca67"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "useFieldValue('numberOfKicks')>100 && !isEmpty(useFieldValue('numberOfKicks'))",
+                      "message": "Number of kicks should not exceed 100"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "86247b46-bdce-4607-a509-7051f025c5b9",
+  "description": "kick chart",
+  "version": "1.0",
+  "repeatable": true
+}

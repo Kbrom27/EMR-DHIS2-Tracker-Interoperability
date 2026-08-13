@@ -1,0 +1,220 @@
+{
+  "name": "DM followup chart",
+  "pages": [
+    {
+      "label": "DM followup chart",
+      "sections": [
+        {
+          "label": "DM followup chart",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "DM followup chart Entry",
+              "id": "dmFollowupChartEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "6afcc547-17d7-48de-9458-177a9a30ccb9",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "label": "Date",
+                  "id": "date",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "a3afe876-835f-430e-9560-23be61577b01"
+                  }
+                },
+                {
+                  "label": "Time",
+                  "id": "time",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "a2ccca41-2f73-4004-8dc8-2249a7b6020d"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "FBS",
+                  "id": "fbs",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "160912AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('fbs')<30 || useFieldValue('fbs')>300) && !isEmpty(useFieldValue('fbs'))",
+                      "message": "FBS should be between 30 and 300"
+                    }
+                  ]
+                },
+                {
+                  "label": "Dose of insulin/40% if needed",
+                  "id": "doseOfInsulin40IfNeeded",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "d78e81f2-9eb6-4c77-a0ba-880278b4c30c"
+                  }
+                },
+                {
+                  "label": "1 hr breakfast",
+                  "id": "1HrBreakfast",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "4f9c15e9-86db-4a8b-84ce-ce7bb0baed98",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "2hr breakfast",
+                  "id": "2hrBreakfast",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "56170bdf-177e-42a9-9f21-1a090ef15ab8",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Dose of insulin/40% if needed",
+                  "id": "doseOfInsulin40IfNeeded2",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "0bd3eea4-2944-4d11-8ef2-7beea6e5a3e9"
+                  }
+                },
+                {
+                  "label": "1 hr lunch",
+                  "id": "1HrLunch",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "ad68d000-c90a-467e-b078-1b0338c555fc",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "2hr lunch",
+                  "id": "2hrLunch",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "15a0ca57-36aa-4a5e-af3a-ff5efdb7a214",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Dose of insulin/40% if needed",
+                  "id": "doseOfInsulin40IfNeeded3",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "b3a2c8ea-fbcb-49ea-801b-5d387d58e0a4"
+                  }
+                },
+                {
+                  "label": "1 hr dinner",
+                  "id": "1HrDinner",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "17e78ef3-c559-4050-a19b-e16ee6ead237",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "2hr dinner",
+                  "id": "2hrDinner",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "247f2c42-6a18-41ae-82cf-c06e5f6fd54e",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Dose of insulin/40% if needed",
+                  "id": "doseOfInsulin40IfNeeded4",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "9146956f-ee5e-47cf-a8d7-8bf85d4ce65e"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "df3bc5bf-5484-45c7-ab5a-0ee7a224e449",
+  "description": "DM followup chart",
+  "version": "1.0",
+  "repeatable": true
+}

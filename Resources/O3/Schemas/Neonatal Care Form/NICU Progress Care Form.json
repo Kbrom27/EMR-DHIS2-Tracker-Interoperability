@@ -1,0 +1,816 @@
+{
+  "name": "NICU Progress Care Form",
+  "pages": [
+    {
+      "label": "NICU Progress Care Form",
+      "sections": [
+        {
+          "label": "NICU Progress Care Form",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "NICU Progress Care Form Entry",
+              "id": "nicuProgressCareFormEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "733a0f10-a879-41d3-ad07-e1bc77bca62c",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "label": "Date and Time",
+                  "id": "dateAndTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "7f36c0b6-a1ed-40a0-936c-134f0072b933"
+                  },
+                  "datePickerFormat": "both"
+                },
+                {
+                  "label": "Diagnosis",
+                  "id": "diagnosis",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "504405ad-eed7-44c1-b947-b64b1dd1a825"
+                  }
+                },
+                {
+                  "label": "Rx",
+                  "id": "rx",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "962753d7-1e38-4202-b56c-d24681ec201d"
+                  }
+                },
+                {
+                  "label": "New concern/complaint",
+                  "id": "newConcernComplaint",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "64484687-e1ba-4188-9931-6641d9f255cd"
+                  }
+                },
+                {
+                  "label": "Day of life",
+                  "id": "dayOfLife",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "4c984d6d-2f6a-48be-aec2-ea9c0d9f2291"
+                  }
+                },
+                {
+                  "label": "General appearance",
+                  "id": "generalAppearance",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "0ff9ec67-371f-4866-ba3c-2a0884266a72",
+                    "answers": [
+                      {
+                        "concept": "d414ad17-fa9d-4617-8de3-21660a27181d",
+                        "label": "Well looking"
+                      },
+                      {
+                        "concept": "e1b12e43-8f10-4f05-bedc-6b7ea491b902",
+                        "label": "ASL"
+                      },
+                      {
+                        "concept": "0225d9b6-c476-4132-a504-aa2525a2125b",
+                        "label": "CSL"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Weight",
+                  "id": "weight",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "df19740c-020a-4f0d-a9f9-781268c8ee3a"
+                  }
+                },
+                {
+                  "label": "Temp",
+                  "id": "temp",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "f7fb09b9-89ee-4a0d-93ff-222292fe6cbf"
+                  }
+                },
+                {
+                  "label": "RR",
+                  "id": "rr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "18e19a5c-f57c-4aac-8397-c831b71cd622"
+                  }
+                },
+                {
+                  "label": "HR",
+                  "id": "hr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "41ad8e12-0de6-4d58-9390-80888ae67a14"
+                  }
+                },
+                {
+                  "label": "Spo2",
+                  "id": "spo2",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "30ebbf92-0713-49ac-8c70-31b4d102d0c3"
+                  }
+                },
+                {
+                  "label": "HC",
+                  "id": "hc",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "0d114d7e-a442-4c0d-befe-abf8ed64b786"
+                  }
+                },
+                {
+                  "label": "Down’s score",
+                  "id": "downSScore",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "b9ee13f0-53fb-4e58-9433-ad9ac9a454f1"
+                  }
+                },
+                {
+                  "label": "Type of respiratory support",
+                  "id": "typeOfRespiratorySupport",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "20dc13d9-81d3-49ba-8326-f142faa59cb9",
+                    "answers": [
+                      {
+                        "concept": "ee082f2d-6456-4348-9838-59ac9202ce0f",
+                        "label": "INO2"
+                      },
+                      {
+                        "concept": "07784324-dace-4d1b-886d-715470e00349",
+                        "label": "Head Hood"
+                      },
+                      {
+                        "concept": "57eb85b4-fcad-4d40-8963-6c841c6c2761",
+                        "label": "CPAP"
+                      },
+                      {
+                        "concept": "dfd28560-f3d2-4895-afdb-8232100acd35",
+                        "label": "MV"
+                      },
+                      {
+                        "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "None"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Pain Score",
+                  "id": "painScore",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "cb2b00f0-1ec1-4f17-bdf5-9446f6ac6595",
+                    "answers": []
+                  }
+                },
+                {
+                  "label": "Urine out put (ml/kg/hr)",
+                  "id": "urineOutPutMlKgHr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "6dfa921c-70df-4118-8023-68f054e4d2a1"
+                  }
+                },
+                {
+                  "label": "Sign of respiratory distress",
+                  "id": "signOfRespiratoryDistress",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "checkbox",
+                    "concept": "03578473-4793-48b5-877a-0af59fdd9cf3",
+                    "answers": [
+                      {
+                        "concept": "c1ddcf53-f1a6-4b3b-8355-d805dbd0d2ee",
+                        "label": "IC/SC retraction"
+                      },
+                      {
+                        "concept": "41749ef0-2d97-4ffc-815f-b047be53fae0",
+                        "label": "Chest indrawing"
+                      },
+                      {
+                        "concept": "83c0c0c2-8a8a-42cc-84b0-ba7583e976ea",
+                        "label": "Nasal flaring"
+                      },
+                      {
+                        "concept": "ab8651dd-96e7-48f4-b307-b35fcbde4ee3",
+                        "label": "other( specify)"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Specify other sign of respiratiory distress",
+                  "id": "specifyOtherSignOfRespiratioryDistress",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "2f155aa8-0ab8-4e06-97b1-e1152950f80b"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('signOfRespiratoryDistress')?.includes('ab8651dd-96e7-48f4-b307-b35fcbde4ee3')"
+                  }
+                },
+                {
+                  "label": "Air entry",
+                  "id": "airEntry",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "0c9c4065-9831-4fd0-a909-0af76056dba2",
+                    "answers": [
+                      {
+                        "concept": "8bc5d7df-86d8-45a6-a072-bdb8315a0660",
+                        "label": "Good"
+                      },
+                      {
+                        "concept": "b6b5959f-91f2-4383-b98c-92d4a0e4353b",
+                        "label": "Decreased"
+                      },
+                      {
+                        "concept": "163747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Absent"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "capillary refill",
+                  "id": "capillaryRefill",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "15b3fdc0-b096-46a1-bc70-fbcc1f497e31",
+                    "answers": [
+                      {
+                        "concept": "1be120c4-9662-46ca-a604-b1542da932d7",
+                        "label": "fast"
+                      },
+                      {
+                        "concept": "21e8c1d6-5c9f-4f12-9644-c490a4966803",
+                        "label": "delayed"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Heart sound",
+                  "id": "heartSound",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "63996977-1f71-4451-9ecc-da50c7da902f",
+                    "answers": [
+                      {
+                        "concept": "8e17330f-d82b-4f88-ba20-f2c04f02722b",
+                        "label": "S1,S2 well heard"
+                      },
+                      {
+                        "concept": "95d19ee0-37ee-44c2-893b-1e13c130135b",
+                        "label": "Gallop"
+                      },
+                      {
+                        "concept": "18d31f68-d6a8-47bc-b42b-930381d01b0b",
+                        "label": "MurMur"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Echo",
+                  "id": "echo",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "7c088a54-2da3-464e-9982-a1d8dd6f886c",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Type of feeding",
+                  "id": "typeOfFeeding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "checkbox-searchable",
+                    "concept": "5002efb7-3ee0-4587-954b-f51166e01fba",
+                    "answers": [
+                      {
+                        "concept": "022599fa-88ab-40e6-8621-0b26ee7a3c1a",
+                        "label": "NPO"
+                      },
+                      {
+                        "concept": "31546166-48ab-47ca-be2b-491c07993932",
+                        "label": "Open drainage"
+                      },
+                      {
+                        "concept": "542259b9-41bf-45bc-8b2e-57120195d1f6",
+                        "label": "Exclusive Breast milk"
+                      },
+                      {
+                        "concept": "24eb0841-6414-4c91-9f10-12ed0c32a190",
+                        "label": "Formula"
+                      },
+                      {
+                        "concept": "c14eb0fa-a9df-432c-a615-53e0701d7a49",
+                        "label": "Maintenance fluid"
+                      },
+                      {
+                        "concept": "b61296a8-882e-4bd4-8960-7ab6c9800514",
+                        "label": "Trophic"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "TF ordered total/intake (ml/kg/day)",
+                  "id": "tfOrderedTotalIntakeMlKgDay",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "7bc430b0-0f62-4a79-b0e2-0d9be1829e2a"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('typeOfFeeding')?.includes('b61296a8-882e-4bd4-8960-7ab6c9800514')"
+                  }
+                },
+                {
+                  "label": "distention",
+                  "id": "distention",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "45c2a843-6b06-4a30-b3bb-16d66f8e3da8",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "bowl sound",
+                  "id": "bowlSound",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "7c350dd7-4d1c-4082-a23b-343999e723cb",
+                    "answers": [
+                      {
+                        "concept": "4ad8b798-8f0f-4182-b71d-ef67897935ce",
+                        "label": "Active"
+                      },
+                      {
+                        "concept": "b6b5959f-91f2-4383-b98c-92d4a0e4353b",
+                        "label": "Decreased"
+                      },
+                      {
+                        "concept": "163747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Absent"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Organomegaly",
+                  "id": "organomegaly",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "c98ba785-6110-4e0c-9c64-81a65b6ecb19",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Stool",
+                  "id": "stool",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "c71364f5-e0a7-452b-b8d8-7242658e76ea",
+                    "answers": [
+                      {
+                        "concept": "d73347c3-293b-4ae6-896f-b11dabeaeec2",
+                        "label": "Pass"
+                      },
+                      {
+                        "concept": "d8a60fcc-aef7-4010-aad1-66670e5b9f6d",
+                        "label": "Not pass"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Vomiting",
+                  "id": "vomiting",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "9043f105-b232-4bd8-9629-c69c34a7e6bc",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Color of Vomiting",
+                  "id": "colorOfVomiting",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "a6ba558d-a822-40e5-aaab-0793ca220561",
+                    "answers": [
+                      {
+                        "concept": "9e6446ea-8b7b-4df0-b951-c6bafcd012bb",
+                        "label": "Ingested matter"
+                      },
+                      {
+                        "concept": "d6f54dc3-8678-45a9-b2b7-755d60ccd2c6",
+                        "label": "billous"
+                      },
+                      {
+                        "concept": "1077AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Bloody"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('vomiting')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Jaundice",
+                  "id": "jaundice",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "00296085-fb34-4def-a73e-b71ec1023c3a",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Level of jaundice",
+                  "id": "levelOfJaundice",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "685d8661-a3ad-423b-a908-5e7a0e725113",
+                    "answers": [
+                      {
+                        "concept": "e3ebfecd-89b9-457d-9e78-271ebb9d240b",
+                        "label": "Face only"
+                      },
+                      {
+                        "concept": "70df0e93-7369-4ed2-b9a2-b5ecb5ec8f0e",
+                        "label": "Chest"
+                      },
+                      {
+                        "concept": "2d135ff6-4cf7-416a-8b05-08a40374b5bc",
+                        "label": "Amblicus"
+                      },
+                      {
+                        "concept": "0af484cd-08d1-40c2-99e7-e92e1b66ef6f",
+                        "label": "Tigh"
+                      },
+                      {
+                        "concept": "49d76273-532c-459d-8180-606a5ca94714",
+                        "label": "Foot"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('jaundice')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Mental status",
+                  "id": "mentalStatus",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "8b7ac352-9425-4f6b-80f4-84700e547c09",
+                    "answers": [
+                      {
+                        "concept": "27e77623-4c37-4aab-948a-7a16171441fe",
+                        "label": "alert"
+                      },
+                      {
+                        "concept": "6bb34ca9-aa17-469e-b4da-0eba2dc09b55",
+                        "label": "sleepy"
+                      },
+                      {
+                        "concept": "34f1bc74-a84e-4b16-b7e8-96d817e1823a",
+                        "label": "stupor"
+                      },
+                      {
+                        "concept": "144576AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Coma"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "primitive reflex: Moro",
+                  "id": "primitiveReflexMoro",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "9c4b704c-fd53-4eaf-8b11-bc8e06a4c5cb",
+                    "answers": [
+                      {
+                        "concept": "561b30d1-42d2-4508-ad4b-e528deb119fb",
+                        "label": "Complete"
+                      },
+                      {
+                        "concept": "e7d0ef0a-6ef2-4e5a-bb29-0fc550be22e0",
+                        "label": "Incomplete"
+                      },
+                      {
+                        "concept": "9390a562-4fb3-49d4-9969-f30029097320",
+                        "label": "Exaggerated"
+                      },
+                      {
+                        "concept": "163747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Absent"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "primitive reflex: Suckling",
+                  "id": "primitiveReflexSuckling",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "334551ab-9019-4456-9fd1-7c5e964e23bb",
+                    "answers": [
+                      {
+                        "concept": "bc9026b3-60b4-4db4-b410-6b6b8dad2c7e",
+                        "label": "Sustained"
+                      },
+                      {
+                        "concept": "4f31a93f-6fee-4f5e-8fe2-bbbef3d34733",
+                        "label": "Unsustained"
+                      },
+                      {
+                        "concept": "163747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Absent"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "primitive reflex: Grasp",
+                  "id": "primitiveReflexGrasp",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "a60a5890-06d6-424f-9dd9-3c431e34a714",
+                    "answers": [
+                      {
+                        "concept": "1e941038-5ecc-4e83-bfa6-b255b238e03e",
+                        "label": "Strong"
+                      },
+                      {
+                        "concept": "8caf143d-8610-47af-9df8-ae8edf13400e",
+                        "label": "Weak"
+                      },
+                      {
+                        "concept": "163747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Absent"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "IVF received?",
+                  "id": "ivfReceived",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "5489eaa6-dde4-4551-a5fc-4041cc868160",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "ml/kg/day",
+                  "id": "mlKgDay",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "5d3a0263-08f8-4aaf-a488-d6678dc44480"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "useFieldValue('mlKgDay')>120",
+                      "message": "Invalid value"
+                    }
+                  ],
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('ivfReceived')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Culture done?",
+                  "id": "cultureDone",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "5031122a-5b55-4ae2-9a2a-b3aa1d553c99",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "last culture date",
+                  "id": "lastCultureDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "a4b4442e-4cc3-4567-9c19-6ffe4c868547"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('cultureDone')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  },
+                  "datePickerFormat": "calendar"
+                },
+                {
+                  "label": "culture growth",
+                  "id": "cultureGrowth",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "cb2a5877-ccd8-4780-929c-2a3b04e82827"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('cultureDone')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "sensitivity",
+                  "id": "sensitivity",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "3d6031c2-6608-4851-b4da-e1b64d85bfe2"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('cultureDone')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Assessment",
+                  "id": "assessment",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "13f82aece2cd4e3bbb950140e6cbffce",
+                    "answers": [
+                      {
+                        "concept": "7018e8a0-02c3-4885-8891-d352047a11c4",
+                        "label": "The same"
+                      },
+                      {
+                        "concept": "62420c5d-c449-4672-96f9-a0e9989d6adc",
+                        "label": "Improving"
+                      },
+                      {
+                        "concept": "d68466b9-2489-4c36-b1b6-6ef0b950bfa0",
+                        "label": "Deteriorating"
+                      },
+                      {
+                        "concept": "ab8651dd-96e7-48f4-b307-b35fcbde4ee3",
+                        "label": "other( specify)"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Other Assessment",
+                  "id": "otherAssessment",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "3777d976-ea7f-4857-89fc-67aa0cb2c366"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('assessment')!=='3a18f0a8-d8d9-4e47-a946-e0b52062392e'"
+                  }
+                },
+                {
+                  "label": "Plan",
+                  "id": "plan",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "c853a1fe-8fbd-4b85-aee6-62a8c230ade8"
+                  }
+                },
+                {
+                  "label": "Name of physician",
+                  "id": "nameOfPhysician",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "6f407c33-743d-4df4-b32b-77e13508d555"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "7fccb81d-42a8-4f1b-a0e9-fecfc74fe989",
+  "description": "NICU Progress Care Form",
+  "version": "1.0",
+  "repeatable": true
+}

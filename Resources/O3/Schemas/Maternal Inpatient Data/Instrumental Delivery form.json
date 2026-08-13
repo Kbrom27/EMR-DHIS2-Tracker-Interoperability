@@ -1,0 +1,491 @@
+{
+  "name": "Instrumental Delivery form",
+  "pages": [
+    {
+      "label": "Instrumental Delivery form",
+      "sections": [
+        {
+          "label": "Delivery",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Instrumental delivery?",
+              "id": "instrumentalDelivery",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "21e8cee7-ff10-43c3-a77a-fea0cfbc2cf7",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(Mode_of_delivery_pre==='9485fcbf-b4b3-4aa7-8bf5-fa057d91c2ff') && isEmpty(myValue)",
+                  "message": "This field is required"
+                }
+              ]
+            },
+            {
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "datetime",
+                "concept": "7f36c0b6-a1ed-40a0-936c-134f0072b933"
+              },
+              "id": "dateAndTime",
+              "label": "Date and Time",
+              "datePickerFormat": "both",
+              "hide": {
+                "hideWhenExpression": "instrumentalDelivery!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Delivery Details",
+          "isExpanded": "true",
+          "hide": {
+            "hideWhenExpression": "instrumentalDelivery!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+          },
+          "questions": [
+            {
+              "label": "Date",
+              "id": "date",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "eee7a5d0-f208-4819-aee1-dec58f7fe494"
+              }
+            },
+            {
+              "label": "Time",
+              "id": "time",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "datetime",
+                "concept": "33319bd2-2836-413f-955d-22aa53f70c0b"
+              },
+              "datePickerFormat": "timer"
+            },
+            {
+              "label": "Indication",
+              "id": "indication",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "b46988ba-0b91-4a28-b863-f5b01c078e7a"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Prerequisite during application",
+          "isExpanded": "true",
+          "hide": {
+            "hideWhenExpression": "instrumentalDelivery!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+          },
+          "questions": [
+            {
+              "label": "Cervical dilation",
+              "id": "cervicalDilation",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "abc69402-62be-4107-ace2-ef17999de23b"
+              }
+            },
+            {
+              "label": "Presentation",
+              "id": "presentation",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "aa537814-9233-4088-a24b-aadf995b6aab"
+              }
+            },
+            {
+              "label": "Position",
+              "id": "position",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "27c3da63-4825-4e66-ac24-be9426a8d24e"
+              }
+            },
+            {
+              "label": "Station",
+              "id": "station",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "b3aa0cf0-aab5-434d-82f6-671b1e2058f5"
+              }
+            },
+            {
+              "label": "Caput",
+              "id": "caput",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "22c721de-05eb-481d-b5b7-729330cd0b97",
+                "answers": [
+                  {
+                    "concept": "1498AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Mild"
+                  },
+                  {
+                    "concept": "1499AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Moderate"
+                  },
+                  {
+                    "concept": "1500AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Severe"
+                  },
+                  {
+                    "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "None"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Molding",
+              "id": "molding",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "91185db1-7a43-4634-b1fb-a47677a5d8ee",
+                "answers": [
+                  {
+                    "concept": "1498AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Mild"
+                  },
+                  {
+                    "concept": "1499AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Moderate"
+                  },
+                  {
+                    "concept": "1500AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Severe"
+                  },
+                  {
+                    "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "None"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Bladder status",
+              "id": "bladderStatus",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "e20c55fb-5e22-48b9-8754-3c45f2d63bf0",
+                "answers": [
+                  {
+                    "concept": "29d42747-b264-4b15-a1ff-b1fb38d6decf",
+                    "label": "Empty"
+                  },
+                  {
+                    "concept": "55370c68-b169-4492-bf61-f4af65ef55a9",
+                    "label": "Moderately full"
+                  },
+                  {
+                    "concept": "921d47a7-d0b6-481c-a3e3-51208a927162",
+                    "label": "Distended (Full bladder)"
+                  },
+                  {
+                    "concept": "695568c2-7c3e-47ce-8933-d9ab25035b45",
+                    "label": "Catheterized"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "label": "Instrument Used",
+          "isExpanded": "true",
+          "hide": {
+            "hideWhenExpression": "instrumentalDelivery!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+          },
+          "questions": [
+            {
+              "label": "Instrument used",
+              "id": "instrumentUsed",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "394298f9-3a11-4adf-94cc-b819d565ab55",
+                "answers": [
+                  {
+                    "concept": "61d1ac36-8e05-4ef7-bc9d-1db402f020c0",
+                    "label": "Forceps"
+                  },
+                  {
+                    "concept": "1fd216a3-0292-4528-8459-03f0c3061daf",
+                    "label": "Vacuum"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Forceps type used",
+              "id": "forcepsTypeUsed",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "26977b50-1763-4bc4-a741-489a1a1dd291",
+                "answers": [
+                  {
+                    "concept": "bb5b7aad-e7de-472b-9e02-2d62d85d137f",
+                    "label": "Low forceps"
+                  },
+                  {
+                    "concept": "5f9047fc-bbee-460b-9564-7be2fbf6441b",
+                    "label": "Outlet forceps"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Vacuum type used",
+              "id": "vacuumTypeUsed",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "6ad989dd-0685-4054-a171-5be6c6b86e67",
+                "answers": [
+                  {
+                    "concept": "44ca54da-7c82-4bf4-829d-fdd7c9259aee",
+                    "label": "Mid"
+                  },
+                  {
+                    "concept": "02f4a7b8-fc49-45f6-9c71-f9f3e023504e",
+                    "label": "Low."
+                  },
+                  {
+                    "concept": "d52e18d3-e206-4981-858d-685a6bf7d84f",
+                    "label": "Outlet"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Cap size",
+              "id": "capSize",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "fe8fe594-4bd2-414b-8978-720bf49d3809"
+              }
+            },
+            {
+              "label": "Number of pulls",
+              "id": "numberOfPulls",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "bebd2f26-617e-4318-bab3-84f53b9eca01"
+              }
+            },
+            {
+              "label": "Duration (min)",
+              "id": "durationMin",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "aeb0b787-19eb-40c2-af76-6bd38a4a7926"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Instrumental Delivery Outcome",
+          "isExpanded": "true",
+          "hide": {
+            "hideWhenExpression": "instrumentalDelivery!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+          },
+          "questions": [
+            {
+              "label": "Instrumental delivery successful",
+              "id": "instrumentalDeliverySuccessful",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "34f2b6a2-9daa-47d7-b217-26b4d5251707",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Live birth",
+              "id": "liveBirth",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "288814b7-9152-4ed4-8b19-8ee64ad2da72",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Stillbirth",
+              "id": "stillbirth",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "ffb0194f-4ff1-4472-9030-b441b79bdd6f",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Weight (gm)",
+              "id": "weightGm",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "6a0e4314-2c0b-43fb-934e-e336c4260aae"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(weightGm<400 || weightGm>8000) && !isEmpty(weightGm)",
+                  "message": "Weight should be between 400 and 8000"
+                }
+              ]
+            },
+            {
+              "label": "Head circumference (cm)",
+              "id": "headCircumferenceCm",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "f9d34fa0-cdeb-4428-bdaa-7be9596da773"
+              }
+            },
+            {
+              "label": "Sex",
+              "id": "sex",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "4323a19a-da78-4d3b-92ff-0fc70a5e020f",
+                "answers": [
+                  {
+                    "concept": "ddb4128b-4693-4284-9d4f-5f96ca03d2c7",
+                    "label": "Male"
+                  },
+                  {
+                    "concept": "a0c0f551-d867-40ce-9172-26576f4f8b74",
+                    "label": "Female"
+                  },
+                  {
+                    "concept": "1138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Indeterminate"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "GA after newborn assessment (wks)",
+              "id": "gaAfterNewbornAssessmentWks",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "89b09640-1344-49b2-bb24-ec6b0db19067"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Newborn Complications",
+          "isExpanded": "true",
+          "hide": {
+            "hideWhenExpression": "instrumentalDelivery!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+          },
+          "questions": [
+            {
+              "label": "Newborn complication",
+              "id": "newbornComplication",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "c268a87d-1c06-4820-b214-80e3c6fee740",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Neonate referred to neonatology",
+              "id": "neonateReferredToNeonatology",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "d28dd9a8-9901-4e10-8eaf-5ff5958b1a60",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "bea28bb7-1111-42ab-b06a-0dbf45248e3f",
+  "description": "Instrumental Delivery form",
+  "version": "1.0"
+}

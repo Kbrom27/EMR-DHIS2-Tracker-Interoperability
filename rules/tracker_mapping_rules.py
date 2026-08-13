@@ -113,10 +113,6 @@ FIELD_RULES: Dict[str, Dict[str, object]] = {
         "preferred_sources": ["medications"],
         "transform": "all_text",
     },
-    "Investigation sheet :: other inv n": {
-        "preferred_sources": ["lab_results"],
-        "transform": "all_text",
-    },
     "Medication Administration record :: Diagnosis": {
         "preferred_sources": ["Diagnosis Notes [Maternal Medication Administration Record]"],
         "strict_preferred_sources": True,
@@ -288,7 +284,7 @@ def normalize_rule_text(value: object) -> str:
         .lower()
     )
     text = re.sub(r"'s\b", "", text)
-    text = re.sub(r"[^a-z0-9]+", " ", text)
+    text = re.sub(r"[^a-z0-9+-]+", " ", text)
     return " ".join(text.split())
 
 

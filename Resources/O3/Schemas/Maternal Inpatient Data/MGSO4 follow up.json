@@ -1,0 +1,284 @@
+{
+  "name": "MGSO4 follow up",
+  "pages": [
+    {
+      "label": "MGSO4 follow up",
+      "sections": [
+        {
+          "label": "MGSO4 follow up",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "MGSO4 follow up Entry",
+              "id": "mgso4FollowUpEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "6777e2b2-2f0b-4257-9da2-567b9b17ae22",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "label": "MGSO4 Followup event date",
+                  "id": "mgso4FollowupEventDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "3c821ef7-54b8-4262-9af8-2bef980416b8"
+                  }
+                },
+                {
+                  "label": "Drug Type/Name",
+                  "id": "drugTypeName",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "227578f5-af65-4773-8953-99707cbf14f0",
+                    "answers": [
+                      {
+                        "concept": "9c990180-baa2-4d3f-8307-39a364da2568",
+                        "label": "LOADING Dose 4gm IV + 10gm IM"
+                      },
+                      {
+                        "concept": "ebcfb8a0-26dd-45e5-92e3-55d3f9a861fd",
+                        "label": "Maintenance"
+                      },
+                      {
+                        "concept": "9e139ceb-30f9-43f6-b775-bd4d654f1d21",
+                        "label": "If convulsion Re occur/15min"
+                      },
+                      {
+                        "concept": "8cf39d23-1187-4780-94bb-d9756ddb5350",
+                        "label": "Maintenance Post delivery"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Dose",
+                  "id": "dose",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "6de0fd97-5bcb-4ee2-ba09-8db3b4cb577f",
+                    "answers": [
+                      {
+                        "concept": "f715c660-1c35-45c3-8fa2-7c4c848a6355",
+                        "label": "4g MgSo4in 12m ln N/S"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Maintenance dose",
+                  "id": "maintenanceDose",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "898900a7-b0d3-4cff-8c48-534682ff4bcf",
+                    "answers": [
+                      {
+                        "concept": "6cf4505d-5279-45ba-ae69-172f8dd94ec2",
+                        "label": "5gm"
+                      },
+                      {
+                        "concept": "6e4de1d9-2d14-40ed-9e5f-e130066e5ac4",
+                        "label": "2.5gm"
+                      },
+                      {
+                        "concept": "49448e61-39a5-48a2-846a-7d2f7a598f20",
+                        "label": "Not Given"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('drugTypeName')!=='ebcfb8a0-26dd-45e5-92e3-55d3f9a861fd' && useFieldValue('drugTypeName')!=='9e139ceb-30f9-43f6-b775-bd4d654f1d21' && useFieldValue('drugTypeName')!=='8cf39d23-1187-4780-94bb-d9756ddb5350'"
+                  }
+                },
+                {
+                  "label": "Maintenance Post delivery dose",
+                  "id": "maintenancePostDeliveryDose",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "dbea4ef6-8632-40b2-b5af-389188d1d257",
+                    "answers": [
+                      {
+                        "concept": "d6381248-9032-4488-80b3-ead824d5fc85",
+                        "label": "1st"
+                      },
+                      {
+                        "concept": "0c4edb35-a948-4921-a5a8-9d47130f0c8f",
+                        "label": "2nd"
+                      },
+                      {
+                        "concept": "5b03dcf6-5c42-4d20-9365-00808ee4596c",
+                        "label": "3rd"
+                      },
+                      {
+                        "concept": "007eff71-0b3a-4ab1-95a4-258849790a0f",
+                        "label": "4th"
+                      },
+                      {
+                        "concept": "fc40b457-5251-462e-b878-cbff502ad0de",
+                        "label": "5th"
+                      },
+                      {
+                        "concept": "3f31e53f-2687-47f5-851b-8e4122dd3d11",
+                        "label": "6th"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Route given",
+                  "id": "routeGiven",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "0621b031-4290-4043-88ab-3346ee585046",
+                    "answers": [
+                      {
+                        "concept": "160243AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Intramuscular"
+                      },
+                      {
+                        "concept": "160242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Intravenous"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Injection Site",
+                  "id": "injectionSite",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "360334d0-d0b2-4a52-8d49-3087cd833b91",
+                    "answers": [
+                      {
+                        "concept": "44085f7f-c67f-48ec-96bc-6dd1935d5605",
+                        "label": "Right Leg Thigh"
+                      },
+                      {
+                        "concept": "5215a6f9-269d-4f59-bad3-66790806c01c",
+                        "label": "Left Leg Thigh"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "RR",
+                  "id": "rr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "8bd865cc-828e-40f1-869c-17a87cf26d7e"
+                  }
+                },
+                {
+                  "label": "UOP Q 4hrs",
+                  "id": "uopQ4hrs",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "62fcd4e0-22ff-4b77-afb8-6e005af26dfd"
+                  }
+                },
+                {
+                  "label": "DTR",
+                  "id": "dtr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "00a43846-7160-47f9-91df-1915d3737627",
+                    "answers": [
+                      {
+                        "concept": "163748AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Present"
+                      },
+                      {
+                        "concept": "163747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Absent"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Time Given",
+                  "id": "timeGiven",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "0fe288a3-0210-4206-b752-69e4f27e029c"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Time Next",
+                  "id": "timeNext",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "bddd6a03-c84a-4228-9de2-004e9f8b3b8b"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Staff name",
+                  "id": "staffName",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "b9a415f6-0c08-42d1-9d49-d781b72665e9"
+                  }
+                },
+                {
+                  "label": "remark",
+                  "id": "remark",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "2e5b231c-f004-4283-8125-ecf8eea5fdf4"
+                  }
+                },
+                {
+                  "label": "BP",
+                  "id": "bp",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "b899e347-6f70-4e78-984f-22ecfa57ec6e"
+                  }
+                },
+                {
+                  "label": "If convulsion Re occur/15min dose",
+                  "id": "ifConvulsionReOccur15minDose",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "bef35017-8384-4ac2-9bde-de78539ea758",
+                    "answers": [
+                      {
+                        "concept": "8dacef9b-7ee6-469b-851e-70c1b7f59c1c",
+                        "label": "2g"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "b96f5357-699b-4152-a8b5-b61dd4f2a39a",
+  "description": "MGSO4 follow up",
+  "version": "1.0",
+  "repeatable": true
+}

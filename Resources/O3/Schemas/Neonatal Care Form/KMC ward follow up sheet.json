@@ -1,0 +1,898 @@
+{
+  "name": "KMC ward follow up sheet",
+  "pages": [
+    {
+      "label": "KMC ward follow up sheet",
+      "sections": [
+        {
+          "label": "KMC ward follow up sheet",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "KMC ward follow up sheet Entry",
+              "id": "kmcWardFollowUpSheetEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "ded76ccf-b7d3-4d17-9235-49fe216448f6",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "label": "Age  in days (At admission to KMC ward)",
+                  "id": "ageInDaysAtAdmissionToKMCWard",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "bf6776ad-cb98-4eaf-9b5a-0d2e3d8de7b1"
+                  }
+                },
+                {
+                  "label": "Weight (At admission to KMC ward)",
+                  "id": "weightAtAdmissionToKMCWard",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "31c602af-8496-4c7f-aada-abda2f3af552"
+                  }
+                },
+                {
+                  "label": "Type of KMC Practised",
+                  "id": "typeOfKMCPractised",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "checkbox",
+                    "concept": "3bc740c5-bf74-4e05-9bad-a82687116ea1",
+                    "answers": [
+                      {
+                        "concept": "48607693-c176-469f-bae4-2de37dda5d9e",
+                        "label": "Continuous"
+                      },
+                      {
+                        "concept": "19d9c2db-e531-4cf8-a9c0-e8b0515288c6",
+                        "label": "Intermittent"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Able to breathe spontaneously (after resuscitation) at 60 minutes after birth?",
+                  "id": "ableToBreatheSpontaneouslyAfterResuscitationAt60MinutesAfterBirth",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "b25ad829-1443-4fba-b40b-27f353edd77e",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Any congenital malformation affecting KMC?",
+                  "id": "anyCongenitalMalformationAffectingKMC",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "c74a8d2b-1cdc-424d-ac80-13fc46b24e6a",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Needed mechanical ventilation in first 2h after birth or admission?",
+                  "id": "neededMechanicalVentilationInFirst2hAfterBirthOrAdmission",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "092bc098-7f81-474c-9706-588e5052d94a",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Needed inotropes in first 2h after birth or admission?",
+                  "id": "neededInotropesInFirst2hAfterBirthOrAdmission",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "e0d16ce2-68c0-4968-8318-bee46be2ed03",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Total KMC hours/day",
+                  "id": "totalKMCHoursDay",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "1b028876-19a2-4fa3-9ce5-c120a24c7c11"
+                  }
+                },
+                {
+                  "label": "Hours on KMC/every 6hours",
+                  "id": "hoursOnKMCEvery6hours",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "ef13c4cc-69c6-403f-a76f-d7124142067a"
+                  }
+                },
+                {
+                  "label": "KMC intiation date",
+                  "id": "kmcIntiationDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "6267e26f-42cb-4461-876c-2fd5df214d2c"
+                  }
+                },
+                {
+                  "label": "KMC initiation time",
+                  "id": "kmcInitiationTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "6f38e5c0-6953-414e-8e07-ab3479582acc"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "DLT/NLT",
+                  "id": "dltNLT",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "2daf9d0e-a477-4fcf-a0fd-85e3b2fde007",
+                    "answers": [
+                      {
+                        "concept": "a77e3ed2-4ffd-4313-b9ba-3a1f4b5d4781",
+                        "label": "DLT"
+                      },
+                      {
+                        "concept": "b7305b2b-ebe1-4f6a-99a4-ebc35358e667",
+                        "label": "NLT"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Breast feeding initiation time",
+                  "id": "breastFeedingInitiationTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "3a69ea2e-68a4-4d4f-af4a-eb5af48eb951"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Feeding intolerance",
+                  "id": "feedingIntolerance",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "ece80564-a486-4c11-966d-b8874c773110",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Type of feed",
+                  "id": "typeOfFeed",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "706dbeeb-cd2d-4b07-898b-470d50ce286f",
+                    "answers": [
+                      {
+                        "concept": "a114675d-9851-4da7-b154-5eec74254169",
+                        "label": "EBM"
+                      },
+                      {
+                        "concept": "0661b3f8-eaac-452a-b30c-337972569d95",
+                        "label": "EBM+ Fortification"
+                      },
+                      {
+                        "concept": "24eb0841-6414-4c91-9f10-12ed0c32a190",
+                        "label": "Formula"
+                      },
+                      {
+                        "concept": "b1cd9620-434d-42bd-b29c-83aa7b791549",
+                        "label": "Mixed"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Mode of feeding kmc",
+                  "id": "modeOfFeedingKmc",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "74bcd347-d2a6-4cdd-a573-0b17ac05ad98",
+                    "answers": [
+                      {
+                        "concept": "d4073102-e93d-4795-8f67-e28ee700e5df",
+                        "label": "NG tube"
+                      },
+                      {
+                        "concept": "ab33a26f-83c7-4a81-9a3a-777553f6a122",
+                        "label": "Cup"
+                      },
+                      {
+                        "concept": "68f41495-8d80-4dcb-a85f-a26c21db065a",
+                        "label": "Direct BF"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Breast milk feeding initiation time",
+                  "id": "breastMilkFeedingInitiationTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "674b9af6-f31f-498a-b4a0-edb4f2ed61ee"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Provided amount of breast milk (ml/kg/day)",
+                  "id": "providedAmountOfBreastMilkMlKgDay",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "d2a507ce-b2e8-4f84-9584-0061e084305f"
+                  }
+                },
+                {
+                  "label": "Did direct breast feeding initiated? (put the baby on the chest of the mother with or without breastmilk feeding)",
+                  "id": "didDirectBreastFeedingInitiatedPutTheBabyOnTheChestOfTheMotherWithOrWithoutBreastmilkFeeding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "4f207227-2a36-47f1-a955-d9494848099d",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "If Yes, Date of initiation of direct breasfeeding (with or without breastmilk feeding)?",
+                  "id": "ifYesDateOfInitiationOfDirectBreasfeedingWithOrWithoutBreastmilkFeeding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "4131cf85-13a0-4e24-9a62-ff8ec1d6f194"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('didDirectBreastFeedingInitiatedPutTheBabyOnTheChestOfTheMotherWithOrWithoutBreastmilkFeeding')==='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA') && isEmpty(myValue)",
+                      "message": "This field is required"
+                    }
+                  ],
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('didDirectBreastFeedingInitiatedPutTheBabyOnTheChestOfTheMotherWithOrWithoutBreastmilkFeeding')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "If Yes, Time of initiation of direct breasfeeding (with or without breastmilk feeding)?",
+                  "id": "ifYesTimeOfInitiationOfDirectBreasfeedingWithOrWithoutBreastmilkFeeding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "c4dc214a-4c57-4055-a930-5f59f36243bd"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('didDirectBreastFeedingInitiatedPutTheBabyOnTheChestOfTheMotherWithOrWithoutBreastmilkFeeding')==='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA') && isEmpty(myValue)",
+                      "message": "This field is required"
+                    }
+                  ],
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('didDirectBreastFeedingInitiatedPutTheBabyOnTheChestOfTheMotherWithOrWithoutBreastmilkFeeding')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Did breast milk feeding initiated? (either directly from the breast or indirectly expressed breast milk)",
+                  "id": "didBreastMilkFeedingInitiatedEitherDirectlyFromTheBreastOrIndirectlyExpressedBreastMilk",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "b9fd8a34-b46b-430e-9099-2ebddd8e9c90",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "If Yes, Date of initiation of breast milk feeding?",
+                  "id": "ifYesDateOfInitiationOfBreastMilkFeeding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "bf22d356-54a3-4b1b-aa15-a8dea932bd2f"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('didBreastMilkFeedingInitiatedEitherDirectlyFromTheBreastOrIndirectlyExpressedBreastMilk')==='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA') && isEmpty(myValue)",
+                      "message": "This field is required"
+                    }
+                  ],
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('didBreastMilkFeedingInitiatedEitherDirectlyFromTheBreastOrIndirectlyExpressedBreastMilk')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "If Yes, Time of initiation of breast milk feeding?",
+                  "id": "ifYesTimeOfInitiationOfBreastMilkFeeding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "dab59ca2-d423-4660-98bc-66ece5cdfb08"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('didBreastMilkFeedingInitiatedEitherDirectlyFromTheBreastOrIndirectlyExpressedBreastMilk')==='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA') && isEmpty(myValue)",
+                      "message": "This field is required"
+                    }
+                  ],
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('didBreastMilkFeedingInitiatedEitherDirectlyFromTheBreastOrIndirectlyExpressedBreastMilk')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Temperature",
+                  "id": "temperature",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "ff0088c8-e8cb-43d6-993b-be61e60f40da"
+                  }
+                },
+                {
+                  "label": "RR",
+                  "id": "rr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "426f478f-991e-4bd7-b8d1-072db3599508"
+                  }
+                },
+                {
+                  "label": "HR",
+                  "id": "hr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "bea56ceb-95b0-4805-a10c-94e2ac572e24"
+                  }
+                },
+                {
+                  "label": "SPO2 (when needed)",
+                  "id": "spo2WhenNeeded",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "79a7c04c-9594-4135-9bb8-60fe453e332e"
+                  }
+                },
+                {
+                  "label": "Danger sign present",
+                  "id": "dangerSignPresent",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "checkbox-searchable",
+                    "concept": "85048f6e-3bbe-424e-989a-2fba89e27747",
+                    "answers": [
+                      {
+                        "concept": "d4046a41-3152-4f96-b9d7-cf7e374bd7f0",
+                        "label": "Fast breathing (≥60 breath per minute)"
+                      },
+                      {
+                        "concept": "257b77c9-a373-4fcf-80a6-dcc9c9512be8",
+                        "label": "Slow breathing (≤ 30 breath per minute)"
+                      },
+                      {
+                        "concept": "bbf02b46-e08a-49de-901e-2c8a45d364b8",
+                        "label": "Severe chest indrawing"
+                      },
+                      {
+                        "concept": "bb0be5b4-d177-4efb-8561-ec1c2525f629",
+                        "label": "Grunting"
+                      },
+                      {
+                        "concept": "ab8651dd-96e7-48f4-b307-b35fcbde4ee3",
+                        "label": "other( specify)"
+                      },
+                      {
+                        "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "None"
+                      }
+                    ]
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('dangerSignPresent')?.includes('1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')) && (useFieldValue('dangerSignPresent')?.includes('d4046a41-3152-4f96-b9d7-cf7e374bd7f0') || useFieldValue('dangerSignPresent')?.includes('257b77c9-a373-4fcf-80a6-dcc9c9512be8') || useFieldValue('dangerSignPresent')?.includes('bbf02b46-e08a-49de-901e-2c8a45d364b8') || useFieldValue('dangerSignPresent')?.includes('bb0be5b4-d177-4efb-8561-ec1c2525f629') || useFieldValue('dangerSignPresent')?.includes('ab8651dd-96e7-48f4-b307-b35fcbde4ee3'))",
+                      "message": "None can't be selected with other options"
+                    }
+                  ]
+                },
+                {
+                  "label": "Other danger sign",
+                  "id": "otherDangerSign",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "03c89716-e7b1-4ee0-a8ea-969506dc62a0"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('dangerSignPresent')?.includes('ab8651dd-96e7-48f4-b307-b35fcbde4ee3')"
+                  }
+                },
+                {
+                  "label": "Convulsion",
+                  "id": "convulsion",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "113054AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "answers": [
+                      {
+                        "concept": "1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Unknown"
+                      },
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Floppy or stiff",
+                  "id": "floppyOrStiff",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "f6081bd0-0ad4-40ea-a25a-03fec621c415",
+                    "answers": [
+                      {
+                        "concept": "4fcfc99a-941a-4691-af2d-9e3da77dd830",
+                        "label": "Floppy"
+                      },
+                      {
+                        "concept": "39e61ee5-8165-4386-99e2-0fdd6c484425",
+                        "label": "Stiff"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Fever ≥37.5",
+                  "id": "fever375",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "4009ed0c-42f9-46f3-801a-7837e4c68ac3",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Temperature < 36.5 or not raising after warming",
+                  "id": "temperature365OrNotRaisingAfterWarming",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "c2d32da0-4c34-4b14-b62f-b2490611d0bc",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Umbilicus draining pus",
+                  "id": "umbilicusDrainingPus",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "1fa8a67a-c2cb-464c-aecf-c5d8f31dafe4",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Bleeding from the stamp or cut",
+                  "id": "bleedingFromTheStampOrCut",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "d6694fdf-d81b-4d84-9cd6-20ecf995e593",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Pallor",
+                  "id": "pallor",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "06665525-838d-49b4-abaa-6a9f0c2e38d4",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  },
+                  "_review_required": true
+                },
+                {
+                  "label": "Jaundice",
+                  "id": "jaundice",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "00296085-fb34-4def-a73e-b71ec1023c3a",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Supplement",
+                  "id": "supplement",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "checkbox",
+                    "concept": "579bc356-fc43-43ba-8a7f-fa5b31959005",
+                    "answers": [
+                      {
+                        "concept": "d8e17cb1-1086-46ad-afc8-49379c7a65e2",
+                        "label": "Vit D"
+                      },
+                      {
+                        "concept": "4176d69b-1e01-4857-a876-53cda07a0a03",
+                        "label": "Iron"
+                      },
+                      {
+                        "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "None"
+                      }
+                    ]
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('supplement')?.includes('1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')) && (useFieldValue('supplement')?.includes('d8e17cb1-1086-46ad-afc8-49379c7a65e2') || useFieldValue('supplement')?.includes('4176d69b-1e01-4857-a876-53cda07a0a03'))",
+                      "message": "None can't be selected with other options"
+                    }
+                  ]
+                },
+                {
+                  "label": "Vomiting",
+                  "id": "vomiting",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "9043f105-b232-4bd8-9629-c69c34a7e6bc",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "If present frequency",
+                  "id": "ifPresentFrequency",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "27b8d9a1-56f1-4fbd-96ea-026ecdfbd11a"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('vomiting')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Abdominal Distension",
+                  "id": "abdominalDistension",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "9b077291-c4a6-4f4f-8c5b-3566fe050aed",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  },
+                  "_review_required": true
+                },
+                {
+                  "label": "Stool",
+                  "id": "stool",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "29445d58-aadd-43ac-98f4-65c3ac24ba30",
+                    "answers": [
+                      {
+                        "concept": "d73347c3-293b-4ae6-896f-b11dabeaeec2",
+                        "label": "Pass"
+                      },
+                      {
+                        "concept": "d8a60fcc-aef7-4010-aad1-66670e5b9f6d",
+                        "label": "Not pass"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Stool color",
+                  "id": "stoolColor",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "615f3ff5-198e-4252-b840-081ca4690d91"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('stool')!=='d73347c3-293b-4ae6-896f-b11dabeaeec2'"
+                  }
+                },
+                {
+                  "label": "Urine",
+                  "id": "urine",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "159994AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "answers": [
+                      {
+                        "concept": "d73347c3-293b-4ae6-896f-b11dabeaeec2",
+                        "label": "Pass"
+                      },
+                      {
+                        "concept": "d8a60fcc-aef7-4010-aad1-66670e5b9f6d",
+                        "label": "Not pass"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Number of wet diaper",
+                  "id": "numberOfWetDiaper",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "85e6af8b-071e-45e3-9af0-5abe4482dbd5"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('urine')!=='d73347c3-293b-4ae6-896f-b11dabeaeec2'"
+                  }
+                },
+                {
+                  "label": "Weight",
+                  "id": "weight",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "4d99351a-6155-4cdc-be85-5d302d72151a"
+                  }
+                },
+                {
+                  "label": "Gain in gm/kg/day",
+                  "id": "gainInGmKgDay",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "a79bb979-39eb-4767-995b-5eb0feb1b7de"
+                  }
+                },
+                {
+                  "label": "Head circumference(Weekly)",
+                  "id": "headCircumferenceWeekly",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "043fa4e4-7132-4ffd-88b0-55e85894357d"
+                  }
+                },
+                {
+                  "label": "Vaccination",
+                  "id": "vaccination",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "017576eb-bdd9-44c1-97e6-60ae40b3c3b1",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Family planning",
+                  "id": "familyPlanning",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "1efe70d4-d73c-4d50-ae01-41b569fd4f42",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Assessment",
+                  "id": "assessment",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "09e9c6e5-0bea-44bd-8f45-fdcd90d21b28"
+                  }
+                },
+                {
+                  "label": "Plan kmc",
+                  "id": "planKmc",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "3973d6de-2f32-4aa2-a984-041bb5cfe7f0"
+                  }
+                },
+                {
+                  "label": "Name and  signature",
+                  "id": "nameAndSignature",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "423e0df2-44a2-41fa-8e00-ac3e0fb795d2"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "60e59dd4-b070-4116-985b-15b3a5a19ea8",
+  "description": "KMC ward follow up sheet",
+  "version": "1.0",
+  "repeatable": true
+}

@@ -1,2 +1,0 @@
-record_id,patient,program,stage,column,field_name,field_id,value,reason
-TEST0000100046,TEST0000100046,Maternal Inpatient Data/aLoraiFNkng,Row,Record ID,Record ID,lE1elfwqzWM,TEST0000100046,Row could not be fully imported: No DHIS2 organisation unit was found for org_unit code 'TEST'.

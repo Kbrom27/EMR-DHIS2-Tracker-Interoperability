@@ -5,6 +5,9 @@ from typing import Dict, Optional
 
 RESOURCES_DIR = Path(__file__).resolve().with_name("Resources")
 
+O3_SCHEMA_ROOT = RESOURCES_DIR / "O3" / "Schemas"
+O3_METADATA_PATH = RESOURCES_DIR / "O3" / "metadata_for_openmrs_3x.json"
+
 MATERNAL_PROGRAM = "Maternal Inpatient Data/aLoraiFNkng"
 NEONATAL_PROGRAM = "Neonatal Care Form/QYJKpoUeg9F"
 PROGRAM_LABELS = (MATERNAL_PROGRAM, NEONATAL_PROGRAM)
@@ -93,6 +96,19 @@ FACILITIES = (
 )
 
 FACILITY_CODES = dict(FACILITIES)
+
+STAGE_NAME_ALIASES = {
+    "Medication sheet": "Medication and intervention",
+    "Neonatal Medication Adminstration Sheet": "Medication and intervention",
+    "Neonatal Intervention Sheet": "Medication and intervention",
+    "Neonatal Discharge care form": "Discharge care form",
+    "Neonatal Nurse followup Sheet": "Nurse followup Sheet",
+}
+
+
+def normalize_stage_name(name: str) -> str:
+    cleaned = str(name or "").strip()
+    return STAGE_NAME_ALIASES.get(cleaned, cleaned)
 
 MATERNAL_COMPUTED_DIAGNOSIS_HEADERS = (
     "Diagnosis :: Obstetric complications",

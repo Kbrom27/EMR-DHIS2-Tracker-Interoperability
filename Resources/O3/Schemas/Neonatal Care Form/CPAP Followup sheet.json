@@ -1,0 +1,206 @@
+{
+  "name": "CPAP Followup sheet",
+  "pages": [
+    {
+      "label": "CPAP Followup sheet",
+      "sections": [
+        {
+          "label": "CPAP Followup sheet",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "CPAP Followup sheet Entry",
+              "id": "cpapFollowupSheetEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "33fa7f1b-41ff-4183-9025-a0720ac8bd3c",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "label": "CPAP Administered",
+                  "id": "cpapAdministered",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "bb521972-bb15-4eef-aafd-76a201c1bdae",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Type of CPAP machine used",
+                  "id": "typeOfCPAPMachineUsed",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "84c3c934-e061-4585-8f91-c6197e69c79d",
+                    "answers": [
+                      {
+                        "concept": "b44f5305-9544-47eb-aa75-bceca2fa3dc5",
+                        "label": "Improvised bubble CPAP machine with 100% oxygen"
+                      },
+                      {
+                        "concept": "9af647a4-d8c2-437a-b98f-e077fa902030",
+                        "label": "CPAP machine that blends oxygen (without humidification)"
+                      },
+                      {
+                        "concept": "d73e6fd7-e284-45b1-891e-78edcbfa82b6",
+                        "label": "CPAP machine that blends oxygen and humidifies"
+                      },
+                      {
+                        "concept": "db685cbf-c645-4841-9953-fc6c7495d7b2",
+                        "label": "CPAP machine that blends oxygen, heats and humidifies"
+                      },
+                      {
+                        "concept": "758ff55e-fb78-4040-93d2-6d28fe8c6dd3",
+                        "label": "Mechanical ventilator on nasal CPAP mode"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('cpapAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Does CPAP require electrical power",
+                  "id": "doesCPAPRequireElectricalPower",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "4a6a38eb-ca52-4912-baa5-22fc4fc96d68",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('cpapAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Oxygen saturation (%) level that led to the use of CPAP",
+                  "id": "oxygenSaturationLevelThatLedToTheUseOfCPAP",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "7a010e23-7a7d-43f2-bf14-f69c7425f0c5"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('cpapAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "CPAP Start Date",
+                  "id": "cpapStartDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "8c4c1c7c-2d1c-4eef-9b88-2a72f8f6bc5b"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('cpapAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "CPAP Start Time",
+                  "id": "cpapStartTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "3ede63fe-0b62-49c3-9313-b79d73efac6e"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('cpapAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "CPAP End Date",
+                  "id": "cpapEndDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "2d366bff-374c-4056-b3a7-9484b43173ab"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('cpapAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "CPAP End Time",
+                  "id": "cpapEndTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "1d9613c6-6578-4c4f-b351-d7b488db052e"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('cpapAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Why CPAP stopped",
+                  "id": "whyCPAPStopped",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "9090abc2-c670-4c1e-97dc-6288bf7760bd",
+                    "answers": [
+                      {
+                        "concept": "9c913c2d-3467-4b44-8cd1-51cf6a7e9473",
+                        "label": "No longer indicated (Improvement)"
+                      },
+                      {
+                        "concept": "e512b7ed-0d94-464f-ab6e-be815b5382d9",
+                        "label": "No longer indicated (Deterioration)"
+                      },
+                      {
+                        "concept": "4f516e08-e93a-4a8d-8506-b5d0acdfc816",
+                        "label": "Power outage"
+                      },
+                      {
+                        "concept": "c2b58cfa-c246-43a7-9700-3525cf03d839",
+                        "label": "Device broke or stopped functioning"
+                      },
+                      {
+                        "concept": "ba46256c-1c1a-4ff7-af02-ecefc9ca6bf5",
+                        "label": "Device needed for another baby"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('cpapAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "d48e9732-967b-49b6-a695-3223e75e69b8",
+  "description": "CPAP Followup sheet",
+  "version": "1.0",
+  "repeatable": true
+}

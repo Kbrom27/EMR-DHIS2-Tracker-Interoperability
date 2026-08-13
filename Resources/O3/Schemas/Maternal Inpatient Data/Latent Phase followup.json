@@ -1,0 +1,244 @@
+{
+  "name": "Latent Phase followup",
+  "pages": [
+    {
+      "label": "Latent Phase followup",
+      "sections": [
+        {
+          "label": "Latent Phase followup",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Latent Phase followup Entry",
+              "id": "latentPhaseFollowupEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "fa029141-385f-40ea-8f15-2b6fc2c65ce5",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "label": "Date",
+                  "id": "date",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "1d76817e-1452-44af-95bd-4ecd5f323327"
+                  }
+                },
+                {
+                  "label": "Time",
+                  "id": "time",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "d70bac20-5571-46c2-a14d-f81e886212cd"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "BP (systolic)",
+                  "id": "bpSystolic",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "d0865b95-a4f0-41d9-9473-ba20808e31b0"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('bpSystolic')<50 || useFieldValue('bpSystolic')>250) && !isEmpty(useFieldValue('bpSystolic'))",
+                      "message": "Systolic Blood Pressure should be between 50 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "BP (diastolic)",
+                  "id": "bpDiastolic",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "015cacc6-98da-48a1-a162-f5b300f382c7"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('bpDiastolic')<50 || useFieldValue('bpDiastolic')>250) && !isEmpty(useFieldValue('bpDiastolic'))",
+                      "message": "Diastolic Blood Pressure should be between 50 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "PR",
+                  "id": "pr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "f7f39291-80c3-4f54-aeba-74f5b89adefc"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('pr')<20 || useFieldValue('pr')>250) && !isEmpty(useFieldValue('pr'))",
+                      "message": "Pulse Rate should be between 20 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "RR",
+                  "id": "rr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "9f963dc3-469a-404b-b8d7-19e4e1aaec18"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('rr')<5 || useFieldValue('rr')>80) && !isEmpty(useFieldValue('rr'))",
+                      "message": "Respiration Rate should be between 5 and 80"
+                    }
+                  ]
+                },
+                {
+                  "label": "Temp",
+                  "id": "temp",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "3b53faa5-9658-4f3f-843f-d5e6fbb6c152"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('temp')<30 || useFieldValue('temp')>45) && !isEmpty(useFieldValue('temp'))",
+                      "message": "Temperature Should be between 30 and 45"
+                    }
+                  ]
+                },
+                {
+                  "label": "Uterine contraction",
+                  "id": "uterineContraction",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "cc68b93e-f21d-49c7-8017-4b4113daf2fc",
+                    "answers": [
+                      {
+                        "concept": "163748AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Present"
+                      },
+                      {
+                        "concept": "163747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Absent"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Colour of Liquor",
+                  "id": "colourOfLiquor",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "2cdc02bf-29f0-477e-9e53-e638181b341b",
+                    "answers": [
+                      {
+                        "concept": "d80b7dcc-31cc-4e20-ac08-f52ca3d48419",
+                        "label": "Clear"
+                      },
+                      {
+                        "concept": "c2267221-fb9b-4e57-82c5-943537052e2f",
+                        "label": "Meconium-stained"
+                      },
+                      {
+                        "concept": "a33e1c3e-aba7-4cfd-a00c-f29da4d81518",
+                        "label": "Foul-smelling"
+                      },
+                      {
+                        "concept": "1077AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Bloody"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "FHB (Fetal Heart Beat)",
+                  "id": "fhbFetalHeartBeat",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "7d974884-2bbb-43b4-a67f-65fa25e90b30"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('fhbFetalHeartBeat')<80 || useFieldValue('fhbFetalHeartBeat')>200) && !isEmpty(useFieldValue('fhbFetalHeartBeat'))",
+                      "message": "FHB must be between 80 and 200 bpm"
+                    }
+                  ]
+                },
+                {
+                  "label": "Cervical dilatation",
+                  "id": "cervicalDilatation",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "d504a66d-1f7d-4aa6-9c08-45507f61239e"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "useFieldValue('cervicalDilatation')>10 && !isEmpty(useFieldValue('cervicalDilatation'))",
+                      "message": "Dilation cannot exceed 10 cm"
+                    }
+                  ]
+                },
+                {
+                  "label": "Cervical effacement",
+                  "id": "cervicalEffacement",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "5c5538cb-e2eb-4de2-ac71-01230921057e"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "useFieldValue('cervicalEffacement')>100 && !isEmpty(useFieldValue('cervicalEffacement'))",
+                      "message": "Cervical effacement should be between 0 and 100"
+                    }
+                  ]
+                },
+                {
+                  "label": "HCT",
+                  "id": "hct",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "b38c77b3-6b8c-45f0-b932-2cea7ae1f7d9"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('hct')<20 || useFieldValue('hct')>50) && !isEmpty(useFieldValue('hct'))",
+                      "message": "HCT should be between 20 and 50"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "603868c6-de33-4c07-a7d9-b82f602e139b",
+  "description": "Latent Phase followup",
+  "version": "1.0",
+  "repeatable": true
+}

@@ -1,0 +1,2 @@
+record_id,patient,program,stage,column,field_name,field_id,value,reason
+Test0000100046,Test0000100046,Maternal Inpatient Data/aLoraiFNkng,Delivery summary,Delivery summary :: Other Number of Newborns,Other Number of Newborns,tIa0WvbPGLk,Single,Value could not be converted to DHIS2 INTEGER_POSITIVE format and was discarded.

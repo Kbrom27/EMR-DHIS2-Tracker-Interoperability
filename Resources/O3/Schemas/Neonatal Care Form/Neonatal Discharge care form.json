@@ -1,0 +1,1139 @@
+{
+  "name": "Neonatal Discharge care form",
+  "pages": [
+    {
+      "label": "Discharge care form",
+      "sections": [
+        {
+          "label": "Discharge Outcome",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Newborn status at discharge",
+              "id": "newbornStatusAtDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "e8874b1d-f72a-42fb-895c-094c5b625c8f",
+                "answers": [
+                  {
+                    "concept": "bc1bdd23-0264-4831-8b13-1bdbc45f1763",
+                    "label": "Dead"
+                  },
+                  {
+                    "concept": "6b28d08a-03f2-11ec-9a03-0242ac130003",
+                    "label": "Alive"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Discharge Outcome",
+              "id": "dischargeOutcome",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "47962798-cad1-49c4-af80-8e5d2e802540",
+                "answers": [
+                  {
+                    "concept": "4ee0cb5d-8f2f-45de-9b50-ea3d992c0847",
+                    "label": "Discharged Alive"
+                  },
+                  {
+                    "concept": "1fac9712-f5ab-4d21-81b1-b1fadd8062b8",
+                    "label": "Discharged with complications"
+                  },
+                  {
+                    "concept": "8a910362-b423-430b-bff3-7420edef50ff",
+                    "label": "Discharged against medical advice - poor prognosis"
+                  },
+                  {
+                    "concept": "8f3d9251-5003-4cdc-b463-9b5e7b7af05a",
+                    "label": "Discharged against medical advice - other"
+                  },
+                  {
+                    "concept": "fffe0323-1273-4192-89a0-8d0382ab5ea8",
+                    "label": "Absconded"
+                  },
+                  {
+                    "concept": "4c05164a-a9ea-4bf9-a8a1-62d792e63057",
+                    "label": "Referred/Transferred"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "newbornStatusAtDischarge!=='6b28d08a-03f2-11ec-9a03-0242ac130003'"
+              }
+            },
+            {
+              "label": "Final Discharge Diagnosis/Cause of Death (primary)",
+              "id": "finalDischargeDiagnosisCauseOfDeathPrimary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "589ade7d-f93e-4855-97ba-a748a335a0a8",
+                "answers": [
+                  {
+                    "concept": "f8f04657-4baf-4351-92bb-ad19e85b6a27",
+                    "label": "Congenital Malformations"
+                  },
+                  {
+                    "concept": "81f05d3e-a9cd-47ca-b4c2-2c34ecec509c",
+                    "label": "Prematurity"
+                  },
+                  {
+                    "concept": "27fa49de-29cf-49b9-acf5-678a88a59e9e",
+                    "label": "Infection"
+                  },
+                  {
+                    "concept": "090f62e1-ab55-4440-9760-b7fc2cc4037a",
+                    "label": "Intrapartum-related"
+                  },
+                  {
+                    "concept": "8ec325b5-a639-4518-af7f-85e0aaa6e5dc",
+                    "label": "Jaundice (Pathological)"
+                  },
+                  {
+                    "concept": "148e118c-7f05-45a3-b783-4296102543b2",
+                    "label": "Other (None of Above)"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Sub-Categories of Congenital Malformations",
+              "id": "subCategoriesOfCongenitalMalformations",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "90e4bfd4-d6c6-48d4-b2d1-0815ae1414ac",
+                "answers": [
+                  {
+                    "concept": "ef66d87e-42be-441a-ab3f-13780292b1d4",
+                    "label": "Congenital Heart Defects"
+                  },
+                  {
+                    "concept": "94524d7f-525b-4171-8347-c9d98ce8ce1c",
+                    "label": "Chromosomal Disorders"
+                  },
+                  {
+                    "concept": "ae2e2e6a-ab18-4cd2-945e-d945e8fbba1b",
+                    "label": "Abdominal Defects"
+                  },
+                  {
+                    "concept": "dee2f578-72af-4c24-96e8-97281ba6925c",
+                    "label": "Neural Tube Defects"
+                  },
+                  {
+                    "concept": "aa80ff76-e275-48e8-a31e-31fd613ed503",
+                    "label": "Orofacial Cleft"
+                  },
+                  {
+                    "concept": "903d616e-8113-4eb8-ba81-74a6653c2c3c",
+                    "label": "Talipes/Club Foot"
+                  },
+                  {
+                    "concept": "934d340a-95bf-44ad-be5b-d8f47614bbbd",
+                    "label": "Other Congential"
+                  },
+                  {
+                    "concept": "6c646dba-801f-42d2-97ee-98874e75ea4b",
+                    "label": "Congenital Cause But Not Able to Specify"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathPrimary!=='f8f04657-4baf-4351-92bb-ad19e85b6a27'"
+              }
+            },
+            {
+              "label": "If other congenital cause/diagnosis - specify",
+              "id": "ifOtherCongenitalCauseDiagnosisSpecify",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "70a85671-b47f-497b-afbe-9b2f23fce4d4"
+              },
+              "hide": {
+                "hideWhenExpression": "subCategoriesOfCongenitalMalformations!=='934d340a-95bf-44ad-be5b-d8f47614bbbd'"
+              }
+            },
+            {
+              "label": "Sub-Categories of Prematurity",
+              "id": "subCategoriesOfPrematurity",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "21d82b04-c9a0-462a-a677-6542e43dae0a",
+                "answers": [
+                  {
+                    "concept": "927ac56f-4f97-44a8-92dd-95743202b48e",
+                    "label": "Respiratory Distress Syndrome (of Prematurity)"
+                  },
+                  {
+                    "concept": "0317594a-9959-49a6-a2d7-4e84f7faf7a2",
+                    "label": "Intraventricular Haemorrhage"
+                  },
+                  {
+                    "concept": "41bcc21d-c963-46aa-8411-5b7d49a6bb0f",
+                    "label": "Necrotizing Enterocolitis"
+                  },
+                  {
+                    "concept": "03e63e99-3d65-4695-8316-de2f2ea3b3a9",
+                    "label": "Other Prematurity"
+                  },
+                  {
+                    "concept": "9364c924-a828-4e27-a110-db1027e72af2",
+                    "label": "Prematurity Cause But Not Able to Specify"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathPrimary!=='81f05d3e-a9cd-47ca-b4c2-2c34ecec509c'"
+              }
+            },
+            {
+              "label": "If other prematurity cause/diagnosis - specify",
+              "id": "ifOtherPrematurityCauseDiagnosisSpecify",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "1562dd1f-a7b4-4252-9464-69d8d04f25e7"
+              },
+              "hide": {
+                "hideWhenExpression": "subCategoriesOfPrematurity!=='03e63e99-3d65-4695-8316-de2f2ea3b3a9'"
+              }
+            },
+            {
+              "label": "Sub-Categories of Infection",
+              "id": "subCategoriesOfInfection",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "d237030b-1106-4247-8dee-be728db63a26",
+                "answers": [
+                  {
+                    "concept": "6e741dc8-0cb0-4d15-8d35-ae8a80556cbf",
+                    "label": "Probable Sepsis"
+                  },
+                  {
+                    "concept": "6e23bab3-a11d-4bc9-80a9-54bb74081144",
+                    "label": "Culture-Positive Sepsis"
+                  },
+                  {
+                    "concept": "93781a1c-5e1e-48cc-a8d0-9712882ea476",
+                    "label": "Probable Meningitis"
+                  },
+                  {
+                    "concept": "22142919-f321-499f-bee5-67efb552b2f8",
+                    "label": "Culture-Positive Meningitis"
+                  },
+                  {
+                    "concept": "114100AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Pneumonia"
+                  },
+                  {
+                    "concept": "ffffa9ac-61e9-4c99-aba0-589102176419",
+                    "label": "SARS-CoV-2 (COVID-19)"
+                  },
+                  {
+                    "concept": "1bccad96-3e0b-4c17-b5c7-ec3635bed5c1",
+                    "label": "Other Infection"
+                  },
+                  {
+                    "concept": "7f417ae8-7155-4b31-80e3-e46415ecfa9f",
+                    "label": "Infection Cause But Not Able to Specify"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(finalDischargeDiagnosisCauseOfDeathPrimary==='27fa49de-29cf-49b9-acf5-678a88a59e9e') && isEmpty(myValue)",
+                  "message": "This field is required"
+                }
+              ],
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathPrimary!=='27fa49de-29cf-49b9-acf5-678a88a59e9e'"
+              }
+            },
+            {
+              "label": "If other infection cause/diagnosis - specify",
+              "id": "ifOtherInfectionCauseDiagnosisSpecify",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "b5f38544-0d7d-455b-bbe3-83697b9b654f"
+              },
+              "hide": {
+                "hideWhenExpression": "subCategoriesOfInfection!=='1bccad96-3e0b-4c17-b5c7-ec3635bed5c1'"
+              }
+            },
+            {
+              "label": "If infection - is it hospital-acquired?",
+              "id": "ifInfectionIsItHospitalAcquired",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "80de470e-5ef5-4687-9c5d-7a5f0d475cad",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathPrimary!=='27fa49de-29cf-49b9-acf5-678a88a59e9e'"
+              }
+            },
+            {
+              "label": "Sub-Categories of Intrapartum-Related",
+              "id": "subCategoriesOfIntrapartumRelated",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "a1d3af53-cf66-4439-8e80-79db21fbeeec",
+                "answers": [
+                  {
+                    "concept": "89a157a6-eb57-412b-9a45-ae6af8d50609",
+                    "label": "Neonatal Hypoxic Ischemic Encephalopathy"
+                  },
+                  {
+                    "concept": "c9b2f434-c1bd-4aa2-82b7-a21021ceebd2",
+                    "label": "Birth Injury (Intrapartum-related)"
+                  },
+                  {
+                    "concept": "076eb3c8-db83-41ef-ac47-a8b44879cbf5",
+                    "label": "Other Intrapartum-Related"
+                  },
+                  {
+                    "concept": "bef8ee8c-4ea3-4997-b651-442679f1841a",
+                    "label": "Intrapartum-Related Cause But Not Able to Specify"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathPrimary!=='090f62e1-ab55-4440-9760-b7fc2cc4037a'"
+              }
+            },
+            {
+              "label": "If other intrapartum-related cause/diagnosis - specify",
+              "id": "ifOtherIntrapartumRelatedCauseDiagnosisSpecify",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "c21decf1-a27e-4212-ad24-21c9c86607ee"
+              },
+              "hide": {
+                "hideWhenExpression": "subCategoriesOfIntrapartumRelated!=='076eb3c8-db83-41ef-ac47-a8b44879cbf5'"
+              }
+            },
+            {
+              "label": "Sub-Categories of Jaundice (Pathological)",
+              "id": "subCategoriesOfJaundicePathological",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "d2b01572-1ac6-4738-ae38-b544660ea0c1",
+                "answers": [
+                  {
+                    "concept": "19d1c95f-bd04-47ab-bd00-065ed01a0044",
+                    "label": "Requiring Phototherapy"
+                  },
+                  {
+                    "concept": "95c82781-9a37-4d4e-bfad-efd7a5bc7920",
+                    "label": "Requiring Exchange Transfusion"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathPrimary!=='8ec325b5-a639-4518-af7f-85e0aaa6e5dc'"
+              }
+            },
+            {
+              "label": "If Other Cause of Death or Final Diagnosis - Specify",
+              "id": "ifOtherCauseOfDeathOrFinalDiagnosisSpecify",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "fa1ef1c4-453e-439b-a063-3ed0502337c5"
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathPrimary!=='148e118c-7f05-45a3-b783-4296102543b2'"
+              }
+            },
+            {
+              "label": "Final Discharge Diagnosis/Cause of Death (Secondary)",
+              "id": "finalDischargeDiagnosisCauseOfDeathSecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "d3f4b495-3f1a-455b-9ef2-d3ae11a99b90",
+                "answers": [
+                  {
+                    "concept": "f8f04657-4baf-4351-92bb-ad19e85b6a27",
+                    "label": "Congenital Malformations"
+                  },
+                  {
+                    "concept": "81f05d3e-a9cd-47ca-b4c2-2c34ecec509c",
+                    "label": "Prematurity"
+                  },
+                  {
+                    "concept": "27fa49de-29cf-49b9-acf5-678a88a59e9e",
+                    "label": "Infection"
+                  },
+                  {
+                    "concept": "090f62e1-ab55-4440-9760-b7fc2cc4037a",
+                    "label": "Intrapartum-related"
+                  },
+                  {
+                    "concept": "8ec325b5-a639-4518-af7f-85e0aaa6e5dc",
+                    "label": "Jaundice (Pathological)"
+                  },
+                  {
+                    "concept": "148e118c-7f05-45a3-b783-4296102543b2",
+                    "label": "Other (None of Above)"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Was low birthweight (LBW) mentioned as a diagnosis or cause of death?",
+              "id": "wasLowBirthweightLBWMentionedAsADiagnosisOrCauseOfDeath",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "567c0d09-f927-462b-9ba9-b69d8237a498",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathSecondary!=='148e118c-7f05-45a3-b783-4296102543b2'"
+              }
+            },
+            {
+              "label": "Sub-Categories of Congenital Malformations(secondary):",
+              "id": "subCategoriesOfCongenitalMalformationsSecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "298f6c14-8247-4e7c-a3b3-ca8030792800",
+                "answers": [
+                  {
+                    "concept": "ef66d87e-42be-441a-ab3f-13780292b1d4",
+                    "label": "Congenital Heart Defects"
+                  },
+                  {
+                    "concept": "94524d7f-525b-4171-8347-c9d98ce8ce1c",
+                    "label": "Chromosomal Disorders"
+                  },
+                  {
+                    "concept": "ae2e2e6a-ab18-4cd2-945e-d945e8fbba1b",
+                    "label": "Abdominal Defects"
+                  },
+                  {
+                    "concept": "dee2f578-72af-4c24-96e8-97281ba6925c",
+                    "label": "Neural Tube Defects"
+                  },
+                  {
+                    "concept": "aa80ff76-e275-48e8-a31e-31fd613ed503",
+                    "label": "Orofacial Cleft"
+                  },
+                  {
+                    "concept": "903d616e-8113-4eb8-ba81-74a6653c2c3c",
+                    "label": "Talipes/Club Foot"
+                  },
+                  {
+                    "concept": "934d340a-95bf-44ad-be5b-d8f47614bbbd",
+                    "label": "Other Congential"
+                  },
+                  {
+                    "concept": "6c646dba-801f-42d2-97ee-98874e75ea4b",
+                    "label": "Congenital Cause But Not Able to Specify"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathSecondary!=='f8f04657-4baf-4351-92bb-ad19e85b6a27'"
+              }
+            },
+            {
+              "label": "If other congenital cause/diagnosis - specify(secondary):",
+              "id": "ifOtherCongenitalCauseDiagnosisSpecifySecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "37d61493-c811-41fb-ab1f-0623d2170e45"
+              },
+              "hide": {
+                "hideWhenExpression": "subCategoriesOfCongenitalMalformationsSecondary!=='934d340a-95bf-44ad-be5b-d8f47614bbbd'"
+              }
+            },
+            {
+              "label": "Sub-Categories of Prematurity(secondary):",
+              "id": "subCategoriesOfPrematuritySecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "3da0ab06-6e78-4290-a518-ff26fba91b20",
+                "answers": [
+                  {
+                    "concept": "927ac56f-4f97-44a8-92dd-95743202b48e",
+                    "label": "Respiratory Distress Syndrome (of Prematurity)"
+                  },
+                  {
+                    "concept": "0317594a-9959-49a6-a2d7-4e84f7faf7a2",
+                    "label": "Intraventricular Haemorrhage"
+                  },
+                  {
+                    "concept": "41bcc21d-c963-46aa-8411-5b7d49a6bb0f",
+                    "label": "Necrotizing Enterocolitis"
+                  },
+                  {
+                    "concept": "03e63e99-3d65-4695-8316-de2f2ea3b3a9",
+                    "label": "Other Prematurity"
+                  },
+                  {
+                    "concept": "9364c924-a828-4e27-a110-db1027e72af2",
+                    "label": "Prematurity Cause But Not Able to Specify"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathSecondary!=='81f05d3e-a9cd-47ca-b4c2-2c34ecec509c'"
+              }
+            },
+            {
+              "label": "If other prematurity cause/diagnosis - specify(secondary):",
+              "id": "ifOtherPrematurityCauseDiagnosisSpecifySecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "9d55bedf-a0d8-4e19-981a-fc48e82ed103"
+              },
+              "hide": {
+                "hideWhenExpression": "subCategoriesOfPrematuritySecondary!=='03e63e99-3d65-4695-8316-de2f2ea3b3a9'"
+              }
+            },
+            {
+              "label": "Sub-Categories of Infection(secondary):",
+              "id": "subCategoriesOfInfectionSecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "2602923c-e983-44ba-bcb9-3af67f9a5402",
+                "answers": [
+                  {
+                    "concept": "6e741dc8-0cb0-4d15-8d35-ae8a80556cbf",
+                    "label": "Probable Sepsis"
+                  },
+                  {
+                    "concept": "6e23bab3-a11d-4bc9-80a9-54bb74081144",
+                    "label": "Culture-Positive Sepsis"
+                  },
+                  {
+                    "concept": "93781a1c-5e1e-48cc-a8d0-9712882ea476",
+                    "label": "Probable Meningitis"
+                  },
+                  {
+                    "concept": "22142919-f321-499f-bee5-67efb552b2f8",
+                    "label": "Culture-Positive Meningitis"
+                  },
+                  {
+                    "concept": "114100AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Pneumonia"
+                  },
+                  {
+                    "concept": "ffffa9ac-61e9-4c99-aba0-589102176419",
+                    "label": "SARS-CoV-2 (COVID-19)"
+                  },
+                  {
+                    "concept": "1bccad96-3e0b-4c17-b5c7-ec3635bed5c1",
+                    "label": "Other Infection"
+                  },
+                  {
+                    "concept": "7f417ae8-7155-4b31-80e3-e46415ecfa9f",
+                    "label": "Infection Cause But Not Able to Specify"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathSecondary!=='27fa49de-29cf-49b9-acf5-678a88a59e9e'"
+              }
+            },
+            {
+              "label": "If other infection cause/diagnosis - specify(secondary):",
+              "id": "ifOtherInfectionCauseDiagnosisSpecifySecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "7835710c-d69c-41da-8a7e-46ddf1eec7c7"
+              },
+              "hide": {
+                "hideWhenExpression": "subCategoriesOfInfectionSecondary!=='1bccad96-3e0b-4c17-b5c7-ec3635bed5c1'"
+              }
+            },
+            {
+              "label": "If infection - is it hospital-acquired(secondary)?",
+              "id": "ifInfectionIsItHospitalAcquiredSecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "d3b4dae2-5380-438b-b976-38ae3998a330",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathSecondary!=='27fa49de-29cf-49b9-acf5-678a88a59e9e'"
+              }
+            },
+            {
+              "label": "Culture Positive Organism(secondary):",
+              "id": "culturePositiveOrganismSecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "271bdfd8-f3dd-4093-a4ce-40267214325a",
+                "answers": [
+                  {
+                    "concept": "7acb562f-3b2e-4f88-a892-a45417e87c6c",
+                    "label": "Staphylococcus aureus"
+                  },
+                  {
+                    "concept": "bb386f00-cf5d-4587-94bd-e416ffe8078a",
+                    "label": "Klebsiella spp."
+                  },
+                  {
+                    "concept": "2386b14a-1e13-4337-8a9b-88902417e1da",
+                    "label": "Pseudomonas spp."
+                  },
+                  {
+                    "concept": "fe8fe0d3-6a57-4c23-b879-c8cd03c074e5",
+                    "label": "Escherichia coli"
+                  },
+                  {
+                    "concept": "a6c70706-6416-4f58-822a-6c248138aba6",
+                    "label": "Acinetobacter spp."
+                  },
+                  {
+                    "concept": "e7453b69-f53c-4ae3-8d66-f3415881d425",
+                    "label": "Group B Streptococcus"
+                  },
+                  {
+                    "concept": "1e7ac392-b1be-48c9-b3a2-755b2d384347",
+                    "label": "Other gram-negatives"
+                  },
+                  {
+                    "concept": "591af06a-f45e-4a74-9dd0-0215599e1824",
+                    "label": "Other Streptococcus"
+                  },
+                  {
+                    "concept": "a563165a-4824-4eb3-a856-f44089cfca5e",
+                    "label": "Other Fungal spp."
+                  },
+                  {
+                    "concept": "4565db6d-e67c-420e-b8cb-3b21de796372",
+                    "label": "Not indicated"
+                  },
+                  {
+                    "concept": "4ecad760-e2f1-4a02-8072-d7fc5068dd29",
+                    "label": "Not recorded"
+                  },
+                  {
+                    "concept": "0b476f22-529c-4769-8795-3b875a78faa9",
+                    "label": "Not readable"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "subCategoriesOfInfectionSecondary!=='6e23bab3-a11d-4bc9-80a9-54bb74081144' && subCategoriesOfInfectionSecondary!=='22142919-f321-499f-bee5-67efb552b2f8'"
+              }
+            },
+            {
+              "label": "If other - full species/genus of microorganism(secondary):",
+              "id": "ifOtherFullSpeciesGenusOfMicroorganismSecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "ad78c875-a64b-473c-86e5-af8a53f335cc"
+              },
+              "hide": {
+                "hideWhenExpression": "culturePositiveOrganismSecondary!=='c71c7542-8ff5-44dd-a623-dc9559cbbbb5'"
+              }
+            },
+            {
+              "label": "If full name available - full species/genus of microorganism(secondary):",
+              "id": "ifFullNameAvailableFullSpeciesGenusOfMicroorganismSecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "65585382-8fd3-4920-a4cb-ffac982f573f"
+              },
+              "hide": {
+                "hideWhenExpression": "culturePositiveOrganismSecondary!=='bb386f00-cf5d-4587-94bd-e416ffe8078a' && culturePositiveOrganismSecondary!=='2386b14a-1e13-4337-8a9b-88902417e1da' && culturePositiveOrganismSecondary!=='a6c70706-6416-4f58-822a-6c248138aba6' && culturePositiveOrganismSecondary!=='1e7ac392-b1be-48c9-b3a2-755b2d384347' && culturePositiveOrganismSecondary!=='591af06a-f45e-4a74-9dd0-0215599e1824' && culturePositiveOrganismSecondary!=='a563165a-4824-4eb3-a856-f44089cfca5e'"
+              }
+            },
+            {
+              "label": "Sub-Categories of Intrapartum-Related(secondary):",
+              "id": "subCategoriesOfIntrapartumRelatedSecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "ceb05550-286f-4456-ac61-1103aaf47743",
+                "answers": [
+                  {
+                    "concept": "89a157a6-eb57-412b-9a45-ae6af8d50609",
+                    "label": "Neonatal Hypoxic Ischemic Encephalopathy"
+                  },
+                  {
+                    "concept": "c9b2f434-c1bd-4aa2-82b7-a21021ceebd2",
+                    "label": "Birth Injury (Intrapartum-related)"
+                  },
+                  {
+                    "concept": "076eb3c8-db83-41ef-ac47-a8b44879cbf5",
+                    "label": "Other Intrapartum-Related"
+                  },
+                  {
+                    "concept": "bef8ee8c-4ea3-4997-b651-442679f1841a",
+                    "label": "Intrapartum-Related Cause But Not Able to Specify"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathSecondary!=='090f62e1-ab55-4440-9760-b7fc2cc4037a'"
+              }
+            },
+            {
+              "label": "If other intrapartum-related cause/diagnosis - specify(secondary):",
+              "id": "ifOtherIntrapartumRelatedCauseDiagnosisSpecifySecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "3e0684c7-d906-4ba4-8aa6-186ac36114b5"
+              },
+              "hide": {
+                "hideWhenExpression": "subCategoriesOfIntrapartumRelatedSecondary!=='076eb3c8-db83-41ef-ac47-a8b44879cbf5'"
+              }
+            },
+            {
+              "label": "Sub-Categories of Jaundice (Pathological)(secondary):",
+              "id": "subCategoriesOfJaundicePathologicalSecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "40f867c0-08d2-4968-888c-702b56e16b04",
+                "answers": [
+                  {
+                    "concept": "19d1c95f-bd04-47ab-bd00-065ed01a0044",
+                    "label": "Requiring Phototherapy"
+                  },
+                  {
+                    "concept": "95c82781-9a37-4d4e-bfad-efd7a5bc7920",
+                    "label": "Requiring Exchange Transfusion"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathSecondary!=='8ec325b5-a639-4518-af7f-85e0aaa6e5dc'"
+              }
+            },
+            {
+              "label": "If Other Cause of Death or Final Diagnosis - Specify(secondary):",
+              "id": "ifOtherCauseOfDeathOrFinalDiagnosisSpecifySecondary",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "29de2eda-53f7-4c8d-bcdd-773a3d0dbfcb"
+              },
+              "hide": {
+                "hideWhenExpression": "finalDischargeDiagnosisCauseOfDeathSecondary!=='148e118c-7f05-45a3-b783-4296102543b2'"
+              }
+            },
+            {
+              "label": "what was done to prevent death",
+              "id": "whatWasDoneToPreventDeath",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "bf100dad-c07f-4719-87ad-110c5fbb7a97"
+              },
+              "hide": {
+                "hideWhenExpression": "newbornStatusAtDischarge!=='bc1bdd23-0264-4831-8b13-1bdbc45f1763'"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Admission",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Date and time of discharge",
+              "id": "dateAndTimeOfDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "datetime",
+                "concept": "ffb99f69-9c37-4398-aebc-4e6d1f64616e"
+              },
+              "datePickerFormat": "both"
+            },
+            {
+              "label": "Age at discharge",
+              "id": "ageAtDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "8f80da6b-8a66-4e50-9f6d-3aa777ef5a79"
+              }
+            },
+            {
+              "label": "GA",
+              "id": "ga",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "2dec7637-228c-4d61-b8a6-1f00cbef77ce"
+              }
+            },
+            {
+              "label": "Corrected GA at discharges",
+              "id": "correctedGAAtDischarges",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "ab0c876d-1d97-42d5-9cf7-012148cae4f5"
+              }
+            },
+            {
+              "label": "Weight on discharge",
+              "id": "weightOnDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "ef2c90e6-a240-4803-80a2-9f15740024af"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "!isEmpty(weightOnDischarge) && (weightOnDischarge<500 || weightOnDischarge>8000)",
+                  "message": "Weight on discharge should be between 500 and 8000"
+                }
+              ]
+            },
+            {
+              "label": "HC on discharge",
+              "id": "hcOnDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "2c125d2f-bef7-4c8f-b006-7bc29573035c"
+              }
+            },
+            {
+              "label": "Length on discharge",
+              "id": "lengthOnDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "d5f67e00-58ae-460c-91e9-161a18d69204"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Diagnosis",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "List of diagnosis",
+              "id": "listOfDiagnosis",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "e8c8869c-6843-4d37-b8a0-b31908045eb1"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Significant Maternal and Birth History",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Any significant maternal and birth history",
+              "id": "anySignificantMaternalAndBirthHistory",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "925853c8-3006-4025-b8c6-679a97e78d50"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Investigations and Results",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Investigations done and result",
+              "id": "investigationsDoneAndResult",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "3918114d-a375-4daa-8008-c2605bd2e0ef"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Course and Treatments given",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Course and Treatments given in the hospital",
+              "id": "courseAndTreatmentsGivenInTheHospital",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "e58edeed-3c64-44f1-add8-338df1d0e72c"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Vital signs",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "PR",
+              "id": "pr",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "7b36e6d7-369a-4bf0-b02f-cbd5e7a5b254"
+              }
+            },
+            {
+              "label": "RR",
+              "id": "rr",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "1fc65639-75fb-4c8d-be75-1fbd78b917e7"
+              }
+            },
+            {
+              "label": "Temp",
+              "id": "temp",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "e6168eda-c4c2-40ef-af97-000b29bb3f73"
+              }
+            },
+            {
+              "label": "Sao2",
+              "id": "sao2",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "004623a9-eb40-4752-b1f8-f179d043b051"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Physical examination finding",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Pertinent physical examination finding at discharge",
+              "id": "pertinentPhysicalExaminationFindingAtDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "db2ea83d-5bf9-4fe6-bfaf-4687f2a2ddf6"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Provisions at discharge",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Advice given on discharge",
+              "id": "adviceGivenOnDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "f6757721-b5e8-47cc-a8f8-bd45a1a612f7"
+              }
+            },
+            {
+              "label": "Medications/Supplements given on discharge",
+              "id": "medicationsSupplementsGivenOnDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "6ec33ef3-2bfd-4ec9-b1cc-efbe7ae9f9c3"
+              }
+            },
+            {
+              "label": "Type of feeding on discharge",
+              "id": "typeOfFeedingOnDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "2770991d-65f6-4711-a221-5ae7fd06a781",
+                "answers": [
+                  {
+                    "concept": "9d8fb088-6563-4161-866f-a2d03dd42b91",
+                    "label": "Exclusive breastmilk"
+                  },
+                  {
+                    "concept": "094bbdc3-7df3-47cb-ae59-0d0d225baee4",
+                    "label": "Formula only"
+                  },
+                  {
+                    "concept": "46a82073-681f-4ff5-99d5-1114a9799e43",
+                    "label": "Fortified breastmilk"
+                  },
+                  {
+                    "concept": "49d5bbd9-94e8-4d03-b490-c06e0a83005c",
+                    "label": "Predominant breastmilk"
+                  },
+                  {
+                    "concept": "f0d2ecbb-3d3b-40fe-b053-910347b78705",
+                    "label": "Combination of breastmilk and formula"
+                  },
+                  {
+                    "concept": "5befe62f-e0a1-484e-9bba-7f70b9ce1b9e",
+                    "label": "Unknown - Absconder"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Vaccinations type given",
+              "id": "vaccinationsTypeGiven",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "870a2ccc-5ce0-4d39-b576-c9615a08c540"
+              }
+            },
+            {
+              "label": "Vaccinations given date",
+              "id": "vaccinationsGivenDate",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "b0236670-e8ea-44ff-a8a8-b407b5f9a5d3"
+              },
+              "datePickerFormat": "calendar"
+            }
+          ]
+        },
+        {
+          "label": "Appointment/followup",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Was the patient given a follow-up appointment",
+              "id": "wasThePatientGivenAFollowUpAppointment",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "632b004d-2f05-47ba-94c0-2fa4877d9680",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Appointment date",
+              "id": "appointmentDate",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "f9cbbf0a-7ac4-46ee-b03f-a508456bc1f7"
+              },
+              "hide": {
+                "hideWhenExpression": "wasThePatientGivenAFollowUpAppointment!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              },
+              "datePickerFormat": "calendar"
+            },
+            {
+              "label": "Reason for follow up",
+              "id": "reasonForFollowUp",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "f9625abc-839a-45ab-bbc7-8e1d5ab4ac6f"
+              },
+              "hide": {
+                "hideWhenExpression": "wasThePatientGivenAFollowUpAppointment!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Place of follow up",
+              "id": "placeOfFollowUp",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "c39d66b6-89e4-41aa-aadd-9eeddd41f13e"
+              },
+              "hide": {
+                "hideWhenExpression": "wasThePatientGivenAFollowUpAppointment!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Name of physician",
+              "id": "nameOfPhysician",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "3cd3cae8-7276-4be1-929f-195ec4c0f7b3"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "181820aa-88c9-479b-9077-af92f5364329",
+  "referencedForms": [],
+  "uuid": "46455009-4c42-41d9-97b7-cb96b1ba02b5",
+  "description": "Discharge care form",
+  "version": "1.0"
+}

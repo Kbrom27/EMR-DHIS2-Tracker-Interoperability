@@ -1,0 +1,369 @@
+{
+  "name": "Induction and augmentation chart",
+  "pages": [
+    {
+      "label": "Induction and augmentation chart",
+      "sections": [
+        {
+          "label": "Induction and augmentation chart",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Induction and augmentation chart Entry",
+              "id": "inductionAndAugmentationChartEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "f5a1d4cd-24ad-4c96-aa43-dbd4f3bd1b6d",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "7f36c0b6-a1ed-40a0-936c-134f0072b933"
+                  },
+                  "id": "dateAndTime",
+                  "label": "Date and Time",
+                  "datePickerFormat": "both"
+                },
+                {
+                  "label": "Type of procedure",
+                  "id": "typeOfProcedure",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "16d7bb7e-5108-4dad-b41e-4081c061de5b",
+                    "answers": [
+                      {
+                        "concept": "d48897cc-d3f4-4c7b-9a6f-f8d1b9f7674d",
+                        "label": "Induction"
+                      },
+                      {
+                        "concept": "6efdecf9-c6ac-4400-a51f-ddad638eb346",
+                        "label": "Augmentation"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Indication",
+                  "id": "indication",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "32376805-8926-40b8-b240-398d24d5c36c"
+                  }
+                },
+                {
+                  "label": "Bishop score (for induction)",
+                  "id": "bishopScoreForInduction",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "5965cad3-f1cb-4ee0-8d74-b34cb90c4ace"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "useFieldValue('bishopScoreForInduction')>13 && !isEmpty(useFieldValue('bishopScoreForInduction'))",
+                      "message": "Bishop Score should be between 0 and 13"
+                    }
+                  ]
+                },
+                {
+                  "label": "Cervical status at decision (for augmentation)",
+                  "id": "cervicalStatusAtDecisionForAugmentation",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "0c22eb04-9490-4c04-b225-502c09de4c71"
+                  }
+                },
+                {
+                  "label": "Deciding physician for the procedure",
+                  "id": "decidingPhysicianForTheProcedure",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "cd6d41ac-d69a-495c-b106-24f45d2b39d6"
+                  }
+                },
+                {
+                  "label": "Date of initiation",
+                  "id": "dateOfInitiation",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "f91e87e3-32ca-4a72-a840-1a9dc1d5fed8"
+                  }
+                },
+                {
+                  "label": "Time of initiation",
+                  "id": "timeOfInitiation",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "65245a2f-b071-4f48-8604-bcfd2b35cff0"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date",
+                  "id": "date",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "0be26434-36c9-436e-8a85-1b1248247eb6"
+                  }
+                },
+                {
+                  "label": "Time",
+                  "id": "time",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "0694a807-6194-49ef-ac3e-be51258c8e5a"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "BP (systolic)",
+                  "id": "bpSystolic",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "0b7596fd-27df-47bd-81ec-d57507b0662f"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('bpSystolic')<50 || useFieldValue('bpSystolic')>250) && !isEmpty(useFieldValue('bpSystolic'))",
+                      "message": "Systolic Blood Pressure should be between 50 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "BP (diastolic)",
+                  "id": "bpDiastolic",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "2cde2ee0-0a75-47ae-b30d-e9d89cc07ea0"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('bpDiastolic')<50 || useFieldValue('bpDiastolic')>250) && !isEmpty(useFieldValue('bpDiastolic'))",
+                      "message": "Diastolic Blood Pressure should be between 50 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "PR",
+                  "id": "pr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "de451b9c-a4c3-495b-a0fe-a5a0d09472bd"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('pr')<20 || useFieldValue('pr')>250) && !isEmpty(useFieldValue('pr'))",
+                      "message": "Pulse Rate should be between 20 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "Temp",
+                  "id": "temp",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "1683aa38-7e4b-4a34-818e-a67bf92859dd"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('temp')<30 || useFieldValue('temp')>45) && !isEmpty(useFieldValue('temp'))",
+                      "message": "Temperature Should be between 30 and 45"
+                    }
+                  ]
+                },
+                {
+                  "label": "FHB (Fetal Heart Beat)",
+                  "id": "fhbFetalHeartBeat",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "6b29e9ac-0518-4e30-bcb6-31378626af94"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('fhbFetalHeartBeat')<80 || useFieldValue('fhbFetalHeartBeat')>200) && !isEmpty(useFieldValue('fhbFetalHeartBeat'))",
+                      "message": "FHB must be between 80 and 200 bpm"
+                    }
+                  ]
+                },
+                {
+                  "label": "Contraction frequency",
+                  "id": "contractionFrequency",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "b563792c-cd2f-48e6-9dba-6061bd5b8565"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "useFieldValue('contractionFrequency')>10 && !isEmpty(useFieldValue('contractionFrequency'))",
+                      "message": "Contraction frequency out of range"
+                    }
+                  ]
+                },
+                {
+                  "label": "Contraction duration",
+                  "id": "contractionDuration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "0ac6b251-247f-4d70-8051-976fbdd5b8a3"
+                  }
+                },
+                {
+                  "label": "Cervical status",
+                  "id": "cervicalStatus",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "9e10ab8e-3321-44c7-8ade-a1661fda4e51"
+                  }
+                },
+                {
+                  "label": "Dose of Oxytocin",
+                  "id": "doseOfOxytocin",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "7346cd5f-4ead-4fc0-8ad9-26f419baf957"
+                  }
+                },
+                {
+                  "label": "Dose",
+                  "id": "dose",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "e10d7944-a5e0-4c2c-b2fc-a4a2a19c7df2",
+                    "answers": [
+                      {
+                        "concept": "9b3a2b21-9e51-4017-9c96-5bff0d2dec74",
+                        "label": "1st Dose"
+                      },
+                      {
+                        "concept": "eea6050b-c2c2-45bc-9457-9febc81c8ad8",
+                        "label": "2nd Dose"
+                      },
+                      {
+                        "concept": "bb4b481a-bf72-4079-a6f3-0fb602f54705",
+                        "label": "3rd Dose"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Rate in Drop/min 1st dose",
+                  "id": "rateInDropMin1stDose",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "2b157f39-620b-4a8b-9300-7577ed50b790",
+                    "answers": [
+                      {
+                        "concept": "0f195fd5-79e9-49e3-a464-63c0d9e7e793",
+                        "label": "20"
+                      },
+                      {
+                        "concept": "c6bee9c7-8c39-429c-b7f9-a23f014885bf",
+                        "label": "40"
+                      },
+                      {
+                        "concept": "d0c7c0a1-6e6b-4728-9fb3-7f5235ac3175",
+                        "label": "60"
+                      },
+                      {
+                        "concept": "48535e18-5a97-4b75-9e8c-f3ed0af3e336",
+                        "label": "80"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "dose!=='9b3a2b21-9e51-4017-9c96-5bff0d2dec74'"
+                  }
+                },
+                {
+                  "label": "Rate in Drop/min 2nd dose",
+                  "id": "rateInDropMin2ndDose",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "6fe2e9e4-7f7f-4f2c-a2da-0308422d5711",
+                    "answers": [
+                      {
+                        "concept": "c6bee9c7-8c39-429c-b7f9-a23f014885bf",
+                        "label": "40"
+                      },
+                      {
+                        "concept": "d0c7c0a1-6e6b-4728-9fb3-7f5235ac3175",
+                        "label": "60"
+                      },
+                      {
+                        "concept": "48535e18-5a97-4b75-9e8c-f3ed0af3e336",
+                        "label": "80"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "dose!=='eea6050b-c2c2-45bc-9457-9febc81c8ad8'"
+                  }
+                },
+                {
+                  "label": "Rate in Drop/min 3rd dose IA",
+                  "id": "rateInDropMin3rdDoseIA",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "242ea877-9031-4697-85c4-f8e588b22e1e",
+                    "answers": [
+                      {
+                        "concept": "d0c7c0a1-6e6b-4728-9fb3-7f5235ac3175",
+                        "label": "60"
+                      },
+                      {
+                        "concept": "48535e18-5a97-4b75-9e8c-f3ed0af3e336",
+                        "label": "80"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "dose!=='bb4b481a-bf72-4079-a6f3-0fb602f54705'"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "3da226b2-bd4c-4a9b-95fd-a104e976191f",
+  "description": "Induction and augmentation chart",
+  "version": "1.0",
+  "repeatable": true
+}

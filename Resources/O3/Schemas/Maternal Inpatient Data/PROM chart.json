@@ -1,0 +1,164 @@
+{
+  "name": "PROM chart",
+  "pages": [
+    {
+      "label": "PROM chart",
+      "sections": [
+        {
+          "label": "PROM chart",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "PROM chart Entry",
+              "id": "promChartEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "5bc1a01a-cab7-4a32-8c7b-166419d7d013",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "label": "PROM event date",
+                  "id": "promEventDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "85c50d13-6d26-43ec-ae16-d3e82587f27a"
+                  }
+                },
+                {
+                  "label": "Date",
+                  "id": "date",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "a1e02b67-28be-4685-b22a-61753d70c869"
+                  }
+                },
+                {
+                  "label": "Time",
+                  "id": "time",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "db00111e-f52b-46fe-b9a3-3a4ef8291d9c"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "BP",
+                  "id": "bp",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "066baf9c-15e4-41ef-98e9-f91e74080a9a"
+                  }
+                },
+                {
+                  "label": "PR",
+                  "id": "pr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "dd77246c-f959-43a4-a3d6-a99e108ca56a"
+                  }
+                },
+                {
+                  "label": "RR",
+                  "id": "rr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "0213556c-4adf-4cd9-be58-507858286979"
+                  }
+                },
+                {
+                  "label": "Temperature",
+                  "id": "temperature",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "5a317512-e5e3-43de-aa89-01948b5e6977"
+                  }
+                },
+                {
+                  "label": "Pain scoring",
+                  "id": "painScoring",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "dcbb8f18-7d94-4e0a-aa96-9718e1db92a0"
+                  }
+                },
+                {
+                  "label": "Fhr",
+                  "id": "fhr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "7ac8a165-2fd0-453b-b1a5-df52fb29239d"
+                  }
+                },
+                {
+                  "label": "Uterine tenderness",
+                  "id": "uterineTenderness",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "37d6b051-77ac-494d-9e2d-ffc179574f5a",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Foul smelling discharge",
+                  "id": "foulSmellingDischarge",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "fbf3777d-8e56-403d-a561-136d0dadf251",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Wbc",
+                  "id": "wbc",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "a5326104-d39e-484f-83f9-a19e48026c42"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "6a4b717c-a880-4c58-b6a0-69f6df561fab",
+  "description": "PROM chart",
+  "version": "1.0",
+  "repeatable": true
+}

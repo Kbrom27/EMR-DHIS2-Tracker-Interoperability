@@ -1,0 +1,1287 @@
+{
+  "name": "Delivery summary",
+  "pages": [
+    {
+      "label": "Delivery summary",
+      "sections": [
+        {
+          "label": "Delivery Details",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Date of Delivery:",
+              "id": "dateOfDelivery",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "ded9fde6-bf50-4dbe-90c9-63af25214fea"
+              }
+            },
+            {
+              "label": "Time of Delivery:",
+              "id": "timeOfDelivery",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "datetime",
+                "concept": "65aee427-9f9b-408d-a1b3-970e10a2027e"
+              },
+              "datePickerFormat": "timer"
+            },
+            {
+              "label": "Mode of Delivery",
+              "id": "modeOfDelivery",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "3703112b-dccc-4aaa-98da-7d94da7d2fea",
+                "answers": [
+                  {
+                    "concept": "0f364f40-4caf-4b2a-b18c-aa8926dbe2e1",
+                    "label": "Spontaneous Vaginal Delivery (SVD)"
+                  },
+                  {
+                    "concept": "c8ec2f3b-8368-46ef-a648-18fff8ccde74",
+                    "label": "Cesarean Section (C-section)"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Vacuum/Forceps",
+              "id": "vacuumForceps",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "32044502-6915-4585-b10c-9536ed838b48",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Episiotomy performed:",
+              "id": "episiotomyPerformed",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "4dd776d1-6818-44fa-929a-b59b8c6f86ca",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "label": "Active Management of Third Stage of Labor (AMTSL)",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Controlled Cord Traction (CCT):",
+              "id": "controlledCordTractionCCT",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "5df246df-6d2b-411a-8af2-ef7219066189",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Manual Removal of Placenta (MRP)",
+              "id": "manualRemovalOfPlacentaMRP",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "343103c9-74f9-45ab-a09f-64e59358d58d",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Placenta Status",
+              "id": "placentaStatus",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "e53d09c3-61cb-435d-a643-6b1fd5c980be",
+                "answers": [
+                  {
+                    "concept": "561b30d1-42d2-4508-ad4b-e528deb119fb",
+                    "label": "Complete"
+                  },
+                  {
+                    "concept": "e7d0ef0a-6ef2-4e5a-bb29-0fc550be22e0",
+                    "label": "Incomplete"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Laceration Repair:",
+              "id": "lacerationRepair",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "df5c41c0-5e60-4097-9f02-330563c792c1",
+                "answers": [
+                  {
+                    "concept": "19f11631-0406-4425-a072-c391552a12c7",
+                    "label": "1st degree"
+                  },
+                  {
+                    "concept": "2780bf18-f1bb-4969-84d5-9fad5daeda86",
+                    "label": "2nd degree"
+                  },
+                  {
+                    "concept": "619a2a0a-e421-443c-9f60-bb487e531b78",
+                    "label": "3rd degree"
+                  },
+                  {
+                    "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "None"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "label": "Uterotonics given",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Uterotonics given",
+              "id": "uterotonicsGiven",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "checkbox-searchable",
+                "concept": "e45b0f26-71df-4d67-b58d-5b2efe5cf03a",
+                "answers": [
+                  {
+                    "concept": "56c8ac9e-b049-466f-a27a-260f320790c1",
+                    "label": "Ergometrine"
+                  },
+                  {
+                    "concept": "eb3c251d-b345-4517-9438-8ffb9336ebc9",
+                    "label": "Misoprostol"
+                  },
+                  {
+                    "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "None"
+                  },
+                  {
+                    "concept": "2a301cf3-7a51-487d-8a07-5f9db3baafd7",
+                    "label": "Oxytocin"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(new RegExp('.*\\\\b0\\\\b.*').test(uterotonicsGiven)) && (new RegExp('.*\\\\b1\\\\b.*').test(uterotonicsGiven) || new RegExp('.*\\\\b2\\\\b.*').test(uterotonicsGiven) || new RegExp('.*\\\\b3\\\\b.*').test(uterotonicsGiven))",
+                  "message": "None can not be selected with other options"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Newborn Information",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Number of Newborns:",
+              "id": "numberOfNewborns",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "b662adfb-afa7-49ab-b816-3cfd02799f35",
+                "answers": [
+                  {
+                    "concept": "8d01481b-8501-478b-83a3-1ccde7042d44",
+                    "label": "Single"
+                  },
+                  {
+                    "concept": "354b8360-0744-4af2-8604-72b4c0f25685",
+                    "label": "Twin"
+                  },
+                  {
+                    "concept": "debb476c-d521-4941-aed0-450f8c861c95",
+                    "label": "Triplet"
+                  },
+                  {
+                    "concept": "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Other"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Other specify",
+              "id": "otherSpecify",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "1e076fde-45f4-4db6-b7fa-0ba12900369d"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "!isEmpty(otherSpecify) && (otherSpecify<4 || otherSpecify>9)",
+                  "message": "number of births should be above or equal to 4"
+                },
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(numberOfNewborns==='3a18f0a8-d8d9-4e47-a946-e0b52062392e') && isEmpty(myValue)",
+                  "message": "This field is required"
+                }
+              ],
+              "hide": {
+                "hideWhenExpression": "numberOfNewborns!=='5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Outcome",
+              "id": "outcome",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "a706f386-aba3-4011-9f52-26ccd3658221",
+                "answers": [
+                  {
+                    "concept": "6b28d08a-03f2-11ec-9a03-0242ac130003",
+                    "label": "Alive"
+                  },
+                  {
+                    "concept": "44a7a5bc-a360-46dc-b4fc-f46658bbed7b",
+                    "label": "Stillbirth"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Stillbirth:",
+              "id": "stillbirth",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "44a7a5bc-a360-46dc-b4fc-f46658bbed7b"
+              },
+              "hide": {
+                "hideWhenExpression": "outcome!=='44a7a5bc-a360-46dc-b4fc-f46658bbed7b'"
+              }
+            },
+            {
+              "label": "Apgar Score 1st min",
+              "id": "apgarScore1stMin",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "7eb0a2f1-570f-4217-8adf-8325a27798df"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "apgarScore1stMin>10 && !isEmpty(apgarScore1stMin)",
+                  "message": "Apgar Score should be between 0 and 10"
+                }
+              ]
+            },
+            {
+              "label": "Apgar Score 5th min",
+              "id": "apgarScore5thMin",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "15d77c15-40f3-4296-9d1b-18773c7569af"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "apgarScore5thMin>10 && !isEmpty(apgarScore5thMin)",
+                  "message": "Apgar Score should be between 0 and 10"
+                }
+              ]
+            },
+            {
+              "label": "Apgar Score 10th min",
+              "id": "apgarScore10thMin",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "36944d85-12bc-4d99-9bf1-9c89f8688a79"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "apgarScore10thMin>10 && !isEmpty(apgarScore10thMin)",
+                  "message": "Apgar Score should be between 0 and 10"
+                }
+              ]
+            },
+            {
+              "label": "Sex",
+              "id": "sex",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "94dc2f5e-5e3f-4cec-b76a-b33c55c728d2",
+                "answers": [
+                  {
+                    "concept": "ddb4128b-4693-4284-9d4f-5f96ca03d2c7",
+                    "label": "Male"
+                  },
+                  {
+                    "concept": "a0c0f551-d867-40ce-9172-26576f4f8b74",
+                    "label": "Female"
+                  },
+                  {
+                    "concept": "1138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Indeterminate"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Birth Weight (grams):",
+              "id": "birthWeightGrams",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "95ad0e45-9f61-4f73-9ac9-8b4abf26dfac"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(birthWeightGrams<400 || birthWeightGrams>8000) && !isEmpty(birthWeightGrams)",
+                  "message": "Birth Weight should be between 400 and 8000"
+                }
+              ]
+            },
+            {
+              "label": "Length (cm):",
+              "id": "lengthCm",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "e4ebc981-2836-4e9e-a53e-358f17292ea9"
+              }
+            },
+            {
+              "label": "Gestation:",
+              "id": "gestation",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "1fdd8463-fb3e-45b8-8fab-1cff5de29a43",
+                "answers": [
+                  {
+                    "concept": "50a0ef4f-0419-4cb5-a1d1-507e5f05a7d6",
+                    "label": "Term"
+                  },
+                  {
+                    "concept": "68af8c04-6103-4b40-803f-5310fb8a9bdf",
+                    "label": "Preterm"
+                  },
+                  {
+                    "concept": "41be98ca-0f13-44c2-b4f2-4034f157bffc",
+                    "label": "Postterm"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Newborn Immunizations and Interventions",
+              "id": "newbornImmunizationsAndInterventions",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "checkbox-searchable",
+                "concept": "d2c00057-1a75-4827-b1ea-9bf93f77f80c",
+                "answers": [
+                  {
+                    "concept": "4f60c141-9051-4f22-a4b1-f286e17681a8",
+                    "label": "BCG vaccine"
+                  },
+                  {
+                    "concept": "983adb54-a734-4a39-96da-06b323620c16",
+                    "label": "Polio 0 (birth dose)"
+                  },
+                  {
+                    "concept": "5877b78b-4afc-48e6-9480-3258413f276b",
+                    "label": "Hepatitis B birth dose"
+                  },
+                  {
+                    "concept": "3a5eeb61-1ec7-49c9-9f4a-519838d0d892",
+                    "label": "Vitamin K injection"
+                  },
+                  {
+                    "concept": "8f7dc561-52c9-43e6-98a9-4d79e28b6625",
+                    "label": "Tetracycline (TTC) eye ointment"
+                  },
+                  {
+                    "concept": "3d434865-0f6d-4e27-a4b8-9037ba3d937f",
+                    "label": "Skin-to-skin contact"
+                  },
+                  {
+                    "concept": "b817f62b-3e8f-4817-ad66-8acdc52fe249",
+                    "label": "IBF"
+                  },
+                  {
+                    "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "None"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(new RegExp('.*\\\\b0\\\\b.*').test(newbornImmunizationsAndInterventions)) && (new RegExp('.*\\\\b1\\\\b.*').test(newbornImmunizationsAndInterventions) || new RegExp('.*\\\\b2\\\\b.*').test(newbornImmunizationsAndInterventions) || new RegExp('.*\\\\b3\\\\b.*').test(newbornImmunizationsAndInterventions) || new RegExp('.*\\\\b4\\\\b.*').test(newbornImmunizationsAndInterventions) || new RegExp('.*\\\\b5\\\\b.*').test(newbornImmunizationsAndInterventions) || new RegExp('.*\\\\b6\\\\b.*').test(newbornImmunizationsAndInterventions) || new RegExp('.*\\\\b7\\\\b.*').test(newbornImmunizationsAndInterventions))",
+                  "message": "None can not be selected with other options"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Newborn 2 Information",
+          "isExpanded": "true",
+          "hide": {
+            "hideWhenExpression": "!(numberOfNewborns==='354b8360-0744-4af2-8604-72b4c0f25685' || numberOfNewborns==='debb476c-d521-4941-aed0-450f8c861c95' || (numberOfNewborns==='5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' && otherSpecify>=4))"
+          },
+          "questions": [
+            {
+              "label": "Outcome of newborn 2",
+              "id": "outcomeOfNewborn2",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "ca3a850c-a8d8-4b0b-b62f-e5211b92d951",
+                "answers": [
+                  {
+                    "concept": "6b28d08a-03f2-11ec-9a03-0242ac130003",
+                    "label": "Alive"
+                  },
+                  {
+                    "concept": "44a7a5bc-a360-46dc-b4fc-f46658bbed7b",
+                    "label": "Stillbirth"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(numberOfNewborns==='354b8360-0744-4af2-8604-72b4c0f25685' || numberOfNewborns==='debb476c-d521-4941-aed0-450f8c861c95' || numberOfNewborns==='3a18f0a8-d8d9-4e47-a946-e0b52062392e') && isEmpty(myValue)",
+                  "message": "This field is required"
+                }
+              ]
+            },
+            {
+              "label": "Stillbirth newborn 2:",
+              "id": "stillbirthNewborn2",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "9f97d1a4-542d-4f17-87df-21b81ee2871d",
+                "answers": [
+                  {
+                    "concept": "7f903f76-0b5c-4fc2-99e2-fbb70f1a6fca",
+                    "label": "Macerated"
+                  },
+                  {
+                    "concept": "450438e5-af3b-4418-8ee4-c48dc9ef33d6",
+                    "label": "Fresh"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "outcomeOfNewborn2!=='44a7a5bc-a360-46dc-b4fc-f46658bbed7b'"
+              }
+            },
+            {
+              "label": "Apgar Score 1st min newborn 2",
+              "id": "apgarScore1stMinNewborn2",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "4c54cd49-2ed6-47d9-b5b3-bc6cf286dd1a"
+              }
+            },
+            {
+              "label": "Apgar Score 5th min newborn 2",
+              "id": "apgarScore5thMinNewborn2",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "4970cc47-39b6-4bb0-a41b-db714fc95633"
+              }
+            },
+            {
+              "label": "Apgar Score 10th min newborn 2",
+              "id": "apgarScore10thMinNewborn2",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "da7688fc-56ae-4561-9976-7702f6e6bec9"
+              }
+            },
+            {
+              "label": "Sex newborn 2",
+              "id": "sexNewborn2",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "ce5f1b5e-50c9-4b1c-8775-3154ca0fec28",
+                "answers": [
+                  {
+                    "concept": "ddb4128b-4693-4284-9d4f-5f96ca03d2c7",
+                    "label": "Male"
+                  },
+                  {
+                    "concept": "a0c0f551-d867-40ce-9172-26576f4f8b74",
+                    "label": "Female"
+                  },
+                  {
+                    "concept": "1138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Indeterminate"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Birth Weight (grams) newborn 2:",
+              "id": "birthWeightGramsNewborn2",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "869950e6-1c7f-48b7-91fb-ba81c989584c"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(birthWeightGramsNewborn2<400 || birthWeightGramsNewborn2>8000) && !isEmpty(birthWeightGramsNewborn2)",
+                  "message": "Birth Weight should be between 400 and 8000"
+                },
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(numberOfNewborns==='354b8360-0744-4af2-8604-72b4c0f25685' || numberOfNewborns==='debb476c-d521-4941-aed0-450f8c861c95' || numberOfNewborns==='3a18f0a8-d8d9-4e47-a946-e0b52062392e') && isEmpty(myValue)",
+                  "message": "This field is required"
+                }
+              ]
+            },
+            {
+              "label": "Newborn Immunizations and Interventions newborn 2",
+              "id": "newbornImmunizationsAndInterventionsNewborn2",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "checkbox-searchable",
+                "concept": "865a3f0e-0481-4ea7-8379-66629c7a49cf",
+                "answers": [
+                  {
+                    "concept": "4f60c141-9051-4f22-a4b1-f286e17681a8",
+                    "label": "BCG vaccine"
+                  },
+                  {
+                    "concept": "983adb54-a734-4a39-96da-06b323620c16",
+                    "label": "Polio 0 (birth dose)"
+                  },
+                  {
+                    "concept": "5877b78b-4afc-48e6-9480-3258413f276b",
+                    "label": "Hepatitis B birth dose"
+                  },
+                  {
+                    "concept": "3a5eeb61-1ec7-49c9-9f4a-519838d0d892",
+                    "label": "Vitamin K injection"
+                  },
+                  {
+                    "concept": "8f7dc561-52c9-43e6-98a9-4d79e28b6625",
+                    "label": "Tetracycline (TTC) eye ointment"
+                  },
+                  {
+                    "concept": "3d434865-0f6d-4e27-a4b8-9037ba3d937f",
+                    "label": "Skin-to-skin contact"
+                  },
+                  {
+                    "concept": "b817f62b-3e8f-4817-ad66-8acdc52fe249",
+                    "label": "IBF"
+                  },
+                  {
+                    "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "None"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(numberOfNewborns==='354b8360-0744-4af2-8604-72b4c0f25685' || numberOfNewborns==='debb476c-d521-4941-aed0-450f8c861c95' || numberOfNewborns==='3a18f0a8-d8d9-4e47-a946-e0b52062392e') && isEmpty(myValue)",
+                  "message": "This field is required"
+                },
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(new RegExp('.*\\\\b0\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn2)) && (new RegExp('.*\\\\b1\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn2) || new RegExp('.*\\\\b2\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn2) || new RegExp('.*\\\\b3\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn2) || new RegExp('.*\\\\b4\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn2) || new RegExp('.*\\\\b5\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn2) || new RegExp('.*\\\\b6\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn2) || new RegExp('.*\\\\b7\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn2))",
+                  "message": "None can not be selected with other options"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Newborn 3 Information",
+          "isExpanded": "true",
+          "hide": {
+            "hideWhenExpression": "!(numberOfNewborns==='debb476c-d521-4941-aed0-450f8c861c95' || (numberOfNewborns==='5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' && otherSpecify>=4))"
+          },
+          "questions": [
+            {
+              "label": "Outcome of newborn 3",
+              "id": "outcomeOfNewborn3",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "2db1eca7-df40-419a-9a8f-6921dfd02b42",
+                "answers": [
+                  {
+                    "concept": "6b28d08a-03f2-11ec-9a03-0242ac130003",
+                    "label": "Alive"
+                  },
+                  {
+                    "concept": "44a7a5bc-a360-46dc-b4fc-f46658bbed7b",
+                    "label": "Stillbirth"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(numberOfNewborns==='debb476c-d521-4941-aed0-450f8c861c95' || numberOfNewborns==='3a18f0a8-d8d9-4e47-a946-e0b52062392e') && isEmpty(myValue)",
+                  "message": "This field is required"
+                }
+              ]
+            },
+            {
+              "label": "Stillbirth newborn 3:",
+              "id": "stillbirthNewborn3",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "b8a84484-f1a8-4b1a-92b1-d31464a62b05",
+                "answers": [
+                  {
+                    "concept": "7f903f76-0b5c-4fc2-99e2-fbb70f1a6fca",
+                    "label": "Macerated"
+                  },
+                  {
+                    "concept": "450438e5-af3b-4418-8ee4-c48dc9ef33d6",
+                    "label": "Fresh"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "outcomeOfNewborn3!=='44a7a5bc-a360-46dc-b4fc-f46658bbed7b'"
+              }
+            },
+            {
+              "label": "Apgar Score 1st min newborn 3",
+              "id": "apgarScore1stMinNewborn3",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "d2a6d084-194e-4816-bc18-ba86f2a55344"
+              }
+            },
+            {
+              "label": "Apgar Score 5th min newborn 3",
+              "id": "apgarScore5thMinNewborn3",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "e67fbbf4-21e6-4e1a-a037-490c58f5cb72"
+              }
+            },
+            {
+              "label": "Apgar Score 10th min newborn 3",
+              "id": "apgarScore10thMinNewborn3",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "32cd4b5e-eb3a-4cba-81cb-39791458f1a5"
+              }
+            },
+            {
+              "label": "Sex newborn 3",
+              "id": "sexNewborn3",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "7e916adf-a7ad-4e9a-a6ac-22a3dcfbe309",
+                "answers": [
+                  {
+                    "concept": "ddb4128b-4693-4284-9d4f-5f96ca03d2c7",
+                    "label": "Male"
+                  },
+                  {
+                    "concept": "a0c0f551-d867-40ce-9172-26576f4f8b74",
+                    "label": "Female"
+                  },
+                  {
+                    "concept": "1138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Indeterminate"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Birth Weight (grams) newborn 3:",
+              "id": "birthWeightGramsNewborn3",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "ea4c766a-38e5-4521-8ddb-44a431d3e412"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(birthWeightGramsNewborn3<400 || birthWeightGramsNewborn3>8000) && !isEmpty(birthWeightGramsNewborn3)",
+                  "message": "Birth Weight should be between 400 and 8000"
+                },
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(numberOfNewborns==='debb476c-d521-4941-aed0-450f8c861c95' || numberOfNewborns==='3a18f0a8-d8d9-4e47-a946-e0b52062392e') && isEmpty(myValue)",
+                  "message": "This field is required"
+                }
+              ]
+            },
+            {
+              "label": "Newborn Immunizations and Interventions newborn 3",
+              "id": "newbornImmunizationsAndInterventionsNewborn3",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "checkbox-searchable",
+                "concept": "82d49bfd-ccb1-4527-96d9-1057791183e9",
+                "answers": [
+                  {
+                    "concept": "4f60c141-9051-4f22-a4b1-f286e17681a8",
+                    "label": "BCG vaccine"
+                  },
+                  {
+                    "concept": "983adb54-a734-4a39-96da-06b323620c16",
+                    "label": "Polio 0 (birth dose)"
+                  },
+                  {
+                    "concept": "5877b78b-4afc-48e6-9480-3258413f276b",
+                    "label": "Hepatitis B birth dose"
+                  },
+                  {
+                    "concept": "3a5eeb61-1ec7-49c9-9f4a-519838d0d892",
+                    "label": "Vitamin K injection"
+                  },
+                  {
+                    "concept": "8f7dc561-52c9-43e6-98a9-4d79e28b6625",
+                    "label": "Tetracycline (TTC) eye ointment"
+                  },
+                  {
+                    "concept": "3d434865-0f6d-4e27-a4b8-9037ba3d937f",
+                    "label": "Skin-to-skin contact"
+                  },
+                  {
+                    "concept": "b817f62b-3e8f-4817-ad66-8acdc52fe249",
+                    "label": "IBF"
+                  },
+                  {
+                    "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "None"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(numberOfNewborns==='debb476c-d521-4941-aed0-450f8c861c95' || numberOfNewborns==='3a18f0a8-d8d9-4e47-a946-e0b52062392e') && isEmpty(myValue)",
+                  "message": "This field is required"
+                },
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(new RegExp('.*\\\\b0\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn3)) && (new RegExp('.*\\\\b1\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn3) || new RegExp('.*\\\\b2\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn3) || new RegExp('.*\\\\b3\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn3) || new RegExp('.*\\\\b4\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn3) || new RegExp('.*\\\\b5\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn3) || new RegExp('.*\\\\b6\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn3) || new RegExp('.*\\\\b7\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn3))",
+                  "message": "None can not be selected with other options"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Newborn 4 Information",
+          "isExpanded": "true",
+          "hide": {
+            "hideWhenExpression": "!(numberOfNewborns==='5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' && otherSpecify>=4)"
+          },
+          "questions": [
+            {
+              "label": "Outcome of newborn 4",
+              "id": "outcomeOfNewborn4",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "87d7ff42-c666-4be4-8284-c77354fc8377",
+                "answers": [
+                  {
+                    "concept": "6b28d08a-03f2-11ec-9a03-0242ac130003",
+                    "label": "Alive"
+                  },
+                  {
+                    "concept": "44a7a5bc-a360-46dc-b4fc-f46658bbed7b",
+                    "label": "Stillbirth"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(numberOfNewborns==='3a18f0a8-d8d9-4e47-a946-e0b52062392e') && isEmpty(myValue)",
+                  "message": "This field is required"
+                }
+              ]
+            },
+            {
+              "label": "Stillbirth newborn 4:",
+              "id": "stillbirthNewborn4",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "31168dd7-0775-4971-8f09-f0491d90151d",
+                "answers": [
+                  {
+                    "concept": "7f903f76-0b5c-4fc2-99e2-fbb70f1a6fca",
+                    "label": "Macerated"
+                  },
+                  {
+                    "concept": "450438e5-af3b-4418-8ee4-c48dc9ef33d6",
+                    "label": "Fresh"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "outcomeOfNewborn4!=='44a7a5bc-a360-46dc-b4fc-f46658bbed7b'"
+              }
+            },
+            {
+              "label": "Apgar Score 1st min newborn 4",
+              "id": "apgarScore1stMinNewborn4",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "abed2212-4b7d-4e1a-b4e2-82a1512d7f39"
+              }
+            },
+            {
+              "label": "Apgar Score 5th min newborn 4",
+              "id": "apgarScore5thMinNewborn4",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "90060f78-e647-4322-80e0-e7c5ed8efe7d"
+              }
+            },
+            {
+              "label": "Apgar Score 10th min newborn 4",
+              "id": "apgarScore10thMinNewborn4",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "e3e6c06c-3cbb-4664-a182-339724be00ae"
+              }
+            },
+            {
+              "label": "Sex newborn 4",
+              "id": "sexNewborn4",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "4c376705-4990-48fe-94cf-d575df9fcfab",
+                "answers": [
+                  {
+                    "concept": "ddb4128b-4693-4284-9d4f-5f96ca03d2c7",
+                    "label": "Male"
+                  },
+                  {
+                    "concept": "a0c0f551-d867-40ce-9172-26576f4f8b74",
+                    "label": "Female"
+                  },
+                  {
+                    "concept": "1138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Indeterminate"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Birth Weight (grams) newborn 4:",
+              "id": "birthWeightGramsNewborn4",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "a09ab142-19bc-4e53-b843-0d1af1ad68d4"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(birthWeightGramsNewborn4<400 || birthWeightGramsNewborn4>8000) && !isEmpty(birthWeightGramsNewborn4)",
+                  "message": "Birth Weight should be between 400 and 8000"
+                },
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(numberOfNewborns==='3a18f0a8-d8d9-4e47-a946-e0b52062392e') && isEmpty(myValue)",
+                  "message": "This field is required"
+                }
+              ]
+            },
+            {
+              "label": "Newborn Immunizations and Interventions newborn 4",
+              "id": "newbornImmunizationsAndInterventionsNewborn4",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "checkbox-searchable",
+                "concept": "2d84e276-de5f-4a5b-94fe-e16794dc09e3",
+                "answers": [
+                  {
+                    "concept": "4f60c141-9051-4f22-a4b1-f286e17681a8",
+                    "label": "BCG vaccine"
+                  },
+                  {
+                    "concept": "983adb54-a734-4a39-96da-06b323620c16",
+                    "label": "Polio 0 (birth dose)"
+                  },
+                  {
+                    "concept": "5877b78b-4afc-48e6-9480-3258413f276b",
+                    "label": "Hepatitis B birth dose"
+                  },
+                  {
+                    "concept": "3a5eeb61-1ec7-49c9-9f4a-519838d0d892",
+                    "label": "Vitamin K injection"
+                  },
+                  {
+                    "concept": "8f7dc561-52c9-43e6-98a9-4d79e28b6625",
+                    "label": "Tetracycline (TTC) eye ointment"
+                  },
+                  {
+                    "concept": "3d434865-0f6d-4e27-a4b8-9037ba3d937f",
+                    "label": "Skin-to-skin contact"
+                  },
+                  {
+                    "concept": "b817f62b-3e8f-4817-ad66-8acdc52fe249",
+                    "label": "IBF"
+                  },
+                  {
+                    "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "None"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(numberOfNewborns==='3a18f0a8-d8d9-4e47-a946-e0b52062392e') && isEmpty(myValue)",
+                  "message": "This field is required"
+                },
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(new RegExp('.*\\\\b0\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn4)) && (new RegExp('.*\\\\b1\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn4) || new RegExp('.*\\\\b2\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn4) || new RegExp('.*\\\\b3\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn4) || new RegExp('.*\\\\b4\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn4) || new RegExp('.*\\\\b5\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn4) || new RegExp('.*\\\\b6\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn4) || new RegExp('.*\\\\b7\\\\b.*').test(newbornImmunizationsAndInterventionsNewborn4))",
+                  "message": "None can not be selected with other options"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Obstetric condition at delivery",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Obstetric condition at delivery",
+              "id": "obstetricConditionAtDelivery",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "checkbox-searchable",
+                "concept": "84ef57e6-450e-40d3-80ae-a82419f65d01",
+                "answers": [
+                  {
+                    "concept": "f302570d-6ecc-4d7a-a416-57bdd01bc3c4",
+                    "label": "Obstructed"
+                  },
+                  {
+                    "concept": "118744AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Eclampsia"
+                  },
+                  {
+                    "concept": "519aded4-c24d-413e-96c4-9f21f28736b4",
+                    "label": "Postpartum Hemorrhage (PPH)"
+                  },
+                  {
+                    "concept": "bbac1a5e-e5aa-42ec-b272-1007d588693a",
+                    "label": "Antepartum Hemorrhage (APH)"
+                  },
+                  {
+                    "concept": "15205da1-69fb-4c4a-8fa1-96a079ae9a1a",
+                    "label": "PROM / Sepsis"
+                  },
+                  {
+                    "concept": "42a5b90b-c00e-4553-a0e1-30f4a6ab9eff",
+                    "label": "Ruptured Uterus"
+                  },
+                  {
+                    "concept": "cdfd166a-0722-47ea-8f5a-0bcc638ab82d",
+                    "label": "Prolonged Labor."
+                  },
+                  {
+                    "concept": "40c74b57-9f99-4707-9658-aca28fac4649",
+                    "label": "Repaired Uterus"
+                  },
+                  {
+                    "concept": "159837AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Hysterectomy"
+                  },
+                  {
+                    "concept": "ab8651dd-96e7-48f4-b307-b35fcbde4ee3",
+                    "label": "other( specify)"
+                  },
+                  {
+                    "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "None"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(new RegExp('.*\\\\b0\\\\b.*').test(obstetricConditionAtDelivery)) && (new RegExp('.*\\\\b1\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b2\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b3\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b4\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b5\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b6\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b7\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b8\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b9\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b10\\\\b.*').test(obstetricConditionAtDelivery))",
+                  "message": "None can not be selected with other options"
+                }
+              ]
+            },
+            {
+              "label": "Specify",
+              "id": "specify",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "d35686d0-ec55-4ab1-ad8a-d273c0ea741a"
+              },
+              "hide": {
+                "hideWhenExpression": "(new RegExp('.*\\\\b0\\\\b.*').test(obstetricConditionAtDelivery)) && (new RegExp('.*\\\\b1\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b2\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b3\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b4\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b5\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b6\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b7\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b8\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b9\\\\b.*').test(obstetricConditionAtDelivery) || new RegExp('.*\\\\b10\\\\b.*').test(obstetricConditionAtDelivery))"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Measure Taken",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Measures Taken",
+              "id": "measuresTaken",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "c8e448f8-958c-4544-91ae-3cd534746e6c",
+                "answers": [
+                  {
+                    "concept": "4e826d73-3e10-484c-8bdb-a711c140a9b1",
+                    "label": "Managed at facility"
+                  },
+                  {
+                    "concept": "001cbb3d-0a6a-4234-9704-e5fbc7715ce5",
+                    "label": "Death"
+                  },
+                  {
+                    "concept": "4145c198-e052-4a30-a5be-c1ca1d1dbd6b",
+                    "label": "Referral"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "label": "HIV Testing & Prophylaxis",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "HIV Testing Accepted:",
+              "id": "hivTestingAccepted",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "77dac6e4-26e6-4d94-8ace-571a31c57da7",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "HIV Result:",
+              "id": "hivResult",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "1d55075b-3c87-46b8-b701-c2bcf63edf61",
+                "answers": [
+                  {
+                    "concept": "988872e5-cd08-401a-867b-b1d01fe6834e",
+                    "label": "+ve"
+                  },
+                  {
+                    "concept": "9ad51831-9bb5-4b92-8ce0-8ecd8b84891f",
+                    "label": "-Ve"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(hivTestingAccepted==='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA') && isEmpty(myValue)",
+                  "message": "This field is required"
+                }
+              ],
+              "hide": {
+                "hideWhenExpression": "hivTestingAccepted!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "ARV Rx for Mother: (by type)",
+              "id": "arvRxForMotherByType",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "92ba590c-b459-4b16-95d3-950e9cc9cf4f"
+              },
+              "hide": {
+                "hideWhenExpression": "hivResult!=='988872e5-cd08-401a-867b-b1d01fe6834e'"
+              }
+            },
+            {
+              "label": "ARV Px for Newborn (by type):",
+              "id": "arvPxForNewbornByType",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "7ceb6824-5834-45a5-9944-7c2698872365"
+              },
+              "hide": {
+                "hideWhenExpression": "hivResult!=='988872e5-cd08-401a-867b-b1d01fe6834e'"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Feeding",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Feeding Option",
+              "id": "feedingOption",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "80bcb137-fbf4-416d-8e2b-b1d5b9b80ba3",
+                "answers": [
+                  {
+                    "concept": "60c828d6-4a24-420d-994c-790638c50def",
+                    "label": "EBF – Exclusive Breastfeeding"
+                  },
+                  {
+                    "concept": "b2f43501-0346-4de8-a0ae-c614126c551e",
+                    "label": "ERF - Exclusive Replacement Feeding"
+                  },
+                  {
+                    "concept": "b1cd9620-434d-42bd-b29c-83aa7b791549",
+                    "label": "Mixed"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "label": "Referral & Follow-up",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Mother and newborn referred for care/support?",
+              "id": "motherAndNewbornReferredForCareSupport",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "380ffa26-a1f4-487f-9db4-bbc5e1074f20",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "If yes, specify facility or service:",
+              "id": "ifYesSpecifyFacilityOrService",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "c58eb7b3-55d1-4ee0-bbdd-01800a3b95e7"
+              },
+              "hide": {
+                "hideWhenExpression": "motherAndNewbornReferredForCareSupport!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "7762f07e-5fcb-4520-a02a-7a8d8776d8bb",
+  "description": "Delivery summary",
+  "version": "1.0"
+}

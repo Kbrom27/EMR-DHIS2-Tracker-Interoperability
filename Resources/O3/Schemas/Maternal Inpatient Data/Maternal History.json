@@ -1,0 +1,610 @@
+{
+  "name": "Maternal History",
+  "pages": [
+    {
+      "label": "Maternal History",
+      "sections": [
+        {
+          "label": "Maternal History",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "datetime",
+                "concept": "7f36c0b6-a1ed-40a0-936c-134f0072b933"
+              },
+              "id": "dateAndTime",
+              "label": "Date and Time",
+              "datePickerFormat": "both"
+            }
+          ]
+        },
+        {
+          "label": "Obstetric History",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Gravida",
+              "id": "gravida",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "4b0309b8-addd-4d66-9df2-042b500e2680"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "gravida>20 && !isEmpty(gravida)",
+                  "message": "Gravida can not exceed 20"
+                }
+              ]
+            },
+            {
+              "label": "Parity",
+              "id": "parity",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "9bd7169c-3445-462b-816c-5a2b3b86e74b"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(parity > gravida) && !isEmpty(parity) && !isEmpty(gravida)",
+                  "message": "Parity should not be greater than Gravida"
+                }
+              ],
+              "hide": {
+                "hideWhenExpression": "gravida===1"
+              }
+            },
+            {
+              "label": "SVD",
+              "id": "svd",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "6320842b-fcae-4bc4-8469-3464f185cbcb"
+              },
+              "hide": {
+                "hideWhenExpression": "gravida===1"
+              }
+            },
+            {
+              "label": "Operative vaginal delivery",
+              "id": "operativeVaginalDelivery",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "203ac2c8-7c70-4b3f-9c88-5ddb5da44d81"
+              },
+              "hide": {
+                "hideWhenExpression": "gravida===1"
+              }
+            },
+            {
+              "label": "Cesarean delivery",
+              "id": "cesareanDelivery",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "c18598f9-0ac3-44b6-9f87-67a62bcecdfb"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "svd + operativeVaginalDelivery + cesareanDelivery > parity  || svd + operativeVaginalDelivery + cesareanDelivery < parity",
+                  "message": "SVD+Operative vaginal delivery+Cesarean delivery should be equal to Parity"
+                }
+              ],
+              "hide": {
+                "hideWhenExpression": "gravida===1"
+              }
+            },
+            {
+              "label": "History of Abortion",
+              "id": "historyOfAbortion",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "e21691c6-aaf3-40ae-af14-0b709a9d60f4",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "gravida===1"
+              }
+            },
+            {
+              "label": "Number of Previous Abortions",
+              "id": "numberOfPreviousAbortions",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "9278961e-0e04-4cf0-aeb0-d5b408843ca7"
+              },
+              "hide": {
+                "hideWhenExpression": "historyOfAbortion!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Spontaneous",
+              "id": "spontaneous",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "e02a5c7e-92f0-4163-8f1e-eafb06358d44"
+              },
+              "hide": {
+                "hideWhenExpression": "historyOfAbortion!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Induced",
+              "id": "induced",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "ade65648-00e2-407b-a315-344bce2bf5f0"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "spontaneous + induced > numberOfPreviousAbortions || spontaneous + induced < numberOfPreviousAbortions",
+                  "message": "Spontaneos + Induced abortions should be equal to Number of abortions"
+                }
+              ],
+              "hide": {
+                "hideWhenExpression": "historyOfAbortion!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "History of GTD",
+              "id": "historyOfGTD",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "627e5b70-2b95-4c57-883d-5a1018272d99",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "gravida===1"
+              }
+            },
+            {
+              "label": "History of Ectopic Pregnancy",
+              "id": "historyOfEctopicPregnancy",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "faa45d9f-6ccb-4612-abbc-d56574b54dc9",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "gravida===1"
+              }
+            },
+            {
+              "label": "LNMP known?",
+              "id": "lnmpKnown",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "42bf0b89-5037-45e5-a6f2-911ede5eeaa2",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "LNMP Date",
+              "id": "lnmpDate",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "7e214537-6a28-452f-b58c-6f6363ccedd8"
+              },
+              "hide": {
+                "hideWhenExpression": "lnmpKnown!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Current Gestational Age (From LMP in weeks)",
+              "id": "currentGestationalAgeFromLMPInWeeks",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "f3d5a4f2-e418-4e1b-b83d-308ba34cc40a"
+              }
+            },
+            {
+              "label": "Remaining Gestational Age (From LMP in days)",
+              "id": "remainingGestationalAgeFromLMPInDays",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "4177f48b-ce6d-452e-aa94-2622407f6980"
+              }
+            },
+            {
+              "label": "EDD",
+              "id": "edd",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "fe245565-6271-4dbe-81ed-3c82c4c1cfe2"
+              }
+            },
+            {
+              "label": "Early Ultrasound Date",
+              "id": "earlyUltrasoundDate",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "eb06b57a-c5d0-40be-9951-defa64585cb9"
+              }
+            },
+            {
+              "label": "Gestational Age at early ultrasound (weeks)",
+              "id": "gestationalAgeAtEarlyUltrasoundWeeks",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "ae8900d8-d63b-439e-a754-6bbb1ab1e627"
+              }
+            },
+            {
+              "label": "Remaining Gestational Age at early ultrasound (days)",
+              "id": "remainingGestationalAgeAtEarlyUltrasoundDays",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "b18f6614-2e71-4264-95c0-1d8486e888b4"
+              }
+            },
+            {
+              "label": "Current Gestational Age (From early ultrasound in weeks)",
+              "id": "currentGestationalAgeFromEarlyUltrasoundInWeeks",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "f494f916-98bf-47c0-874c-717e86ad8d68"
+              }
+            },
+            {
+              "label": "Remaining Current Gestational Age (From early ultrasound in days)",
+              "id": "remainingCurrentGestationalAgeFromEarlyUltrasoundInDays",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "6bb6a42d-6e61-46b4-b214-a70281127c23"
+              }
+            },
+            {
+              "label": "EDD (based on early ultrasound date)",
+              "id": "eddBasedOnEarlyUltrasoundDate",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "3ba457e5-5e1e-4998-b086-cafe2aba6d46"
+              }
+            },
+            {
+              "label": "Presenting Complaint:",
+              "id": "presentingComplaint",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "1563d26d-b50b-4e4b-81ef-f494f70217ed"
+              }
+            }
+          ]
+        },
+        {
+          "label": "ANC History",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "ANC Contact",
+              "id": "ancContact",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "13dbec3b-b39b-455f-9b46-2b7e491667bd",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Number of ANC contacts",
+              "id": "numberOfANCContacts",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "80438b0a-dd11-4b1b-a79b-b9e3a65011dc"
+              },
+              "hide": {
+                "hideWhenExpression": "ancContact!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Place of ANC Visit",
+              "id": "placeOfANCVisit",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "checkbox-searchable",
+                "concept": "1d3c938b-463b-471c-864f-59c1b8b17cef",
+                "answers": [
+                  {
+                    "concept": "34e437f0-97fa-44ba-bf68-27dcefe61599",
+                    "label": "Private Clinic/Hospital"
+                  },
+                  {
+                    "concept": "b3b4abe9-bc88-41cb-825c-f1d4c24850fe",
+                    "label": "Health Center"
+                  },
+                  {
+                    "concept": "f4b7336d-b743-46eb-9530-66f9f4c2434a",
+                    "label": "Comprehensive Health post"
+                  },
+                  {
+                    "concept": "3afb0f74-6e5b-4002-b522-9ea8fa60f01c",
+                    "label": "Government Hospital"
+                  },
+                  {
+                    "concept": "ab8651dd-96e7-48f4-b307-b35fcbde4ee3",
+                    "label": "other( specify)"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "ancContact!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Other",
+              "id": "other",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "91a680bb-aa20-4ed9-be01-a8c8a68887e3"
+              },
+              "hide": {
+                "hideWhenExpression": "!useFieldValue('placeOfANCVisit')?.includes('ab8651dd-96e7-48f4-b307-b35fcbde4ee3')"
+              }
+            },
+            {
+              "label": "Provisions at the ANC",
+              "id": "provisionsAtTheANC",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "checkbox-searchable",
+                "concept": "46e28b36-9a45-443a-8f75-019ac18a1b95",
+                "answers": [
+                  {
+                    "concept": "b0db4300-ca92-499e-adc8-8044f188a7d9",
+                    "label": "FeFol"
+                  },
+                  {
+                    "concept": "95d45939-4ec5-4a60-8649-8aa3331d721c",
+                    "label": "TD Vaccine"
+                  },
+                  {
+                    "concept": "70439AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Albendazole"
+                  },
+                  {
+                    "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "None"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(provisionsAtTheANC?.includes('1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')) && (provisionsAtTheANC?.includes('b0db4300-ca92-499e-adc8-8044f188a7d9') ||\nprovisionsAtTheANC?.includes('95d45939-4ec5-4a60-8649-8aa3331d721c') || provisionsAtTheANC?.includes('70439AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'))",
+                  "message": "None can't be selected with other options"
+                }
+              ],
+              "hide": {
+                "hideWhenExpression": "ancContact!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Past Obstetric Complications",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Past obstetric complications",
+              "id": "pastObstetricComplications",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "checkbox-searchable",
+                "concept": "636e4596-ee62-417a-9fee-a321a2fe105a",
+                "answers": [
+                  {
+                    "concept": "ea4dfbd4-6c02-42c2-8d24-ff800ee97c6d",
+                    "label": "HDP"
+                  },
+                  {
+                    "concept": "0e57df6c-c388-4972-923c-16d15cea4268",
+                    "label": "GDM"
+                  },
+                  {
+                    "concept": "6739baca-5a29-4757-a1fe-b4ad9b6e4c56",
+                    "label": "PROM"
+                  },
+                  {
+                    "concept": "32219da6-0256-11eb-adc1-0242ac120002",
+                    "label": "APH?"
+                  },
+                  {
+                    "concept": "a7c78ba9-348a-4f67-8e2a-376e8a8d6afd",
+                    "label": "PPH"
+                  },
+                  {
+                    "concept": "ab8651dd-96e7-48f4-b307-b35fcbde4ee3",
+                    "label": "other( specify)"
+                  },
+                  {
+                    "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "None"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(pastObstetricComplications?.includes('1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')) && (pastObstetricComplications?.includes('ea4dfbd4-6c02-42c2-8d24-ff800ee97c6d') ||\npastObstetricComplications?.includes('0e57df6c-c388-4972-923c-16d15cea4268') || pastObstetricComplications?.includes('6739baca-5a29-4757-a1fe-b4ad9b6e4c56') || pastObstetricComplications?.includes('32219da6-0256-11eb-adc1-0242ac120002') || pastObstetricComplications?.includes('a7c78ba9-348a-4f67-8e2a-376e8a8d6afd') || pastObstetricComplications?.includes('ab8651dd-96e7-48f4-b307-b35fcbde4ee3'))",
+                  "message": "None can't be selected with other options"
+                }
+              ]
+            },
+            {
+              "label": "Specify Other",
+              "id": "specifyOther",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "16ab9e15-aea9-4f63-b2f0-1a19371f0d81"
+              },
+              "hide": {
+                "hideWhenExpression": "!useFieldValue('pastObstetricComplications')?.includes('ab8651dd-96e7-48f4-b307-b35fcbde4ee3')"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Co-existing Medical Complications",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Co-existing Medical Complications",
+              "id": "coExistingMedicalComplications",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "checkbox-searchable",
+                "concept": "b059ee8d-2df7-4af0-9c8c-9915d700a2ba",
+                "answers": [
+                  {
+                    "concept": "1d68e8fb-3484-4a5b-a84a-0fe85347f848",
+                    "label": "Chronic Hypertension"
+                  },
+                  {
+                    "concept": "f31ec605-8b7a-4328-a7b7-4e51011d0863",
+                    "label": "Overt DM"
+                  },
+                  {
+                    "concept": "9854d2b1-12fa-440a-b8ec-862fdae6d4bd",
+                    "label": "Cardiac disorders"
+                  },
+                  {
+                    "concept": "66ee82bf-69f9-436f-a0b3-b84380e51aa9",
+                    "label": "Asthma."
+                  },
+                  {
+                    "concept": "2c40d2b7-6bff-45c3-8ccf-492e66894783",
+                    "label": "Tuberculosis."
+                  },
+                  {
+                    "concept": "5d573d46-139d-42b7-88f2-84722b0f5408",
+                    "label": "Chronic Liver Disease"
+                  },
+                  {
+                    "concept": "145438AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Chronic Kidney Disease"
+                  },
+                  {
+                    "concept": "f58d78a0-21ee-4507-a474-dedc9d5a10d2",
+                    "label": "Thyroid disorders"
+                  },
+                  {
+                    "concept": "e76c0ccf-8721-42df-ae97-4a0aa673a45c",
+                    "label": "Bleeding disorders"
+                  },
+                  {
+                    "concept": "ab8651dd-96e7-48f4-b307-b35fcbde4ee3",
+                    "label": "other( specify)"
+                  },
+                  {
+                    "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "None"
+                  }
+                ]
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "(coExistingMedicalComplications?.includes('1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')) && (coExistingMedicalComplications?.includes('1d68e8fb-3484-4a5b-a84a-0fe85347f848') ||\ncoExistingMedicalComplications?.includes('f31ec605-8b7a-4328-a7b7-4e51011d0863') || coExistingMedicalComplications?.includes('9854d2b1-12fa-440a-b8ec-862fdae6d4bd') || coExistingMedicalComplications?.includes('66ee82bf-69f9-436f-a0b3-b84380e51aa9') || coExistingMedicalComplications?.includes('2c40d2b7-6bff-45c3-8ccf-492e66894783') || coExistingMedicalComplications?.includes('5d573d46-139d-42b7-88f2-84722b0f5408') || coExistingMedicalComplications?.includes('145438AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA') || coExistingMedicalComplications?.includes('f58d78a0-21ee-4507-a474-dedc9d5a10d2') || coExistingMedicalComplications?.includes('e76c0ccf-8721-42df-ae97-4a0aa673a45c') || coExistingMedicalComplications?.includes('ab8651dd-96e7-48f4-b307-b35fcbde4ee3'))",
+                  "message": "None can't be selected with other options"
+                }
+              ]
+            },
+            {
+              "label": "Spcify Other",
+              "id": "spcifyOther",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "464e04c5-6418-440b-a002-ac70ea68be07"
+              },
+              "hide": {
+                "hideWhenExpression": "!useFieldValue('coExistingMedicalComplications')?.includes('ab8651dd-96e7-48f4-b307-b35fcbde4ee3')"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "e22e39fd-7db2-45e7-80f1-60fa0d5a4378",
+  "referencedForms": [],
+  "uuid": "d88b4126-ee45-4c72-9a0d-9e5e673d5a85",
+  "description": "Maternal History",
+  "version": "1.0"
+}

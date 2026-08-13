@@ -1,0 +1,352 @@
+{
+  "name": "Stillbirth Evaluation",
+  "pages": [
+    {
+      "label": "Stillbirth Evaluation",
+      "sections": [
+        {
+          "label": "Stillbirth Evaluation",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "datetime",
+                "concept": "7f36c0b6-a1ed-40a0-936c-134f0072b933"
+              },
+              "id": "dateAndTime",
+              "label": "Date and Time",
+              "datePickerFormat": "both"
+            }
+          ]
+        },
+        {
+          "label": "Patient and Delivery Information",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Date of Delivery:",
+              "id": "dateOfDelivery",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "ef663ced-d21b-42a8-b4ee-833db21f71bd"
+              },
+              "datePickerFormat": "calendar"
+            },
+            {
+              "label": "Mode of Delivery",
+              "id": "modeOfDelivery",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "54fdad49-555f-4c5c-9a2b-f6a76462e2a4",
+                "answers": [
+                  {
+                    "concept": "45903188-c963-4e83-aa77-63a84b7543dc",
+                    "label": "Vaginal Delivery (VD)"
+                  },
+                  {
+                    "concept": "85e2820c-d376-4817-a21d-33ebd0e66dbd",
+                    "label": "Cesarean Delivery (CD)"
+                  },
+                  {
+                    "concept": "b839623d-1d0c-498f-9876-e658539f7965",
+                    "label": "Destructive"
+                  },
+                  {
+                    "concept": "5e70491c-46b3-4ac3-a569-57f2e0949cf6",
+                    "label": "Breech"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Time",
+              "id": "time",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "datetime",
+                "concept": "ca119d66-dfb5-4385-85fd-5c10e6b608a6"
+              },
+              "datePickerFormat": "timer"
+            }
+          ]
+        },
+        {
+          "label": "Gross Description of Placenta",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Placenta Complete?",
+              "id": "placentaComplete",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "a332f693-3f2c-4236-9d68-4e3a336b883f",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "If No, amount apparently missing:",
+              "id": "ifNoAmountApparentlyMissing",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "0883a50c-8dd3-4777-b655-f6d71ee4f3a8"
+              },
+              "hide": {
+                "hideWhenExpression": "placentaComplete!=='1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Placenta Shape",
+              "id": "placentaShape",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "ccd54cac-3c29-41ca-b3a4-28172f6ed3de",
+                "answers": [
+                  {
+                    "concept": "1fdd56cd-303f-429c-985c-6c4d0825d1df",
+                    "label": "Discoid"
+                  },
+                  {
+                    "concept": "dcec5fcf-dd6c-43fe-8b47-b7eafc8d0871",
+                    "label": "Oval"
+                  },
+                  {
+                    "concept": "7c6719e8-7219-45d5-8d31-8949c88e80e0",
+                    "label": "Bilobed"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Placental Weight (in gm)",
+              "id": "placentalWeightInGm",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "664cc289-bfbf-41c8-a447-74f45b25dc93"
+              }
+            },
+            {
+              "label": "Placental Thickness (in cm)",
+              "id": "placentalThicknessInCm",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "697f6ef3-a182-41e0-b278-12721a1772a1"
+              }
+            },
+            {
+              "label": "Placental Diameter (in cm)",
+              "id": "placentalDiameterInCm",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "87bfa22f-f3ff-4eed-8cb8-97765745eb2a"
+              }
+            },
+            {
+              "label": "Adherent Clot?",
+              "id": "adherentClot",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "d8293f1d-5f0d-4c26-94d0-8b13d1c9d4ef",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "If Yes, approximate area affected:",
+              "id": "ifYesApproximateAreaAffected",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "23f29769-ac14-416c-98e3-b248cf0dde8e"
+              },
+              "hide": {
+                "hideWhenExpression": "adherentClot!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Gross Description of Umbilical Cord",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Cord insertion central?",
+              "id": "cordInsertionCentral",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "0a4d3df7-3a3a-4091-ab28-77c9c580de33",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Cord Length (in cm)",
+              "id": "cordLengthInCm",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "a1ec0f86-8dd9-4d6d-8553-e7491ec85152"
+              }
+            },
+            {
+              "label": "Knots Present?",
+              "id": "knotsPresent",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "f202da79-5f53-4927-bc9c-d59a47a7b490",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Cord Around Body?",
+              "id": "cordAroundBody",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "73441164-25fd-4cad-8068-0d9c767b6ba6",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Number of Vessels",
+              "id": "numberOfVessels",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "b8fae558-e568-4842-9584-692cf0a56343"
+              }
+            },
+            {
+              "label": "Arteries",
+              "id": "arteries",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "b17ee0ab-0e43-4e75-9f4f-69767bba0e41"
+              }
+            },
+            {
+              "label": "Vein",
+              "id": "vein",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "9c9ee2ce-0779-4f7c-8447-864dbb93955f"
+              }
+            },
+            {
+              "label": "Thrombosis Observed?",
+              "id": "thrombosisObserved",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "ae525afa-3b33-4669-9656-a246aed757cd",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "If Yes, describe:",
+              "id": "ifYesDescribe",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "71237a64-986a-40ef-b8de-ca85ceab77e3"
+              },
+              "hide": {
+                "hideWhenExpression": "thrombosisObserved!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Wharton’s Jelly present?",
+              "id": "whartonSJellyPresent",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "174af7a5-1bd2-4950-b446-eebb92ae4198",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "c33cc5d1-33c4-437f-833c-815b378a75ac",
+  "description": "Stillbirth Evaluation",
+  "version": "1.0"
+}

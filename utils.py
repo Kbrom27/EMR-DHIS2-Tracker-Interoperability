@@ -41,6 +41,17 @@ def normalize_date(raw_value: str) -> str:
             return datetime.strptime(value, fmt).strftime("%Y-%m-%d")
         except ValueError:
             continue
+    month_match = re.search(
+        r"(January|February|March|April|May|June|July|August|September|October|November|December)[a-z]*"
+        r"\s+\d{1,2}[;,]?\s+\d{4}",
+        value,
+        re.IGNORECASE,
+    )
+    if month_match:
+        try:
+            return datetime.strptime(month_match.group(0).replace(";", " "), "%B %d %Y").strftime("%Y-%m-%d")
+        except ValueError:
+            pass
     return value
 
 

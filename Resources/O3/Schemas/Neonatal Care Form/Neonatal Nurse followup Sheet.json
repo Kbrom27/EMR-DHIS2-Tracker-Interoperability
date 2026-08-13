@@ -1,0 +1,676 @@
+{
+  "name": "Neonatal Nurse followup Sheet",
+  "pages": [
+    {
+      "label": "Nurse followup Sheet",
+      "sections": [
+        {
+          "label": "Nurse followup Sheet",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Nurse followup Sheet Entry",
+              "id": "nurseFollowupSheetEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "7c6548af-ca8c-479f-95c4-0664a12c53e3",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "label": "Date",
+                  "id": "date",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "6383d515-a41c-43ed-84f8-8122b0f8ce61"
+                  },
+                  "datePickerFormat": "calendar"
+                },
+                {
+                  "label": "Current weight",
+                  "id": "currentWeight",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "38d8061b-8c67-4c48-9242-401d0ecafbc2"
+                  }
+                },
+                {
+                  "label": "Time of check",
+                  "id": "timeOfCheck",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "6cb684a5-9caf-4b41-ab8d-3f8c89c6b06b"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "IV line check",
+                  "id": "ivLineCheck",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "c3cb931c-f596-4b4e-9266-e7bd76dbb86a",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "weight (Change)",
+                  "id": "weightChange",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "90de7ce2-dded-4f03-b2e2-20a6a6b44aa8",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Changed weight",
+                  "id": "changedWeight",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "874cc082-fd82-41e8-bc55-a5b2e63c24c2"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('weightChange')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Temperature",
+                  "id": "temperature",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "7b4dd6cc-1f6e-4d4a-bac2-fbd0dbe528c8"
+                  }
+                },
+                {
+                  "label": "Temperature measurement unit",
+                  "id": "temperatureMeasurementUnit",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "09bb0edb-b432-4184-a95a-e86947b03955",
+                    "answers": [
+                      {
+                        "concept": "5b75a1eb-8df6-40b2-aae4-e010d3b08be3",
+                        "label": "°C"
+                      },
+                      {
+                        "concept": "c77bd00c-08d6-487e-9dc5-229e8454a938",
+                        "label": "°F"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Time of temperature measurement",
+                  "id": "timeOfTemperatureMeasurement",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "2506371d-3a7b-4eca-bc32-7623e1298b7f"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Heart Rate",
+                  "id": "heartRate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "c70d7a3d-995f-44e0-94b5-f8a0e227ff00"
+                  }
+                },
+                {
+                  "label": "Respiratory Rate",
+                  "id": "respiratoryRate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "924b639c-a148-4bab-a4ec-b21c68791bc5"
+                  }
+                },
+                {
+                  "label": "Downes’ Score",
+                  "id": "downesScore",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "2a240d7a-2398-4627-90ae-c3175ee5a540"
+                  }
+                },
+                {
+                  "label": "Pain score",
+                  "id": "painScore",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "80275b15-6991-41f2-a1cc-1a386c0850da",
+                    "answers": [
+                      {
+                        "concept": "6ed3eb6b-ef14-4036-842d-ae95838af761",
+                        "label": "No pain or mild discomfort"
+                      },
+                      {
+                        "concept": "ae49a58f-6a04-465e-ba4e-213bb9f48f63",
+                        "label": "Mild to moderate pain"
+                      },
+                      {
+                        "concept": "012567d9-1677-48ed-b905-3cffc78fe3dc",
+                        "label": "Severe pain"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Oxygen Saturation",
+                  "id": "oxygenSaturation",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "075c2485-ea84-4e3b-8df8-638ef18edf41"
+                  }
+                },
+                {
+                  "label": "Oxygen Source",
+                  "id": "oxygenSource",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "28517d4c-6c8b-4981-a3ad-2fb27edf90f8",
+                    "answers": [
+                      {
+                        "concept": "ee082f2d-6456-4348-9838-59ac9202ce0f",
+                        "label": "INO2"
+                      },
+                      {
+                        "concept": "07784324-dace-4d1b-886d-715470e00349",
+                        "label": "Head Hood"
+                      },
+                      {
+                        "concept": "57eb85b4-fcad-4d40-8963-6c841c6c2761",
+                        "label": "CPAP"
+                      },
+                      {
+                        "concept": "dfd28560-f3d2-4895-afdb-8232100acd35",
+                        "label": "MV"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Amount of oxygen (FiO2)",
+                  "id": "amountOfOxygenFiO2",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "5b2e855d-994d-4793-bc6b-185ffbd10f5c"
+                  }
+                },
+                {
+                  "label": "Blood sugar concentration",
+                  "id": "bloodSugarConcentration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "8a4066d6-db1d-48fd-8009-1189f95fde84"
+                  }
+                },
+                {
+                  "label": "Blood sugar concentration unit",
+                  "id": "bloodSugarConcentrationUnit",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "63d8c427-2b16-4040-9af7-dda4b5e2e496",
+                    "answers": [
+                      {
+                        "concept": "c805d46a-b289-469b-982b-6d3833af07fc",
+                        "label": "mmol/L"
+                      },
+                      {
+                        "concept": "317d6f7d-4fe5-4a80-88f9-813e78ed7e9d",
+                        "label": "mg/dL"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Lab blood draw",
+                  "id": "labBloodDraw",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "eccace9d-d31f-4518-b0c9-7c4948f98a94",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Bilirubin tested?",
+                  "id": "bilirubinTested",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "8703ac21-205e-4c62-9599-11cfb1fbbc83",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "bilirubin value (mg/dL)",
+                  "id": "bilirubinValueMgDL",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "e6cca521-ba71-45c3-ab43-287117665468"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('bilirubinTested')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "How is bilirubin measured",
+                  "id": "howIsBilirubinMeasured",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "85979c99-750e-4621-beca-f1b2539e0449",
+                    "answers": [
+                      {
+                        "concept": "4f56659b-4c72-443f-9667-c350031ae37d",
+                        "label": "Serum"
+                      },
+                      {
+                        "concept": "b7bbb740-a215-41b3-a2b9-b74b9550202b",
+                        "label": "Transcutaneous"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('bilirubinTested')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Phototherapy",
+                  "id": "phototherapy",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "66114665-ab9d-461f-8275-fd46f0dff8d0",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Medications Given",
+                  "id": "medicationsGiven",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "a91cc4bd-c39f-4932-b3ba-e7c8f10d5e7f",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Mode of feeding",
+                  "id": "modeOfFeeding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "beb1378f-da29-44d5-91d1-cd0fe8c57199",
+                    "answers": [
+                      {
+                        "concept": "13aec7f1-24a5-4323-a948-579b92488253",
+                        "label": "direct"
+                      },
+                      {
+                        "concept": "ab33a26f-83c7-4a81-9a3a-777553f6a122",
+                        "label": "Cup"
+                      },
+                      {
+                        "concept": "d4073102-e93d-4795-8f67-e28ee700e5df",
+                        "label": "NG tube"
+                      },
+                      {
+                        "concept": "5192b74e-98e0-4d44-ba74-7f81517b456c",
+                        "label": "orogastric"
+                      },
+                      {
+                        "concept": "cb99074c-1254-4fbd-b5f1-73f85ee37e9a",
+                        "label": "MF"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Vomiting",
+                  "id": "vomiting",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "5f9ec79e-7b2e-4ab0-b833-2960e6afcaf3",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "UOP",
+                  "id": "uop",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "ffd7c1b0-7d98-45e2-b71b-e6954941ded1",
+                    "answers": [
+                      {
+                        "concept": "d73347c3-293b-4ae6-896f-b11dabeaeec2",
+                        "label": "Pass"
+                      },
+                      {
+                        "concept": "d8a60fcc-aef7-4010-aad1-66670e5b9f6d",
+                        "label": "Not pass"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Stool",
+                  "id": "stool",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "b7f7fb37-573e-412e-8a1c-3412c1b97215",
+                    "answers": [
+                      {
+                        "concept": "d73347c3-293b-4ae6-896f-b11dabeaeec2",
+                        "label": "Pass"
+                      },
+                      {
+                        "concept": "d8a60fcc-aef7-4010-aad1-66670e5b9f6d",
+                        "label": "Not pass"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "RBS",
+                  "id": "rbs",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "8445619d-5f35-4235-9b37-acb5b76558ac"
+                  }
+                },
+                {
+                  "label": "Kmc done?",
+                  "id": "kmcDone",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "af15fdcc-977a-4488-9993-51a607b4b49b",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Who is doing KMC(Mother/Surrogate)",
+                  "id": "whoIsDoingKMCMotherSurrogate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "43394b1f-b878-480a-9dc8-f9b784125c39"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('kmcDone')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Hrs on KMC",
+                  "id": "hrsOnKMC",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "a550f8b0-97db-4600-bfa8-cebeb2e0c532"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('kmcDone')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Family Involvement",
+                  "id": "familyInvolvement",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "b19380da-aca3-4eb8-9a0a-87c85b436bb6",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Blood culture",
+                  "id": "bloodCulture",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "ea6c7f90-d63a-4a64-9774-f5270d5c0ec9",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Organism",
+                  "id": "organism",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "bbd3cea7-0bf0-48c4-8322-58133268d1d8"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('bloodCulture')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Sensitivity",
+                  "id": "sensitivity",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "71e66232-ac6f-4580-8dc1-69521fdd0a34"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('bloodCulture')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Does the baby have seizures?",
+                  "id": "doesTheBabyHaveSeizures",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "047c9d1b-92ba-4c1b-aea1-683588726664",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Anticonvulsants administered?",
+                  "id": "anticonvulsantsAdministered",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "fc73d0be-e1f0-43d1-a233-f8b01e47ba86",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('doesTheBabyHaveSeizures')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "What anticonvulsants are administered?",
+                  "id": "whatAnticonvulsantsAreAdministered",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "checkbox",
+                    "concept": "51ef60a2-39fb-4292-ba5c-6e136c37c993",
+                    "answers": [
+                      {
+                        "concept": "f2eca8d0-c02b-482f-8ffd-d06962e256b1",
+                        "label": "Phenobarbitone/Phenobarbital"
+                      },
+                      {
+                        "concept": "82023AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Phenytoin"
+                      },
+                      {
+                        "concept": "74745AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Diazepam"
+                      },
+                      {
+                        "concept": "0ffa123b-abaa-4e51-b52d-bcda012f7611",
+                        "label": "Paraldehyde"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('anticonvulsantsAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Remarks",
+                  "id": "remarks",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "1d2f1045-8b8f-44a0-b5e4-8ed6fac51319"
+                  }
+                },
+                {
+                  "label": "Nurse Initials& signature",
+                  "id": "nurseInitialsSignature",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "d756321d-3d95-41b6-9e2c-0bbb0afda1f2"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "8f388510-9e5d-4e5f-a098-4362ee0f7551",
+  "description": "Nurse followup Sheet",
+  "version": "1.0",
+  "repeatable": true
+}

@@ -1,0 +1,260 @@
+{
+  "name": "TOLAC CHART",
+  "pages": [
+    {
+      "label": "TOLAC CHART",
+      "sections": [
+        {
+          "label": "TOLAC CHART",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "TOLAC CHART Entry",
+              "id": "tolacCHARTEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "8745f2ea-8ec9-43e1-a0a0-16b5dd4ed6cc",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "label": "Tolac event date",
+                  "id": "tolacEventDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "e9ad8986-3a5c-4a05-8a21-7da93f68643d"
+                  }
+                },
+                {
+                  "label": "Date",
+                  "id": "date",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "3915c3e5-719b-4c99-a12e-224622fddc96"
+                  }
+                },
+                {
+                  "label": "Time",
+                  "id": "time",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "aa805a3d-36af-4e6c-ab64-b969a5d06e34"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "BP (systolic)",
+                  "id": "bpSystolic",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "37db04c8-4f31-46c1-a1e9-141811909770"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('bpSystolic')<50 || useFieldValue('bpSystolic')>250) && !isEmpty(useFieldValue('bpSystolic'))",
+                      "message": "Systolic Blood Pressure should be between 50 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "BP (diastolic)",
+                  "id": "bpDiastolic",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "7b7ccc1d-4d3d-42af-b532-5dbcd53c00e6"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('bpDiastolic')<50 || useFieldValue('bpDiastolic')>250) && !isEmpty(useFieldValue('bpDiastolic'))",
+                      "message": "Diastolic Blood Pressure should be between 50 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "PR",
+                  "id": "pr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "683f77ec-26be-4138-9b01-3451e79dfe68"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('pr')<20 || useFieldValue('pr')>250) && !isEmpty(useFieldValue('pr'))",
+                      "message": "Pulse Rate should be between 20 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "RR",
+                  "id": "rr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "a3c11822-a75e-4ab9-b336-e99b9089a334"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('rr')<5 || useFieldValue('rr')>80) && !isEmpty(useFieldValue('rr'))",
+                      "message": "Respiration Rate should be between 5 and 80"
+                    }
+                  ]
+                },
+                {
+                  "label": "Temp",
+                  "id": "temp",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "279bfcfb-5933-427c-a9d7-682a1033eb8c"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('temp')<30 || useFieldValue('temp')>45) && !isEmpty(useFieldValue('temp'))",
+                      "message": "Temperature Should be between 30 and 45"
+                    }
+                  ]
+                },
+                {
+                  "label": "Abdominal Tenderness",
+                  "id": "abdominalTenderness",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "4395bfb3-41d3-426b-8d34-72c9273b9b43",
+                    "answers": [
+                      {
+                        "concept": "163748AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Present"
+                      },
+                      {
+                        "concept": "163747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Absent"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Contraction (Type)",
+                  "id": "contractionType",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "47fed209-ab1a-4413-a054-048899d93877",
+                    "answers": [
+                      {
+                        "concept": "575d4096-7c22-4042-9859-cc63606d35c2",
+                        "label": "Irregular"
+                      },
+                      {
+                        "concept": "2efa0f5a-2bcf-4eba-a2c6-efb4a2e383c7",
+                        "label": "Regular"
+                      },
+                      {
+                        "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "None"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "FHB (Fetal Heart Beat)",
+                  "id": "fhbFetalHeartBeat",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "8832d6b7-5e36-43d8-834a-532abff9412a"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('fhbFetalHeartBeat')<80 || useFieldValue('fhbFetalHeartBeat')>200) && !isEmpty(useFieldValue('fhbFetalHeartBeat'))",
+                      "message": "FHB must be between 80 and 200 bpm"
+                    }
+                  ]
+                },
+                {
+                  "label": "Vaginal bleeding",
+                  "id": "vaginalBleeding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "ebeba3c1-78a7-4344-924b-93236cf9280c",
+                    "answers": [
+                      {
+                        "concept": "1498AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Mild"
+                      },
+                      {
+                        "concept": "1499AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Moderate"
+                      },
+                      {
+                        "concept": "1500AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Severe"
+                      },
+                      {
+                        "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "None"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Cervical dilatation",
+                  "id": "cervicalDilatation",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "6b54193c-57e4-454f-8bc3-bfa84d09dc45"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "useFieldValue('cervicalDilatation')>10 && !isEmpty(useFieldValue('cervicalDilatation'))",
+                      "message": "Dilation cannot exceed 10 cm"
+                    }
+                  ]
+                },
+                {
+                  "label": "Station",
+                  "id": "station",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "133233b4-ccde-49c4-8a73-c17a4bb6a61f"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('station')<-5 || useFieldValue('station')>5) && !isEmpty(useFieldValue('station'))",
+                      "message": "Station should be between -5 and 5"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "2765a326-d6ea-4bac-82ed-b4d44c1c6243",
+  "description": "TOLAC CHART",
+  "version": "1.0",
+  "repeatable": true
+}

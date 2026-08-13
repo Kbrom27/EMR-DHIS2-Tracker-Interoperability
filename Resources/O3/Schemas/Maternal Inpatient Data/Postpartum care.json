@@ -1,0 +1,515 @@
+{
+  "name": "Postpartum care",
+  "pages": [
+    {
+      "label": "Postpartum care",
+      "sections": [
+        {
+          "label": "Postpartum care",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Postpartum care Entry",
+              "id": "postpartumCareEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "e2f31fc1-fda8-4e7a-a910-5ee60ac13b72",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "7f36c0b6-a1ed-40a0-936c-134f0072b933"
+                  },
+                  "id": "dateAndTime",
+                  "label": "Date and Time",
+                  "datePickerFormat": "both"
+                },
+                {
+                  "label": "Date/stay",
+                  "id": "dateStay",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "a6b8cc7f-a49d-4c96-80ea-cd15110a8a34",
+                    "answers": [
+                      {
+                        "concept": "6f06bbf5-e5bb-4009-bb3a-d8ef4ca32b18",
+                        "label": "24 hrs stay"
+                      },
+                      {
+                        "concept": "b82c3c46-03d8-4153-8f45-dcf529c2ea07",
+                        "label": "25- 48 Hrs"
+                      },
+                      {
+                        "concept": "47c12be1-eaaf-45d1-8ef9-669680f33c0f",
+                        "label": "49-72 Hrs"
+                      },
+                      {
+                        "concept": "3dea7e2d-86a0-4d33-a0fe-f88e64f2859b",
+                        "label": "73Hrs-7 days"
+                      },
+                      {
+                        "concept": "78ff464f-ff1a-4a64-841d-8045c71c47ce",
+                        "label": "8- 42 days"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Blood Pressure (BP)",
+                  "id": "bloodPressureBP",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "f35b8f81-7bd3-48f6-96df-4b84fce62fbe"
+                  }
+                },
+                {
+                  "label": "PR/RR",
+                  "id": "prRR",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "0268b81c-0f07-4fc3-a566-88e946737e84"
+                  }
+                },
+                {
+                  "label": "Temp",
+                  "id": "temp",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "b9e8df3a-214b-4cef-a055-19be1242d399"
+                  }
+                },
+                {
+                  "label": "Uterus Contracted / Look for PPH",
+                  "id": "uterusContractedLookForPPH",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "afd9d0c8-5e05-4aff-8ee8-eff1261e7704",
+                    "answers": [
+                      {
+                        "concept": "9127c5eb-bd4e-4a0b-b876-42eff008e135",
+                        "label": "Contracted"
+                      },
+                      {
+                        "concept": "59cbecc2-f762-4603-bc66-82dcb32d85ae",
+                        "label": "Not Contracted"
+                      },
+                      {
+                        "concept": "f10b6f23-740b-4259-8f75-e2d3339b78f4",
+                        "label": "PPH Suspected"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Dribbling / Leaking Urine",
+                  "id": "dribblingLeakingUrine",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "d6cb534a-1ad4-4e28-83e0-e5ca2745f9bd",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Anemia",
+                  "id": "anemia",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "aff0af2d-0b34-4282-bbe7-215ba5fda859",
+                    "answers": [
+                      {
+                        "concept": "1498AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Mild"
+                      },
+                      {
+                        "concept": "1499AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Moderate"
+                      },
+                      {
+                        "concept": "1500AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Severe"
+                      },
+                      {
+                        "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "None"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Vaginal Discharge (After 4 wks of delivery)",
+                  "id": "vaginalDischargeAfter4WksOfDelivery",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "fab7695c-c86d-4b53-a1ed-d4fcfce973fc",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Pelvic Exam (if vaginal discharge)",
+                  "id": "pelvicExamIfVaginalDischarge",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "676ffa18-1a4e-4cc9-b42a-7e6db21c38b4",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Breast Exam",
+                  "id": "breastExam",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "da4ff19a-b293-45d8-8e6e-e0067126edb4",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "IFA Supplement Given",
+                  "id": "ifaSupplementGiven",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "1a2adb78-7d7f-48c7-9ad1-fc3cb504393e",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Counseling Danger sign, FP, Hygiene, Nutrition, EPI, use of ITN, BF, HTP, etc",
+                  "id": "counselingDangerSignFPHygieneNutritionEPIUseOfITNBFHTPEtc",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "96638ba3-c565-49cc-adba-37f10cbf5dc9",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Baby Breathing Well",
+                  "id": "babyBreathingWell",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "7dcba60e-1115-43f1-b258-b759e0ae82fa",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Baby Breastfeeding",
+                  "id": "babyBreastfeeding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "294d44c1-e511-4939-86d2-a942b29359ad",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Baby Weight (grams)",
+                  "id": "babyWeightGrams",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "631f1454-be60-4e04-8180-8b3afc097f0b"
+                  }
+                },
+                {
+                  "label": "Immunization (BCG)",
+                  "id": "immunizationBCG",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "6ecaa665-7db7-4dc3-8a1c-22c868d14eb1",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "HIV Tested",
+                  "id": "hivTested",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "eda4a82e-8039-4640-88ef-875c287706d2",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "HIV Test Result",
+                  "id": "hivTestResult",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "4f05dff7-ae5b-4884-a999-694e7309e69b",
+                    "answers": [
+                      {
+                        "concept": "664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Negative"
+                      },
+                      {
+                        "concept": "703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Positive"
+                      },
+                      {
+                        "concept": "1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Unknown"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('hivTested')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "ARV Rx for Mother (By type)",
+                  "id": "arvRxForMotherByType",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "d6efefd3-3481-40de-9778-e7187b78168b"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('hivTestResult')==='703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA') && isEmpty(myValue)",
+                      "message": "This field is required"
+                    }
+                  ],
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('hivTestResult')!=='703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "ARV Rx for Newborn (By type)",
+                  "id": "arvRxForNewbornByType",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "f7b91586-9525-450d-af72-cac53b77ba07"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('hivTestResult')==='703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA') && isEmpty(myValue)",
+                      "message": "This field is required"
+                    }
+                  ],
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('hivTestResult')!=='703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Feeding Option",
+                  "id": "feedingOption",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "8da97853-ab10-4249-8aab-348951a116a6",
+                    "answers": [
+                      {
+                        "concept": "60c828d6-4a24-420d-994c-790638c50def",
+                        "label": "EBF – Exclusive Breastfeeding"
+                      },
+                      {
+                        "concept": "b2f43501-0346-4de8-a0ae-c614126c551e",
+                        "label": "ERF - Exclusive Replacement Feeding"
+                      },
+                      {
+                        "concept": "b1cd9620-434d-42bd-b29c-83aa7b791549",
+                        "label": "Mixed"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Newborn Referred to Chronic HIV Infant Care",
+                  "id": "newbornReferredToChronicHIVInfantCare",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "4f360be8-6ccf-4d1c-aa66-c7da5bb5d1d0",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "FP Counseling and Method Provided",
+                  "id": "fpCounselingAndMethodProvided",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "1d6cff0f-beb6-4d5e-bfbb-c0f9e27efd36",
+                    "answers": [
+                      {
+                        "concept": "c999865e-d84d-4304-9337-8631e54a3923",
+                        "label": "Pills"
+                      },
+                      {
+                        "concept": "8320d6c4-c5cb-4e90-8102-052503ed0296",
+                        "label": "Injectables"
+                      },
+                      {
+                        "concept": "a29b0b31-6021-4670-bfd6-43b98b2c786d",
+                        "label": "Implants"
+                      },
+                      {
+                        "concept": "ab9b8059-945d-45fb-915b-079c38dc7fee",
+                        "label": "Condom"
+                      },
+                      {
+                        "concept": "122352ea-d183-4d1d-a5da-df79b723756b",
+                        "label": "Counseled only"
+                      },
+                      {
+                        "concept": "5275AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Intrauterine device"
+                      },
+                      {
+                        "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "None"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Action Taken",
+                  "id": "actionTaken",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "c08645f1-31d0-4445-96c6-47508049b04b"
+                  }
+                },
+                {
+                  "label": "Remark",
+                  "id": "remark",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "1cc56cec-56e7-41ab-97ba-ee8cc78f32a1"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "4d706f07-1575-4fa0-bf41-ad20df338ed4",
+  "description": "Postpartum care",
+  "version": "1.0",
+  "repeatable": true
+}

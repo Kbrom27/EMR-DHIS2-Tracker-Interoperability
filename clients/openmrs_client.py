@@ -5,8 +5,24 @@ from urllib.parse import urljoin, urlsplit
 
 import requests
 import urllib3
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+def _install_connection_retries(session: requests.Session) -> None:
+    retry = Retry(
+        total=5,
+        connect=5,
+        read=5,
+        backoff_factor=1.0,
+        status_forcelist=(500, 502, 503, 504),
+        allowed_methods=frozenset({"GET", "HEAD", "OPTIONS", "TRACE"}),
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
 
 
 def normalize_base_url(raw: str) -> str:
@@ -33,6 +49,7 @@ class ApiClient:
         self.session = requests.Session()
         self.session.verify = False
         self.session_ok = False
+        _install_connection_retries(self.session)
 
     def _sync_base_url_from_response(self, response: requests.Response) -> None:
         final_url = response.url

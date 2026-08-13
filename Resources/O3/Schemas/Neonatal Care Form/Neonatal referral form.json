@@ -1,0 +1,1172 @@
+{
+  "name": "Neonatal referral form",
+  "pages": [
+    {
+      "label": "Neonatal referral form",
+      "sections": [
+        {
+          "label": "Referral Details",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Intra/Inter facility transfer",
+              "id": "intraInterFacilityTransfer",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "48896166-3877-4704-9ecf-02a460815314",
+                "answers": [
+                  {
+                    "concept": "cc09d80c-44d9-4b22-8102-0a58cff5b28d",
+                    "label": "Inter facility transfer"
+                  },
+                  {
+                    "concept": "ff4da441-58dd-4bdc-9fa8-6719182860b1",
+                    "label": "Intra facility transfer"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Transferred to",
+              "id": "transferredTo",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "03362997-45a9-462b-a0aa-b7110402c99b"
+              }
+            },
+            {
+              "label": "Name of Referring Facility",
+              "id": "nameOfReferringFacility",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "7db37c9d-ef30-4fe0-a068-cac4c655d5d4"
+              }
+            },
+            {
+              "label": "Date of referral",
+              "id": "dateOfReferral",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "4c83232d-b922-4267-bdde-3a4294d07b93"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Newborn & Maternal Identification",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Singleton-Multiple",
+              "id": "singletonMultiple",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "dafdc167-f731-4a32-a5b6-b5fd7741e48e",
+                "answers": [
+                  {
+                    "concept": "0b1d17d4-5087-455f-9cd0-ca74eaa96b70",
+                    "label": "Singleton"
+                  },
+                  {
+                    "concept": "354b8360-0744-4af2-8604-72b4c0f25685",
+                    "label": "Twin"
+                  },
+                  {
+                    "concept": "debb476c-d521-4941-aed0-450f8c861c95",
+                    "label": "Triplet"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Maternal MRN",
+              "id": "maternalMRN",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "9a6b0f66-bd3d-46c2-8d08-95a7fe7f7f8a"
+              }
+            },
+            {
+              "label": "Maternal Age",
+              "id": "maternalAge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "56ff1ef4-038c-45d7-9897-bc1772eb8afc"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Antenatal History",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Para",
+              "id": "para",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "6dee4338-6275-4b87-894c-cadfcadbedfc"
+              }
+            },
+            {
+              "label": "Abortion (Induced)",
+              "id": "abortionInduced",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "af89f2f2-2ca4-4d9b-a24e-197323d90650"
+              }
+            },
+            {
+              "label": "Abortion (Spontaneous)",
+              "id": "abortionSpontaneous",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "661ca2af-169a-480f-b50c-49dab327862c"
+              }
+            },
+            {
+              "label": "Stillbirth",
+              "id": "stillbirth",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "27beb686-5e38-4569-9d26-aba74a0efaf6"
+              }
+            },
+            {
+              "label": "Early Neonatal death",
+              "id": "earlyNeonatalDeath",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "b0c828ae-b9e5-46b5-b44a-8ff9b9762335"
+              }
+            },
+            {
+              "label": "LNMP",
+              "id": "lnmp",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "c13ba31b-8e36-4b6b-93fb-eda83adfe44d"
+              }
+            },
+            {
+              "label": "Gestational age (weeks)",
+              "id": "gestationalAgeWeeks",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "8133e749-a73a-4562-83ab-44b1af93cbea"
+              }
+            },
+            {
+              "label": "Gestational age (days)",
+              "id": "gestationalAgeDays",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "b0292d45-cb3d-4151-aeb3-f5e8b1084394"
+              }
+            },
+            {
+              "label": "Estimated by: Obstetric Ultrasound",
+              "id": "estimatedByObstetricUltrasound",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "f62655b6-7ece-48e0-8b8e-ad1da444ef2f",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "If Obstetric Ultrasound, done at ref",
+              "id": "ifObstetricUltrasoundDoneAtRef",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "53958b5f-8a92-4847-b7bb-facc8ffa3230"
+              },
+              "hide": {
+                "hideWhenExpression": "estimatedByObstetricUltrasound!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "LNMP",
+              "id": "lnmp2",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "cd3b6fcd-845a-429b-9013-c5613d465da4",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "estimatedByObstetricUltrasound!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Fundal height",
+              "id": "fundalHeight",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "99453b5a-d788-4068-8364-2f8c97b4d241",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Ballard Score",
+              "id": "ballardScore",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "5c56bb76-6d92-4c73-b6d6-7f077946cf55",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "ANC Visit",
+              "id": "ancVisit",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "33426ada-f53a-4255-9c51-713f33d10a3c",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "place of ANC follow up",
+              "id": "placeOfANCFollowUp",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "16d2f707-ff9c-44e8-a956-55097d6fec42"
+              },
+              "hide": {
+                "hideWhenExpression": "ancVisit!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "TT vaccine",
+              "id": "ttVaccine",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "2cd22599-037a-4d3b-a9ca-e16e5e52be40",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "If yes, number of doses",
+              "id": "ifYesNumberOfDoses",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "d235db1c-e5ef-4dd7-ae9a-1ef8065a9f00"
+              },
+              "hide": {
+                "hideWhenExpression": "ttVaccine!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Mother PICT",
+              "id": "motherPICT",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "e1ec9bb6-3b3b-4ff9-b2d7-f3b802ad73aa",
+                "answers": [
+                  {
+                    "concept": "664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Negative"
+                  },
+                  {
+                    "concept": "703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Positive"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "If yes, on HAART",
+              "id": "ifYesOnHAART",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "7b3bf618-1900-452a-8b64-a5dcf0bca80f",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "motherPICT!=='703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "If yes Duration",
+              "id": "ifYesDuration",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "57f8e10e-8977-4a86-8c77-e89817ce1cba"
+              },
+              "hide": {
+                "hideWhenExpression": "ifYesOnHAART!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "ARV drugs",
+              "id": "arvDrugs",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "ca7eaf87-3cc8-4d08-9591-3f4941d6937f"
+              },
+              "hide": {
+                "hideWhenExpression": "motherPICT!=='703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "CD4/date",
+              "id": "cd4Date",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "6f0865b8-5b18-45ee-b4da-16985292ce92"
+              },
+              "hide": {
+                "hideWhenExpression": "motherPICT!=='703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Viral load/date",
+              "id": "viralLoadDate",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "e0292ee9-b143-47c7-910a-bb7af869d828"
+              },
+              "hide": {
+                "hideWhenExpression": "motherPICT!=='703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Infant prophylaxis started",
+              "id": "infantProphylaxisStarted",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "c26659a7-12a6-4db0-be62-8d5fcf3a7e80",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "motherPICT!=='703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "HBsAg",
+              "id": "hbsag",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "89d82f4b-6652-4633-91c5-a36c33262c5e",
+                "answers": [
+                  {
+                    "concept": "703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Positive"
+                  },
+                  {
+                    "concept": "664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Negative"
+                  },
+                  {
+                    "concept": "1118AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Not done"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Blood group done",
+              "id": "bloodGroupDone",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "e664fa0e-e436-4e62-8231-9bc681cb66e9",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "RH",
+              "id": "rh",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "ffa2427a-9c13-4529-b1b8-dd7734c94a55",
+                "answers": [
+                  {
+                    "concept": "664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Negative"
+                  },
+                  {
+                    "concept": "703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Positive"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "bloodGroupDone!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "COOMB’S test",
+              "id": "coombSTest",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "d92278da-2811-4d8c-b6d4-cdd07dcec4b9",
+                "answers": [
+                  {
+                    "concept": "703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Positive"
+                  },
+                  {
+                    "concept": "664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Negative"
+                  },
+                  {
+                    "concept": "1118AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Not done"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "rh!=='664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Anti D given",
+              "id": "antiDGiven",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "925204a3-de11-4720-ae24-2eb0386dbb12",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "rh!=='664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "VDRL",
+              "id": "vdrl",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "12b5ea8f-107f-4d39-b42a-7b3d434de529",
+                "answers": [
+                  {
+                    "concept": "703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Positive"
+                  },
+                  {
+                    "concept": "664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Negative"
+                  },
+                  {
+                    "concept": "1118AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Not done"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "VDRL Treatment",
+              "id": "vdrlTreatment",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "7304dec0-92d1-4e68-ab15-9b8aba368751"
+              },
+              "hide": {
+                "hideWhenExpression": "vdrl!=='703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "date completed",
+              "id": "dateCompleted",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "2e8065fa-71d9-4953-b765-34aea8ecb4b7"
+              },
+              "hide": {
+                "hideWhenExpression": "vdrl!=='703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Pregnancy related maternal problem",
+              "id": "pregnancyRelatedMaternalProblem",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "685748cb-0472-431a-a5c1-a0c64e160f65"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Labor and Delivery",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Labour",
+              "id": "labour",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "9e6f69ed-333a-46e0-bee0-55462ab897d2",
+                "answers": [
+                  {
+                    "concept": "570c6e8c-fe57-11ea-adc1-0242ac120002",
+                    "label": "Induced"
+                  },
+                  {
+                    "concept": "ea83fdff-c711-4eed-bc2d-97520efd73ea",
+                    "label": "spontaneous"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Duration",
+              "id": "duration",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "b456bc52-b365-41d2-9908-9ad761e2123c"
+              }
+            },
+            {
+              "label": "Duration of ROM",
+              "id": "durationOfROM",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "ca278a27-b286-4965-ad7c-401a1f6336aa"
+              }
+            },
+            {
+              "label": "Delivery",
+              "id": "delivery",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "456be468-e2d9-4b78-acc2-9071676e487b",
+                "answers": [
+                  {
+                    "concept": "aa7c57c0-ce94-430d-8a60-8c7cb4802370",
+                    "label": "SVD"
+                  },
+                  {
+                    "concept": "df991fea-0f18-42a7-ba39-1ce58d37ac03",
+                    "label": "Assisted Breech"
+                  },
+                  {
+                    "concept": "1fd216a3-0292-4528-8459-03f0c3061daf",
+                    "label": "Vacuum"
+                  },
+                  {
+                    "concept": "61d1ac36-8e05-4ef7-bc9d-1db402f020c0",
+                    "label": "Forceps"
+                  },
+                  {
+                    "concept": "c5e79619-de35-498c-90a4-2b254d4eb7ca",
+                    "label": "Caesarean Section"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Indication",
+              "id": "indication",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "72af4f3e-730d-4a37-aaf1-f736884a239c"
+              },
+              "hide": {
+                "hideWhenExpression": "delivery!=='df991fea-0f18-42a7-ba39-1ce58d37ac03' && delivery!=='1fd216a3-0292-4528-8459-03f0c3061daf' && delivery!=='61d1ac36-8e05-4ef7-bc9d-1db402f020c0' && delivery!=='c5e79619-de35-498c-90a4-2b254d4eb7ca'"
+              }
+            },
+            {
+              "label": "Delayed Cord clamping done",
+              "id": "delayedCordClampingDone",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "0405a04c-960e-4f93-a284-73197c92cd9a",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "APGAR score: 1st min",
+              "id": "apgarScore1stMin",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "536cbd95-2dd4-403d-97d2-47ca6a7a43f4"
+              }
+            },
+            {
+              "label": "APGAR score: 5th min",
+              "id": "apgarScore5thMin",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "af9c6df7-bea3-45d0-b53e-2b2748b31957"
+              }
+            },
+            {
+              "label": "APGAR score: 10th min",
+              "id": "apgarScore10thMin",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "281f29b2-c476-4278-b578-af4011d5c15a"
+              }
+            },
+            {
+              "label": "APGAR score: 20th min",
+              "id": "apgarScore20thMin",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "d58aeeb9-d63c-4660-9d26-4c21d2566904"
+              }
+            },
+            {
+              "label": "Delivery attended by provider trained on HBB/ neonatal resuscitation?",
+              "id": "deliveryAttendedByProviderTrainedOnHBBNeonatalResuscitation",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "e24a1f32-fa57-4c54-96b8-4f7a3f4fec05",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Baby dried thoroughly at birth",
+              "id": "babyDriedThoroughlyAtBirth",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "0710323e-33d7-4918-8308-ba5a8d76c893",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Baby placed in iKMC",
+              "id": "babyPlacedInIKMC",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "d7ae5e5f-a3b8-4a78-8c08-d1046b4199b1",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Baby placed in plastic bag",
+              "id": "babyPlacedInPlasticBag",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "cad06e57-a68e-4d96-9742-f7c9e532fc7b",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Baby placed skin to skin at birth",
+              "id": "babyPlacedSkinToSkinAtBirth",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "a1a31fe3-88d4-44c3-b870-5828b7552057",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Baby placed on CPAP",
+              "id": "babyPlacedOnCPAP",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "c539a31c-9a06-4eac-89c2-192325e4f908",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Meconium sucked from oropharynx",
+              "id": "meconiumSuckedFromOropharynx",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "adf0e034-f88f-439d-9e5d-c3a24ed1a074",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Neonatal resuscitation done",
+              "id": "neonatalResuscitationDone",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "3b361ffe-ddb3-44ae-93e6-f9862e01eb3e",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "If done tick what was done",
+              "id": "ifDoneTickWhatWasDone",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "checkbox",
+                "concept": "924dbd22-7796-4330-a0d5-c90176153ff9",
+                "answers": [
+                  {
+                    "concept": "14783086-8f4c-4a4b-a372-c5a18bf2796b",
+                    "label": "supplemental oxygen"
+                  },
+                  {
+                    "concept": "b818bae4-02f8-4c75-81d9-631b899064a8",
+                    "label": "bag mask ventilation"
+                  },
+                  {
+                    "concept": "0f1f4bde-a25c-4e0a-958d-9fb83d8149a1",
+                    "label": "chest compression"
+                  },
+                  {
+                    "concept": "df9cbfcf-f9b6-477d-9ce2-fc15a7a41ef4",
+                    "label": "Intubation"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "neonatalResuscitationDone!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Duration of resuscitation",
+              "id": "durationOfResuscitation",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "8c9e9d7e-421d-4c06-a66b-7418592e57cf"
+              },
+              "hide": {
+                "hideWhenExpression": "neonatalResuscitationDone!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Epinephrine doses",
+              "id": "epinephrineDoses",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "21f14f4d-f622-47db-a6e8-6b4b4763eda2"
+              },
+              "hide": {
+                "hideWhenExpression": "neonatalResuscitationDone!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Fluid administered",
+              "id": "fluidAdministered",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "2d842d87-db56-4e18-82de-5b167dd16443"
+              },
+              "hide": {
+                "hideWhenExpression": "neonatalResuscitationDone!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Bag and Mask",
+              "id": "bagAndMask",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "347eb295-e64e-410b-93d9-d3f757ab19ad",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "neonatalResuscitationDone!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Chest compression",
+              "id": "chestCompression",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "0f1f4bde-a25c-4e0a-958d-9fb83d8149a1"
+              },
+              "hide": {
+                "hideWhenExpression": "neonatalResuscitationDone!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            },
+            {
+              "label": "Vitamin K given",
+              "id": "vitaminKGiven",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "85dc898e-1045-4f84-8885-416f915519eb",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "TTC Eye prophylaxis given",
+              "id": "ttcEyeProphylaxisGiven",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "4abd5628-0471-4bbb-b8c1-44bdc8402c89",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Chlorhexdine 4%",
+              "id": "chlorhexdine4",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "be06f32b-f57b-4f2d-85bf-3e52279c5cde",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Feeding initiated",
+              "id": "feedingInitiated",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "773b96ce-909e-430f-b92b-09a883d4ff5c",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "label": "...",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Other treatment given",
+              "id": "otherTreatmentGiven",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "0245d837-df34-4970-89fa-a56ab0652542"
+              }
+            },
+            {
+              "label": "Investigation result",
+              "id": "investigationResult",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "c8adfd25-a05d-4113-9b7d-f3fa2dcbeeda"
+              }
+            },
+            {
+              "label": "Reason for NICU referral",
+              "id": "reasonForNICUReferral",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "98f6f0d4-29b0-4434-b1a6-aad5ffc0b113"
+              }
+            },
+            {
+              "label": "Vital signs on referral Temp (c)",
+              "id": "vitalSignsOnReferralTempC",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "5515e63a-5d93-4fce-98f9-582bbdcd9043"
+              }
+            },
+            {
+              "label": "Vital signs on referral HR",
+              "id": "vitalSignsOnReferralHR",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "49c37e97-a97b-44a6-9455-0afe7ad383e9"
+              }
+            },
+            {
+              "label": "Vital signs on referral RR",
+              "id": "vitalSignsOnReferralRR",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "adb230d0-c9aa-43d3-87e3-027fa3f3c3c3"
+              }
+            },
+            {
+              "label": "Vital signs on referral Saturation",
+              "id": "vitalSignsOnReferralSaturation",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "number",
+                "concept": "e774a0a2-f057-4f9d-8e27-ce23fa9dfaf7"
+              }
+            },
+            {
+              "label": "Name of clinician",
+              "id": "nameOfClinician",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "6cf18494-79d0-422d-b5cb-3de7797d4f4e"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "a214cb59-2ef8-4033-bcfc-06729b3d84b3",
+  "description": "Neonatal referral form",
+  "version": "1.0"
+}

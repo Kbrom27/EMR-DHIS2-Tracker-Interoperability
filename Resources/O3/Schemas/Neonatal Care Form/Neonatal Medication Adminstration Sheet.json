@@ -1,0 +1,234 @@
+{
+  "name": "Neonatal Medication Adminstration Sheet",
+  "pages": [
+    {
+      "label": "Neonatal Medication Adminstration Sheet",
+      "sections": [
+        {
+          "label": "Neonatal Medication Adminstration Sheet",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Medication and Intervention Entry",
+              "id": "medicationAndInterventionEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "e122954a-e48c-464f-b741-76a86525c506",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "7f36c0b6-a1ed-40a0-936c-134f0072b933"
+                  },
+                  "id": "dateAndTime",
+                  "label": "Date and Time",
+                  "datePickerFormat": "both"
+                },
+                {
+                  "label": "Bed No.",
+                  "id": "bedNo",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "c146fd99-8a00-4c58-a31f-95aa83bebfc6"
+                  }
+                },
+                {
+                  "label": "Prescribing doctor’s Name",
+                  "id": "prescribingDoctorSName",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "d7f879b7-864e-4bcb-8c71-a195006a8738"
+                  }
+                },
+                {
+                  "label": "Medication",
+                  "id": "medication",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "74c30505-f703-4d99-a5a0-d2ea88660689"
+                  }
+                },
+                {
+                  "label": "Dose",
+                  "id": "dose",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "eabe819c-517d-43c9-b202-efd9642029ea"
+                  }
+                },
+                {
+                  "label": "Frequency",
+                  "id": "frequency",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "11db7d53-ab5c-4686-ac0c-610043bf5b2d",
+                    "answers": [
+                      {
+                        "concept": "c4388eac-72d1-4db5-a657-eb68c63dccb5",
+                        "label": "Daily"
+                      },
+                      {
+                        "concept": "2f1ce241-7f84-4909-81f0-3a48922f2cb7",
+                        "label": "BID"
+                      },
+                      {
+                        "concept": "3c363bd1-f10c-493e-8323-81364739b078",
+                        "label": "TID"
+                      },
+                      {
+                        "concept": "2651a55e-36f7-47dd-94db-673df76ca798",
+                        "label": "QID"
+                      },
+                      {
+                        "concept": "484c28ff-82da-4705-9da1-2f8b0bec59b6",
+                        "label": "Every 4 hours"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Start date",
+                  "id": "startDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "63286acc-6990-4622-b51e-be081a4720bd"
+                  },
+                  "datePickerFormat": "both"
+                },
+                {
+                  "label": "First dose time",
+                  "id": "firstDoseTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "8562552d-ad10-48e1-9125-d251d49af6d5"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Discontinuation  Date",
+                  "id": "discontinuationDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "cb0cb7e3-3847-42e9-a2d6-78eb21a1330c"
+                  }
+                },
+                {
+                  "label": "Date",
+                  "id": "date",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "74780c75-0e9a-47ea-9af8-2ea2e50a20f8"
+                  }
+                },
+                {
+                  "label": "Medication Given",
+                  "id": "medicationGiven",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "aab076dc-64a0-4952-92e0-d0c9895f9f3b"
+                  }
+                },
+                {
+                  "label": "Medication route",
+                  "id": "medicationRoute",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "d897746c-9b4d-4c49-91d0-5cc33c03c621",
+                    "answers": [
+                      {
+                        "concept": "76c36924-91c6-4818-9733-5dcbf66460b3",
+                        "label": "IV"
+                      },
+                      {
+                        "concept": "6da11012-5431-4003-9922-8275c71a8818",
+                        "label": "PO"
+                      },
+                      {
+                        "concept": "b2a68b94-beb6-4e04-a828-6f1f97dfc31d",
+                        "label": "IM"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Time of Administration",
+                  "id": "timeOfAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "checkbox-searchable",
+                    "concept": "c82035d4-ebff-4bb6-b010-f48b44c9e7aa",
+                    "answers": [
+                      {
+                        "concept": "32677758-2491-42f2-a598-e17d9a52df96",
+                        "label": "6AM Morning"
+                      },
+                      {
+                        "concept": "f5d5dac3-dc6d-4c55-8a98-c54dc7395a45",
+                        "label": "10AM"
+                      },
+                      {
+                        "concept": "f400ca7f-0f52-4b8e-a308-7eb1e1e60cf9",
+                        "label": "12PM Mid-Day"
+                      },
+                      {
+                        "concept": "caf7991f-c7a7-4cf7-9c1a-706bce1bce76",
+                        "label": "2pm"
+                      },
+                      {
+                        "concept": "2947d59a-7e28-440f-8bdd-ba47a0d23aa4",
+                        "label": "6pm Night"
+                      },
+                      {
+                        "concept": "76349eaa-aeaf-4afd-8d50-b2df87706093",
+                        "label": "10pm"
+                      },
+                      {
+                        "concept": "5c67abd6-c649-47aa-a351-515c40e7a92e",
+                        "label": "12am Mid-Night"
+                      },
+                      {
+                        "concept": "51072559-c895-4bff-b17c-f3be135ffbbb",
+                        "label": "2Am"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Remark",
+                  "id": "remark",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "b581e43a-d98f-4af3-ab88-982d6b1ec479"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "9bd9db9a-b175-4d37-9875-8fb95c3d21ae",
+  "description": "Medication and Intervention",
+  "version": "1.0",
+  "repeatable": true
+}

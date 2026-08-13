@@ -12,6 +12,7 @@ from config import (
     MATERNAL_PROGRAM,
     NEONATAL_PROGRAM,
     RESOURCES_DIR,
+    normalize_stage_name,
 )
 from o3.schemas import Form, FormRegistry, load_forms_from_directories
 from utils import (
@@ -70,6 +71,20 @@ O3_TEA_SOURCE_COLUMNS = {
     "neonate sex": "gender",
 }
 
+# Trailing tokens added by DHIS2 dictionary to disambiguate the same concept
+# across forms (e.g. "Dose n", "Abortion (Induced) ref", "Reason for referral
+# adm", "Temperature ref prog", "Temperature kmc f", "Date APH",
+# "Blood pressure diastolic DMP"). They are stripped when fuzzy-matching O3
+# question labels against dictionary data element names.
+DATA_ELEMENT_DISAMBIGUATOR_TOKENS = {"n", "ref", "prog", "adm", "f", "aph", "dmp"}
+
+
+def strip_data_element_disambiguators(name: str) -> str:
+    parts = str(name or "").split()
+    while parts and parts[-1].casefold() in DATA_ELEMENT_DISAMBIGUATOR_TOKENS:
+        parts.pop()
+    return " ".join(parts)
+
 
 def escape_xml(value: str) -> str:
     return (
@@ -81,9 +96,7 @@ def escape_xml(value: str) -> str:
     )
 
 
-def write_xlsx_rows(path: Path, rows: Sequence[Sequence[str]]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-
+def _sheet_xml(rows: Sequence[Sequence[str]]) -> str:
     sheet_rows: List[str] = []
     for row_index, row in enumerate(rows, start=1):
         cells = []
@@ -96,11 +109,19 @@ def write_xlsx_rows(path: Path, rows: Sequence[Sequence[str]]) -> None:
             )
         sheet_rows.append(f'<row r="{row_index}">{"".join(cells)}</row>')
 
-    sheet_xml = (
+    return (
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
         '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
         f'<sheetData>{"".join(sheet_rows)}</sheetData></worksheet>'
     )
+
+
+def write_xlsx_sheets(path: Path, sheets: Sequence[Tuple[str, Sequence[Sequence[str]]]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    sheet_count = len(sheets)
+    sheet_xmls = [_sheet_xml(rows) for _name, rows in sheets]
+    sheet_names = [escape_xml(name) for name, _rows in sheets]
 
     content_types = (
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
@@ -109,9 +130,12 @@ def write_xlsx_rows(path: Path, rows: Sequence[Sequence[str]]) -> None:
         '<Default Extension="xml" ContentType="application/xml"/>'
         '<Override PartName="/xl/workbook.xml" '
         'ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'
-        '<Override PartName="/xl/worksheets/sheet1.xml" '
-        'ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>'
-        "</Types>"
+        + "".join(
+            f'<Override PartName="/xl/worksheets/sheet{index}.xml" '
+            'ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>'
+            for index in range(1, sheet_count + 1)
+        )
+        + "</Types>"
     )
 
     root_rels = (
@@ -123,20 +147,27 @@ def write_xlsx_rows(path: Path, rows: Sequence[Sequence[str]]) -> None:
         "</Relationships>"
     )
 
+    sheet_defs = "".join(
+        f'<sheet name="{sheet_names[index]}" sheetId="{index + 1}" r:id="rId{index + 1}"/>'
+        for index in range(sheet_count)
+    )
     workbook_xml = (
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
         '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" '
         'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'
-        '<sheets><sheet name="Mapping" sheetId="1" r:id="rId1"/></sheets></workbook>'
+        f"<sheets>{sheet_defs}</sheets></workbook>"
     )
 
+    rels_defs = "".join(
+        f'<Relationship Id="rId{index + 1}" '
+        'Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" '
+        f'Target="worksheets/sheet{index + 1}.xml"/>'
+        for index in range(sheet_count)
+    )
     workbook_rels = (
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
         '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
-        '<Relationship Id="rId1" '
-        'Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" '
-        'Target="worksheets/sheet1.xml"/>'
-        "</Relationships>"
+        f"{rels_defs}</Relationships>"
     )
 
     with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as archive:
@@ -144,7 +175,12 @@ def write_xlsx_rows(path: Path, rows: Sequence[Sequence[str]]) -> None:
         archive.writestr("_rels/.rels", root_rels)
         archive.writestr("xl/workbook.xml", workbook_xml)
         archive.writestr("xl/_rels/workbook.xml.rels", workbook_rels)
-        archive.writestr("xl/worksheets/sheet1.xml", sheet_xml)
+        for index, sheet_xml in enumerate(sheet_xmls, start=1):
+            archive.writestr(f"xl/worksheets/sheet{index}.xml", sheet_xml)
+
+
+def write_xlsx_rows(path: Path, rows: Sequence[Sequence[str]]) -> None:
+    write_xlsx_sheets(path, [("Mapping", rows)])
 
 
 def _column_letter(index: int) -> str:
@@ -164,7 +200,7 @@ def load_dictionary_fields(path: Path) -> Dict[str, Dict[str, Dict[str, str]]]:
     stages: Dict[str, Dict[str, Dict[str, str]]] = {}
     for row in rows[1:]:
         item = row_to_dict(row, headers)
-        stage_name = str(item.get("Stage Name", "")).strip()
+        stage_name = normalize_stage_name(str(item.get("Stage Name", "")).strip())
         data_element_name = str(item.get("Data Element Name", "")).strip()
         if not stage_name or not data_element_name:
             continue
@@ -178,7 +214,7 @@ def load_dictionary_fields(path: Path) -> Dict[str, Dict[str, Dict[str, str]]]:
 
 
 def match_stage_name(form_name: str, dictionary_stages: Dict[str, Dict[str, Dict[str, str]]]) -> str:
-    normalized_form = normalize_label(form_name)
+    normalized_form = normalize_label(normalize_stage_name(form_name))
     if not normalized_form:
         return ""
 
@@ -194,6 +230,15 @@ def match_stage_name(form_name: str, dictionary_stages: Dict[str, Dict[str, Dict
             best_score = score
             best_stage = stage_name
     return best_stage if best_score >= 0.9 else ""
+
+
+def _field_label_variants(name: str, field: Dict[str, str]) -> List[str]:
+    variants = {name, strip_data_element_disambiguators(name)}
+    form_name = str(field.get("form_name", "") or "").strip()
+    if form_name:
+        variants.add(form_name)
+        variants.add(strip_data_element_disambiguators(form_name))
+    return [variant for variant in variants if variant]
 
 
 def match_data_element(
@@ -218,15 +263,34 @@ def match_data_element(
         if len(exact_matches) == 1:
             return exact_matches[0], stage_elements[exact_matches[0]]
 
+    form_matches = [
+        name
+        for name, field in stage_elements.items()
+        if normalize_label(str(field.get("form_name", "") or "")) == normalized_label_text
+    ]
+    if len(form_matches) == 1:
+        return form_matches[0], stage_elements[form_matches[0]]
+    if base_label != normalized_label_text:
+        form_matches = [
+            name
+            for name, field in stage_elements.items()
+            if normalize_label(str(field.get("form_name", "") or "")) == base_label
+        ]
+        if len(form_matches) == 1:
+            return form_matches[0], stage_elements[form_matches[0]]
+
     best_name = ""
     best_field = {}
     best_score = 0.0
     for name, field in stage_elements.items():
-        score = SequenceMatcher(None, normalized_label_text, normalize_label(name)).ratio()
-        if score > best_score:
-            best_score = score
-            best_name = name
-            best_field = field
+        for variant in _field_label_variants(name, field):
+            score = SequenceMatcher(
+                None, normalized_label_text, normalize_label(variant)
+            ).ratio()
+            if score > best_score:
+                best_score = score
+                best_name = name
+                best_field = field
     if best_score >= 0.88:
         return best_name, best_field
     return "", {}

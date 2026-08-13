@@ -1,0 +1,163 @@
+{
+  "name": "Labour Management ",
+  "pages": [
+    {
+      "label": "Labour Management ",
+      "sections": [
+        {
+          "label": "Labour Management ",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "datetime",
+                "concept": "7f36c0b6-a1ed-40a0-936c-134f0072b933"
+              },
+              "id": "dateAndTime",
+              "label": "Date and Time",
+              "datePickerFormat": "both"
+            }
+          ]
+        },
+        {
+          "label": "Delivery",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Mode of delivery",
+              "id": "modeOfDelivery",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "5dc28304-a867-4638-b01a-6a91aa7626b5",
+                "answers": [
+                  {
+                    "concept": "aa7c57c0-ce94-430d-8a60-8c7cb4802370",
+                    "label": "SVD"
+                  },
+                  {
+                    "concept": "9485fcbf-b4b3-4aa7-8bf5-fa057d91c2ff",
+                    "label": "Operative vaginal delivery"
+                  },
+                  {
+                    "concept": "677f8c3e-1844-444d-bdf9-f514e1357893",
+                    "label": "Cesarean delivery Emergency"
+                  },
+                  {
+                    "concept": "e799a526-708c-4f6c-b374-061822779fc3",
+                    "label": "Cesarean delivery Elective"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Episiothomy",
+              "id": "episiothomy",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "a2fbed9e-89ee-46d8-a26f-022366af94e0",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "modeOfDelivery!=='aa7c57c0-ce94-430d-8a60-8c7cb4802370'"
+              }
+            },
+            {
+              "label": "Indication",
+              "id": "indication",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "cc0a6424-d724-4303-9c16-56debb69d993",
+                "answers": [
+                  {
+                    "concept": "118256AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Fetal Distress"
+                  },
+                  {
+                    "concept": "ee998886-0b02-4905-b2a8-1fa62cbef7f1",
+                    "label": "CPD"
+                  },
+                  {
+                    "concept": "66a1bf38-bf9b-433c-9145-64f0af8d57c1",
+                    "label": "Previous Uterine Scar"
+                  },
+                  {
+                    "concept": "d2b7ab49-8adc-42ad-8120-e4d3dbaf277e",
+                    "label": "Obstetric Hemorrhage"
+                  },
+                  {
+                    "concept": "ab8651dd-96e7-48f4-b307-b35fcbde4ee3",
+                    "label": "other( specify)"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "modeOfDelivery!=='677f8c3e-1844-444d-bdf9-f514e1357893' && modeOfDelivery!=='e799a526-708c-4f6c-b374-061822779fc3'"
+              }
+            },
+            {
+              "label": "Other",
+              "id": "other",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "ff3b8a20-cc39-49b7-a89c-46f02ae37ded"
+              },
+              "hide": {
+                "hideWhenExpression": "indication!=='ab8651dd-96e7-48f4-b307-b35fcbde4ee3'"
+              }
+            },
+            {
+              "label": "Fetal distress",
+              "id": "fetalDistress",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "62f9040b-1dd0-4a31-a03e-9a4ffc442440",
+                "answers": [
+                  {
+                    "concept": "5287599f-99f7-4fd1-b638-0a33a14ea341",
+                    "label": "Bradycardia"
+                  },
+                  {
+                    "concept": "b69c3da2-574b-4a14-a279-cc92553e738e",
+                    "label": "Thick meconium in early labor"
+                  },
+                  {
+                    "concept": "472026fa-fa96-42c3-af86-8fffe223a777",
+                    "label": "Cord Prolapse/Presentation"
+                  },
+                  {
+                    "concept": "125063AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Tachycardia"
+                  }
+                ]
+              },
+              "hide": {
+                "hideWhenExpression": "indication!=='118256AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "20747749-c25b-4c0d-9864-ef93a3e23b24",
+  "description": "Labour Management ",
+  "version": "1.0"
+}

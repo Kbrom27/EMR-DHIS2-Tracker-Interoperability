@@ -1,0 +1,542 @@
+{
+  "name": "Delivery Monitoring partograph",
+  "pages": [
+    {
+      "label": "Delivery Monitoring partograph",
+      "sections": [
+        {
+          "label": "Delivery Monitoring partograph",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Delivery Monitoring partograph Entry",
+              "id": "deliveryMonitoringPartographEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "ba7f5b39-ac05-483e-a8be-723ced13c5ce",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "7f36c0b6-a1ed-40a0-936c-134f0072b933"
+                  },
+                  "id": "dateAndTime",
+                  "datePickerFormat": "both",
+                  "label": "Date and Time"
+                },
+                {
+                  "label": "Date of admission",
+                  "id": "dateOfAdmission",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "7ec7d0c9-a880-4811-8f52-91ed84ea3e7b"
+                  }
+                },
+                {
+                  "label": "Time of Admission",
+                  "id": "timeOfAdmission",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "251db219-fbd4-428f-a599-00f2c5c07c2d"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Ruptured Membranes",
+                  "id": "rupturedMembranes",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "db6269b4-3402-408f-b241-9ce63816ba67",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Hours",
+                  "id": "hours",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "0ea3da50-9eba-4023-adc2-d69fad54b852"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "useFieldValue('hours')>24 && !isEmpty(useFieldValue('hours'))",
+                      "message": "Hours should not exceed 24"
+                    }
+                  ]
+                },
+                {
+                  "label": "Fetal Heart Rate",
+                  "id": "fetalHeartRate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "162994c2-4ec8-4118-819f-2711d342a884",
+                    "answers": [
+                      {
+                        "concept": "4dd4c5bb-cd1b-475a-bcc0-50f85c8212d4",
+                        "label": "200"
+                      },
+                      {
+                        "concept": "9f18699a-8613-4456-931b-d065e66a7e1b",
+                        "label": "190"
+                      },
+                      {
+                        "concept": "d539820d-e504-49b0-9313-76ccf93bc7d1",
+                        "label": "180"
+                      },
+                      {
+                        "concept": "61f819b2-0314-49cf-a95b-41d1cfa9adce",
+                        "label": "170"
+                      },
+                      {
+                        "concept": "2d3959df-7a01-4143-a3e5-e2658fd27feb",
+                        "label": "160"
+                      },
+                      {
+                        "concept": "1a9993ca-c95d-4069-a4dd-6f15fd63dc78",
+                        "label": "150"
+                      },
+                      {
+                        "concept": "eb541a20-2847-474c-95fd-931485641e58",
+                        "label": "140"
+                      },
+                      {
+                        "concept": "af5c2af1-acc3-4e43-85f5-fcc03afe3a94",
+                        "label": "130"
+                      },
+                      {
+                        "concept": "62e7c9e7-60fe-46c7-ba2b-5ae8b3c8b9d1",
+                        "label": "120"
+                      },
+                      {
+                        "concept": "94c63431-6119-46bd-ad7c-0fb1e436be7b",
+                        "label": "110"
+                      },
+                      {
+                        "concept": "07e23cfe-f34a-4255-855d-3fb0570d8b54",
+                        "label": "100"
+                      },
+                      {
+                        "concept": "429c4b28-b50c-4db5-bd86-7b52c563ecac",
+                        "label": "90"
+                      },
+                      {
+                        "concept": "48535e18-5a97-4b75-9e8c-f3ed0af3e336",
+                        "label": "80"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Minutes",
+                  "id": "minutes",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "67334e29-dc93-473c-a021-dd7306dc886a"
+                  }
+                },
+                {
+                  "label": "Amniotic fluid",
+                  "id": "amnioticFluid",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "16acc544-4a70-4316-b824-9df0ca8772d3",
+                    "answers": [
+                      {
+                        "concept": "21f98db0-df2c-49d6-b688-ccfaf7ecfa9a",
+                        "label": "I"
+                      },
+                      {
+                        "concept": "3a44019d-0a80-4aff-9cd2-29908e356f0b",
+                        "label": "C"
+                      },
+                      {
+                        "concept": "ff0effe6-a8b2-44e2-ad88-bf44227cdee4",
+                        "label": "M"
+                      },
+                      {
+                        "concept": "450adcf8-7de4-41d0-b833-bbdcfcf1b7a2",
+                        "label": "B"
+                      },
+                      {
+                        "concept": "5cd09d00-a4bd-4631-a613-a2c170c25a3d",
+                        "label": "A"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Hours",
+                  "id": "hours2",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "87a31cee-112b-4bd1-bf13-1052ec9d74d9"
+                  }
+                },
+                {
+                  "label": "Moulding",
+                  "id": "moulding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "b3c027a2-877d-4b83-9f6d-4312852a8ec4",
+                    "answers": [
+                      {
+                        "concept": "cd9d06be-7d66-4e9f-a3c2-56fb4ee93a90",
+                        "label": "0"
+                      },
+                      {
+                        "concept": "b5800b4b-2f37-4127-a255-67452357ad78",
+                        "label": "+1"
+                      },
+                      {
+                        "concept": "56069033-0e64-4056-9096-a5abc1298fc5",
+                        "label": "+2"
+                      },
+                      {
+                        "concept": "23170872-4760-45f3-8fb6-48a6cb45084d",
+                        "label": "+3"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Hours",
+                  "id": "hours3",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "b15bedae-4bef-41ff-9172-ca51c6b2c46e"
+                  }
+                },
+                {
+                  "label": "Cervix (cm)",
+                  "id": "cervixCm",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "e915c1f3-7e4b-4013-bc5c-e93504730949",
+                    "answers": [
+                      {
+                        "concept": "d377781b-398c-4dd4-a9ef-1ddc146e09ce",
+                        "label": "10"
+                      },
+                      {
+                        "concept": "c14923fd-6981-4907-8bb2-cbff6d345bf3",
+                        "label": "9"
+                      },
+                      {
+                        "concept": "56bae73e-619e-4faa-8365-7d5385ba5d33",
+                        "label": "8"
+                      },
+                      {
+                        "concept": "9e15a003-92eb-4739-a840-9e19e2a73949",
+                        "label": "7"
+                      },
+                      {
+                        "concept": "e738ce98-b361-4ce6-a5ed-f004e87ce88b",
+                        "label": "6"
+                      },
+                      {
+                        "concept": "7ecdc735-2a42-4ed6-b5e6-0015cae9f281",
+                        "label": "5"
+                      },
+                      {
+                        "concept": "319ca546-315d-40d6-9fc8-fbff43a7aa54",
+                        "label": "4"
+                      }
+                    ]
+                  },
+                  "validators": [
+                    {
+                      "type": "warning",
+                      "failsWhenExpression": "useFieldValue('hours4')==='319ca546-315d-40d6-9fc8-fbff43a7aa54' && (useFieldValue('cervixCm')==='9e15a003-92eb-4739-a840-9e19e2a73949' || useFieldValue('cervixCm')==='e738ce98-b361-4ce6-a5ed-f004e87ce88b' || useFieldValue('cervixCm')==='7ecdc735-2a42-4ed6-b5e6-0015cae9f281' || useFieldValue('cervixCm')==='319ca546-315d-40d6-9fc8-fbff43a7aa54')",
+                      "message": "Alert: Labour progress is slow. Increase monitoring and prepare for possible referral if no improvement."
+                    },
+                    {
+                      "type": "warning",
+                      "failsWhenExpression": "useFieldValue('hours4')==='7ecdc735-2a42-4ed6-b5e6-0015cae9f281' && (useFieldValue('cervixCm')==='319ca546-315d-40d6-9fc8-fbff43a7aa54')",
+                      "message": "Action required! Labour is not progressing. Review immediately — consider intervention (augmentation or C-section as per protocol)."
+                    },
+                    {
+                      "type": "warning",
+                      "failsWhenExpression": "useFieldValue('hours4')==='7ecdc735-2a42-4ed6-b5e6-0015cae9f281' && (useFieldValue('cervixCm')==='56bae73e-619e-4faa-8365-7d5385ba5d33' || useFieldValue('cervixCm')==='9e15a003-92eb-4739-a840-9e19e2a73949' || useFieldValue('cervixCm')==='e738ce98-b361-4ce6-a5ed-f004e87ce88b' || useFieldValue('cervixCm')==='7ecdc735-2a42-4ed6-b5e6-0015cae9f281' )",
+                      "message": "Alert: Labour progress is slow. Increase monitoring and prepare for possible referral if no improvement."
+                    },
+                    {
+                      "type": "warning",
+                      "failsWhenExpression": "useFieldValue('hours4')==='e738ce98-b361-4ce6-a5ed-f004e87ce88b' && (useFieldValue('cervixCm')==='319ca546-315d-40d6-9fc8-fbff43a7aa54' || useFieldValue('cervixCm')==='7ecdc735-2a42-4ed6-b5e6-0015cae9f281')",
+                      "message": "Action required! Labour is not progressing. Review immediately — consider intervention (augmentation or C-section as per protocol)."
+                    },
+                    {
+                      "type": "warning",
+                      "failsWhenExpression": "useFieldValue('hours4')==='e738ce98-b361-4ce6-a5ed-f004e87ce88b' && (useFieldValue('cervixCm')==='c14923fd-6981-4907-8bb2-cbff6d345bf3' || useFieldValue('cervixCm')==='56bae73e-619e-4faa-8365-7d5385ba5d33' || useFieldValue('cervixCm')==='9e15a003-92eb-4739-a840-9e19e2a73949' || useFieldValue('cervixCm')==='e738ce98-b361-4ce6-a5ed-f004e87ce88b')",
+                      "message": "Alert: Labour progress is slow. Increase monitoring and prepare for possible referral if no improvement."
+                    },
+                    {
+                      "type": "warning",
+                      "failsWhenExpression": "useFieldValue('hours4')=== '9e15a003-92eb-4739-a840-9e19e2a73949' || useFieldValue('hours4')=== '56bae73e-619e-4faa-8365-7d5385ba5d33' || useFieldValue('hours4')=== 'c14923fd-6981-4907-8bb2-cbff6d345bf3' || useFieldValue('hours4')=== 'd377781b-398c-4dd4-a9ef-1ddc146e09ce' || useFieldValue('hours4')=== 'ab738012-1457-48e0-8e70-21de7a188637' || useFieldValue('hours4')=== '22961df3-05fb-4054-8a13-912c5cfabd52'",
+                      "message": "Action required! Labour is not progressing. Review immediately — consider intervention (augmentation or C-section as per protocol)."
+                    }
+                  ]
+                },
+                {
+                  "label": "Hours",
+                  "id": "hours4",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "47145473-776c-400f-bb4d-a15995082131",
+                    "answers": [
+                      {
+                        "concept": "cd9d06be-7d66-4e9f-a3c2-56fb4ee93a90",
+                        "label": "0"
+                      },
+                      {
+                        "concept": "e50e8bfe-2125-41b2-b1a4-6cc59cdd0a38",
+                        "label": "1"
+                      },
+                      {
+                        "concept": "b4d61fde-c394-49c4-87f5-f3e3a2867ca6",
+                        "label": "2"
+                      },
+                      {
+                        "concept": "9a87c570-14ea-4a89-b223-60ef4f297d8f",
+                        "label": "3"
+                      },
+                      {
+                        "concept": "319ca546-315d-40d6-9fc8-fbff43a7aa54",
+                        "label": "4"
+                      },
+                      {
+                        "concept": "7ecdc735-2a42-4ed6-b5e6-0015cae9f281",
+                        "label": "5"
+                      },
+                      {
+                        "concept": "e738ce98-b361-4ce6-a5ed-f004e87ce88b",
+                        "label": "6"
+                      },
+                      {
+                        "concept": "9e15a003-92eb-4739-a840-9e19e2a73949",
+                        "label": "7"
+                      },
+                      {
+                        "concept": "56bae73e-619e-4faa-8365-7d5385ba5d33",
+                        "label": "8"
+                      },
+                      {
+                        "concept": "c14923fd-6981-4907-8bb2-cbff6d345bf3",
+                        "label": "9"
+                      },
+                      {
+                        "concept": "d377781b-398c-4dd4-a9ef-1ddc146e09ce",
+                        "label": "10"
+                      },
+                      {
+                        "concept": "ab738012-1457-48e0-8e70-21de7a188637",
+                        "label": "11"
+                      },
+                      {
+                        "concept": "22961df3-05fb-4054-8a13-912c5cfabd52",
+                        "label": "12"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Contraction (per 10 min)",
+                  "id": "contractionPer10Min",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "b6b651bd-7b8b-48b4-927b-306fd67807d4",
+                    "answers": [
+                      {
+                        "concept": "7ecdc735-2a42-4ed6-b5e6-0015cae9f281",
+                        "label": "5"
+                      },
+                      {
+                        "concept": "319ca546-315d-40d6-9fc8-fbff43a7aa54",
+                        "label": "4"
+                      },
+                      {
+                        "concept": "9a87c570-14ea-4a89-b223-60ef4f297d8f",
+                        "label": "3"
+                      },
+                      {
+                        "concept": "b4d61fde-c394-49c4-87f5-f3e3a2867ca6",
+                        "label": "2"
+                      },
+                      {
+                        "concept": "e50e8bfe-2125-41b2-b1a4-6cc59cdd0a38",
+                        "label": "1"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Hours",
+                  "id": "hours5",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "3c58a07f-0e68-46e1-a796-9fe1f6a541e1"
+                  }
+                },
+                {
+                  "label": "Maternal Pulse",
+                  "id": "maternalPulse",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "a303b952-4adf-45b1-b4ca-a76fea6abc62"
+                  }
+                },
+                {
+                  "label": "Hours",
+                  "id": "hours6",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "b44fe04a-e3a0-40b0-8cbe-1aff56deb367"
+                  }
+                },
+                {
+                  "label": "Blood pressure (Systolic)",
+                  "id": "bloodPressureSystolic",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "bd3b82f1-5cc6-4d46-9db9-d38b7a75e382"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('bloodPressureSystolic')<50 || useFieldValue('bloodPressureSystolic')>250) && !isEmpty(useFieldValue('bloodPressureSystolic'))",
+                      "message": "Systolic Blood Pressure should be between 50 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "Blood pressure (diastolic)",
+                  "id": "bloodPressureDiastolic",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "1e42db1f-f952-4a10-b2db-aebfd7f8c495"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('bloodPressureDiastolic')<50 || useFieldValue('bloodPressureDiastolic')>250) && !isEmpty(useFieldValue('bloodPressureDiastolic'))",
+                      "message": "Diastolic Blood Pressure should be between 50 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "Hours",
+                  "id": "hours7",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "fa7bce8e-a4fc-4f9b-9a91-3c88bdbed925"
+                  }
+                },
+                {
+                  "label": "Protein in Urine",
+                  "id": "proteinInUrine",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "48deeea1-8586-4696-ac15-dc415ed6ad8f",
+                    "answers": [
+                      {
+                        "concept": "664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Negative"
+                      },
+                      {
+                        "concept": "1874AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Trace"
+                      },
+                      {
+                        "concept": "1270dac5-5fdf-4b9e-a4c1-0021436f3a9d",
+                        "label": "1+"
+                      },
+                      {
+                        "concept": "5d480b51-b6cd-4818-a5af-b197b140ab67",
+                        "label": "2+"
+                      },
+                      {
+                        "concept": "6ba311f3-8836-4754-96fa-4a322f142562",
+                        "label": "3+"
+                      },
+                      {
+                        "concept": "a267a90e-7250-4f28-91bd-e6f53326247c",
+                        "label": "4+"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Hours",
+                  "id": "hours8",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "d9ff84b3-442d-4003-90d4-5f91d561de7e"
+                  }
+                },
+                {
+                  "label": "Temperature (°C)",
+                  "id": "temperatureC",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "f7123d18-ff5d-465a-93f9-8939919a4a00"
+                  }
+                },
+                {
+                  "label": "Hours",
+                  "id": "hours9",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "80d5a127-19cf-470e-8121-58ae74b16f50"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "e94463c5-2d1c-4288-ad67-0e5780ad2136",
+  "description": "Delivery Monitoring partograph",
+  "version": "1.0",
+  "repeatable": true
+}

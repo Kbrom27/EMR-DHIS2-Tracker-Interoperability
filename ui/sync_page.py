@@ -56,7 +56,7 @@ class SyncPage(ttk.Frame):
         self.dict_var = tk.StringVar()
         self.value_mapping_var = tk.StringVar()
 
-        self.dhis2_url_var = tk.StringVar()
+        self.dhis2_url_var = tk.StringVar(value="https://imnid.aau.edu.et/dhis")
         self.dhis2_username_var = tk.StringVar()
         self.dhis2_password_var = tk.StringVar()
 

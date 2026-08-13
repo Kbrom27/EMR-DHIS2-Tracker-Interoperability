@@ -1,0 +1,140 @@
+{
+  "name": "Discharge Summary",
+  "pages": [
+    {
+      "label": "Discharge Summary",
+      "sections": [
+        {
+          "label": "Discharge Summary",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Date of Admission",
+              "id": "dateOfAdmission",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "7ae62514-e58d-4d0a-bdfa-2afd4e39e8a5"
+              },
+              "datePickerFormat": "calendar"
+            },
+            {
+              "label": "Date of Discharge",
+              "id": "dateOfDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "95263e91-baf5-489f-97ac-55824d9407a3"
+              },
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "daysBetween(dateOfAdmission, dateOfDischarge)<0",
+                  "message": "Discharge Date can't be before admission date"
+                }
+              ],
+              "datePickerFormat": "calendar"
+            },
+            {
+              "label": "Brief History",
+              "id": "briefHistory",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "7b7da695-cd08-4b20-b749-4ce10aaf8b31"
+              }
+            },
+            {
+              "label": "Clinical Findings",
+              "id": "clinicalFindings",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "e5ed381a-d976-424e-bb8a-357368ba0eb0"
+              }
+            },
+            {
+              "label": "Procedures",
+              "id": "procedures",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "46b4578a-2efa-4ad5-ba2a-e00dbdd74228"
+              }
+            },
+            {
+              "label": "Lab Findings",
+              "id": "labFindings",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "baa12911-c744-459f-b108-5d72b3c8ec27"
+              }
+            },
+            {
+              "label": "Condition of Discharge",
+              "id": "conditionOfDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "bd73268f-6263-4d45-904c-bbeaadc35191",
+                "answers": [
+                  {
+                    "concept": "f3008ce7-11a2-49f0-979a-375078365c59",
+                    "label": "Cured."
+                  },
+                  {
+                    "concept": "b9668bf3-2ac1-4e92-974f-b25c7b3547e9",
+                    "label": "Improved"
+                  },
+                  {
+                    "concept": "c0f01a8b-531f-4251-a629-7d3aafe9e81b",
+                    "label": "Same"
+                  },
+                  {
+                    "concept": "bc1bdd23-0264-4831-8b13-1bdbc45f1763",
+                    "label": "Dead"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Final Diagnosis",
+              "id": "finalDiagnosis",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "e4bcace1-cf0a-4e08-9b86-c82527a905f1"
+              },
+              "_review_required": true
+            },
+            {
+              "label": "Course of treatment",
+              "id": "courseOfTreatment",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "580da7e3-584d-40dc-be22-47eafdcbe131"
+              }
+            },
+            {
+              "label": "Plan at Discharge",
+              "id": "planAtDischarge",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "d2f767ec-3f88-42b9-a8f4-3921239591bb"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "181820aa-88c9-479b-9077-af92f5364329",
+  "referencedForms": [],
+  "uuid": "be50e1d0-74d0-4ed2-a690-2d4f4b491cbc",
+  "description": "Discharge Summary",
+  "version": "1.0"
+}

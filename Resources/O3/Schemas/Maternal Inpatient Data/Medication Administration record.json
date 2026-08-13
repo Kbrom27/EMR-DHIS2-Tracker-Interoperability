@@ -1,0 +1,264 @@
+{
+  "name": "Medication Administration record",
+  "pages": [
+    {
+      "label": "Medication Administration record",
+      "sections": [
+        {
+          "label": "Medication Administration record",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Medication Administration record Entry",
+              "id": "medicationAdministrationRecordEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "4a39d515-147a-4fb8-b180-3d3b0253c714",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "7f36c0b6-a1ed-40a0-936c-134f0072b933"
+                  },
+                  "id": "dateAndTime",
+                  "label": "Date and Time",
+                  "datePickerFormat": "both"
+                },
+                {
+                  "label": "Diagnosis",
+                  "id": "diagnosis",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "1120b3ab-6f64-4476-a23a-7a1e2725a593"
+                  }
+                },
+                {
+                  "label": "Allergy",
+                  "id": "allergy",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "afa920ab-e298-403f-8eda-3da823906c39"
+                  },
+                  "_review_required": true
+                },
+                {
+                  "label": "Date",
+                  "id": "date",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "97bd8cda-b176-440b-b40d-8b20e902edd3"
+                  },
+                  "datePickerFormat": "calendar"
+                },
+                {
+                  "label": "Medication name",
+                  "id": "medicationName",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "f997304d-fa42-462f-a3c6-8a84f6a79ac1"
+                  }
+                },
+                {
+                  "label": "Medication Adminstration route",
+                  "id": "medicationAdminstrationRoute",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "c4712158-29b5-4186-b396-4947181ee8df",
+                    "answers": [
+                      {
+                        "concept": "55d08190-a323-4349-826b-71154c5aef55",
+                        "label": "per os"
+                      },
+                      {
+                        "concept": "3298e87f-a26e-484a-8a08-2812c207fd8d",
+                        "label": "Sublingual"
+                      },
+                      {
+                        "concept": "800f8bd7-7203-4790-bf7a-ac25c3ab78f2",
+                        "label": "vaginal route"
+                      },
+                      {
+                        "concept": "a88305e7-ed1c-4876-b434-c43d8edf0a7e",
+                        "label": "OD (right eye)"
+                      },
+                      {
+                        "concept": "b318b9af-9677-449c-a769-8817c8feddf7",
+                        "label": "OS ( left eye)"
+                      },
+                      {
+                        "concept": "ac14169b-989f-40b7-81fa-846066375248",
+                        "label": "OU (both eyes)"
+                      },
+                      {
+                        "concept": "b998d942-7c23-4455-85ad-1cc969e936ab",
+                        "label": "AD (right ear)"
+                      },
+                      {
+                        "concept": "5d420a5c-d69a-463a-9482-05120d531b1c",
+                        "label": "AS (left ear)"
+                      },
+                      {
+                        "concept": "07b354b6-9c2b-4323-9361-37afba0ad388",
+                        "label": "AU (both ears)"
+                      },
+                      {
+                        "concept": "c7ad7f8f-dc45-4aae-86a0-e65db1508d65",
+                        "label": "NGT (Nasogastric tube)"
+                      },
+                      {
+                        "concept": "86b14457-fc4a-42d0-8934-88cad23059e7",
+                        "label": "IVP (Intravenous push)"
+                      },
+                      {
+                        "concept": "43954fd2-490c-4d30-bb5e-593f4d0c7bbf",
+                        "label": "IVPB (Intravenous piggyback)"
+                      },
+                      {
+                        "concept": "1915a5fa-3694-49de-93eb-f48749da061c",
+                        "label": "ID (Intradermal)"
+                      },
+                      {
+                        "concept": "108ca974-d2da-4b2c-81aa-37b9d4995913",
+                        "label": "HHN (Hand held nebulizer"
+                      },
+                      {
+                        "concept": "78a1ace3-4707-4628-b7a0-c327dc644873",
+                        "label": "IT (Intrathecal)"
+                      },
+                      {
+                        "concept": "8b6f6b76-b9b9-4f04-87e6-1da2902c88df",
+                        "label": "S (Swish and swallow)"
+                      },
+                      {
+                        "concept": "6601ef5c-61b1-494e-b00e-c69e59116de6",
+                        "label": "i.a. (Into the lumen of an artery)"
+                      },
+                      {
+                        "concept": "a8043e71-4575-4570-b750-f5c8469c9b17",
+                        "label": "Topical"
+                      },
+                      {
+                        "concept": "160242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Intravenous"
+                      },
+                      {
+                        "concept": "160243AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Intramuscular"
+                      },
+                      {
+                        "concept": "160245AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Subcutaneous"
+                      },
+                      {
+                        "concept": "162393AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Rectally"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Medication frequency",
+                  "id": "medicationFrequency",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "select",
+                    "concept": "d9390247-9b6c-4065-bda7-5a63572b93a9",
+                    "answers": [
+                      {
+                        "concept": "160870AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Four times daily"
+                      },
+                      {
+                        "concept": "162249AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Every six hours"
+                      },
+                      {
+                        "concept": "4586a8db-744d-47a6-b700-25520c3de6a6",
+                        "label": "AC"
+                      },
+                      {
+                        "concept": "5601e928-6764-467d-8d5a-abfed4b5d7a9",
+                        "label": "PC"
+                      },
+                      {
+                        "concept": "ad03851d-3dc7-407a-887f-d1a807f41522",
+                        "label": "Prn"
+                      },
+                      {
+                        "concept": "e7747ddd-e903-444e-a174-ba76d5872e9f",
+                        "label": "Stat"
+                      },
+                      {
+                        "concept": "ff59dc90-5581-4e1f-9cab-7c2f2d8de530",
+                        "label": "QOD"
+                      },
+                      {
+                        "concept": "cf94c96e-a7ec-4366-8d23-b6561c555008",
+                        "label": "QH"
+                      },
+                      {
+                        "concept": "162247AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Every four hours"
+                      },
+                      {
+                        "concept": "0518f5eb-9d5d-4f6d-ba79-c11535ead050",
+                        "label": "HS"
+                      },
+                      {
+                        "concept": "160858AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Twice daily"
+                      },
+                      {
+                        "concept": "160866AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Thrice daily"
+                      },
+                      {
+                        "concept": "160862AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Once daily"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Time to be given",
+                  "id": "timeToBeGiven",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "51f17381-ce86-4229-8754-ee384b363823"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Medication given by",
+                  "id": "medicationGivenBy",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "fead4085-6499-4fdb-abc7-e730021c994a"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "acf34f21-8632-4e63-ae62-2d357c3c2046",
+  "description": "Medication Administration record",
+  "version": "1.0",
+  "repeatable": true
+}

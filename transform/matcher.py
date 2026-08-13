@@ -113,9 +113,32 @@ def resolve_source_header(field: MappingField, header_info: Sequence[HeaderInfo]
                 return exact
         return ""
 
-    eligible_headers = [header for header in header_info if in_same_stage(source_label, header)]
+    eligible_headers = [
+        header
+        for header in header_info
+        if in_same_stage(source_label, header)
+        or (
+            field.stage_name
+            and header.source_label
+            and normalize_label(field.stage_name) == normalize_label(header.source_label)
+        )
+    ]
     if not eligible_headers:
         return ""
+
+    exact_candidates = deduplicate(
+        value
+        for value in (
+            field.source_name,
+            field.form_name,
+            field.data_element_name,
+        )
+        if value
+    )
+    for candidate in exact_candidates:
+        exact = find_exact_header(candidate, eligible_headers)
+        if exact:
+            return exact
 
     preferred_best_header = ""
     preferred_best_score = 0.0
@@ -172,32 +195,40 @@ def resolve_source_header(field: MappingField, header_info: Sequence[HeaderInfo]
     return best_header if best_score >= threshold else ""
 
 
+def order_mapping_fields(
+    fields: Sequence[MappingField],
+    org_unit: str,
+    target_header: str,
+) -> List[MappingField]:
+    candidates = [
+        field for field in fields if field.target_header == target_header and field.source_header
+    ]
+    if not candidates:
+        return []
+
+    normalized_org = str(org_unit or "").strip().casefold()
+    normalized_org_label = normalize_label(org_unit)
+
+    def org_rank(field: MappingField) -> int:
+        if normalized_org and (
+            field.org_unit.casefold() == normalized_org
+            or normalize_label(field.org_unit) == normalized_org_label
+        ):
+            return 0
+        if not field.org_unit:
+            return 1
+        return 2
+
+    return sorted(candidates, key=org_rank)
+
+
 def select_mapping_field(
     fields: Sequence[MappingField],
     org_unit: str,
     target_header: str,
 ) -> Optional[MappingField]:
-    candidates = [
-        field for field in fields if field.target_header == target_header and field.source_header
-    ]
-    if not candidates:
-        return None
-
-    normalized_org = str(org_unit or "").strip().casefold()
-    normalized_org_label = normalize_label(org_unit)
-    if normalized_org:
-        for field in candidates:
-            if (
-                field.org_unit.casefold() == normalized_org
-                or normalize_label(field.org_unit) == normalized_org_label
-            ):
-                return field
-
-    for field in candidates:
-        if not field.org_unit:
-            return field
-
-    return candidates[0]
+    ordered = order_mapping_fields(fields, org_unit, target_header)
+    return ordered[0] if ordered else None
 
 
 def resolve_program_sources(

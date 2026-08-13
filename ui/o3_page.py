@@ -8,7 +8,15 @@ from tkinter import filedialog, messagebox, ttk
 from typing import Dict, List, Optional, Tuple
 
 from clients.openmrs_client import ApiClient, normalize_base_url
-from config import FACILITIES, FACILITY_CODES, MATERNAL_PROGRAM, NEONATAL_PROGRAM, RESOURCES_DIR
+from config import (
+    FACILITIES,
+    FACILITY_CODES,
+    MATERNAL_PROGRAM,
+    NEONATAL_PROGRAM,
+    O3_METADATA_PATH,
+    O3_SCHEMA_ROOT,
+    RESOURCES_DIR,
+)
 from import_.importer import import_rows
 from o3.extract import (
     determine_program_from_visit_type,
@@ -18,7 +26,7 @@ from o3.extract import (
     write_o3_patients_csv,
 )
 from o3.mappings import DEFAULT_MATERNAL_DICTIONARY, DEFAULT_NEONATAL_DICTIONARY
-from o3.schemas import FormRegistry
+from o3.schemas import FormRegistry, load_default_forms
 from transform.mapping import set_mapping_files
 from transform.pipeline import transform_rows
 from ui.components import DatePicker, LogPanel
@@ -61,7 +69,7 @@ class O3Page(ttk.Frame):
             value=str(Path.cwd() / "O3 Export" / "dhis2_tracker_import.csv")
         )
 
-        self.dhis2_url_var = tk.StringVar()
+        self.dhis2_url_var = tk.StringVar(value="https://imnid.aau.edu.et/dhis")
         self.dhis2_username_var = tk.StringVar()
         self.dhis2_password_var = tk.StringVar()
 
@@ -237,8 +245,17 @@ class O3Page(ttk.Frame):
         self._browse_field(view, row, "Output Folder", self.output_dir_var, self.browse_output_dir)
 
         row += 1
-        self._field(view, row, " ", tk.Label(view, text="The export CSV is saved as openmrs3_export.csv in the output folder.",
-                                             foreground="#64748b"))
+        ttk.Label(
+            view,
+            text=f"Form schemas loaded from:\n{O3_SCHEMA_ROOT}\nMetadata: {O3_METADATA_PATH}",
+            foreground="#64748b", justify="left", anchor="w",
+        ).grid(row=row, column=1, sticky="w", pady=(2, 8))
+
+        row += 1
+        self._field(view, row, " ",
+                    tk.Label(view, text="The export CSV is saved as openmrs3_export.csv in the output folder.\n"
+                                        "Form schemas are used to write column labels instead of backend concept names.",
+                             foreground="#64748b"))
         row += 1
         export_btn = ttk.Button(view, text="Export O3 Patients", command=self.export_patients)
         export_btn.grid(row=row, column=1, sticky="w", pady=(10, 4))
@@ -349,6 +366,13 @@ class O3Page(ttk.Frame):
         self._field(view, row, "DHIS2 Password", ttk.Entry(view, textvariable=self.dhis2_password_var, show="*", width=30))
         row += 1
         self._browse_field(view, row, "Output Folder", self.output_dir_var, self.browse_output_dir)
+
+        row += 1
+        ttk.Label(
+            view,
+            text=f"Form schemas loaded from:\n{O3_SCHEMA_ROOT}\nMetadata: {O3_METADATA_PATH}",
+            foreground="#64748b", justify="left", anchor="w",
+        ).grid(row=row, column=1, sticky="w", pady=(2, 8))
 
         row += 1
         sync_btn = ttk.Button(view, text="Run Full O3 Sync", command=self.run_sync)
@@ -485,6 +509,17 @@ class O3Page(ttk.Frame):
 
         threading.Thread(target=worker, daemon=True).start()
 
+    def _load_form_registry(self) -> FormRegistry:
+        if not O3_SCHEMA_ROOT.is_dir():
+            self.log_thread(
+                f"Warning: O3 form schemas folder not found at {O3_SCHEMA_ROOT}; "
+                "obs columns will use backend concept names instead of form labels."
+            )
+            return FormRegistry([])
+        registry = load_default_forms(O3_SCHEMA_ROOT)
+        self.log_thread(f"Loaded {len(registry.forms)} form schemas from {O3_SCHEMA_ROOT}.")
+        return registry
+
     def _run_export(self) -> Tuple[Path, str, int]:
         start_date = normalize_date_filter(self.start_date_var.get())
         end_date = normalize_date_filter(self.end_date_var.get())
@@ -497,7 +532,7 @@ class O3Page(ttk.Frame):
                 "containing 'Delivery'/'Labour' for maternal or 'NICU' for neonatal data."
             )
         output_dir = self._output_dir()
-        registry = FormRegistry([])
+        registry = self._load_form_registry()
         output_path = output_dir / "openmrs3_export.csv"
 
         api = self.api or self._create_api()

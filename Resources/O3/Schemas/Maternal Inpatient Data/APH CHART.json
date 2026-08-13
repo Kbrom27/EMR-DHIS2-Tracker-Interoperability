@@ -1,0 +1,256 @@
+{
+  "name": "APH CHART",
+  "pages": [
+    {
+      "label": "APH CHART",
+      "sections": [
+        {
+          "label": "APH CHART",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "APH CHART Entry",
+              "id": "aphCHARTEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "15bdb9d0-2efc-487a-8ce0-f4bb339b3460",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "label": "APH event date",
+                  "id": "aphEventDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "0289f021-0585-4b3c-8c09-fb926e2d9bb8"
+                  }
+                },
+                {
+                  "label": "Date",
+                  "id": "date",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "7a80a5d9-ce2d-4861-9575-ecd2cfd20c37"
+                  }
+                },
+                {
+                  "label": "Time",
+                  "id": "time",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "d5db0766-4395-459c-8be3-943c742bad8f"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "BP (systolic)",
+                  "id": "bpSystolic",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "1d85625a-9bba-4f62-a536-8ae95150e57d"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('bpSystolic')<50 || useFieldValue('bpSystolic')>250) && !isEmpty(useFieldValue('bpSystolic'))",
+                      "message": "Systolic Blood Pressure should be between 50 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "BP (diastolic)",
+                  "id": "bpDiastolic",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "d7520ac1-da3b-431c-812a-c713f41f2736"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('bpDiastolic')<50 || useFieldValue('bpDiastolic')>250) && !isEmpty(useFieldValue('bpDiastolic'))",
+                      "message": "Diastolic Blood Pressure should be between 50 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "PR",
+                  "id": "pr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "e575e60b-2258-4142-9267-b48d6b089cfc"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('pr')<20 || useFieldValue('pr')>250) && !isEmpty(useFieldValue('pr'))",
+                      "message": "Pulse Rate should be between 20 and 250"
+                    }
+                  ]
+                },
+                {
+                  "label": "RR",
+                  "id": "rr",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "a282791e-1acc-4af4-ae45-9335e15bc6b3"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('rr')<5 || useFieldValue('rr')>80) && !isEmpty(useFieldValue('rr'))",
+                      "message": "Respiration Rate should be between 5 and 80"
+                    }
+                  ]
+                },
+                {
+                  "label": "Temp",
+                  "id": "temp",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "ca73d674-4821-4063-a857-76cf13e2b1cc"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('temp')<30 || useFieldValue('temp')>45) && !isEmpty(useFieldValue('temp'))",
+                      "message": "Temperature Should be between 30 and 45"
+                    }
+                  ]
+                },
+                {
+                  "label": "Abdominal Tenderness",
+                  "id": "abdominalTenderness",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "300b738a-d53d-4981-bbaf-ccf31af25eaa",
+                    "answers": [
+                      {
+                        "concept": "163748AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Present"
+                      },
+                      {
+                        "concept": "163747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Absent"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Abdominal Pain",
+                  "id": "abdominalPain",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "2a9e5da0-1d9c-4453-927a-b3ba22425a8c",
+                    "answers": [
+                      {
+                        "concept": "163748AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Present"
+                      },
+                      {
+                        "concept": "163747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Absent"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "FHB (Fetal Heart Beat)",
+                  "id": "fhbFetalHeartBeat",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "12c2f1f9-49bc-468b-8fb1-8667ae7b1d62"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('fhbFetalHeartBeat')<80 || useFieldValue('fhbFetalHeartBeat')>200) && !isEmpty(useFieldValue('fhbFetalHeartBeat'))",
+                      "message": "FHB must be between 80 and 200 bpm"
+                    }
+                  ]
+                },
+                {
+                  "label": "Vaginal bleeding",
+                  "id": "vaginalBleeding",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "016c57e6-7256-48fc-b408-11d2c024d0f0",
+                    "answers": [
+                      {
+                        "concept": "1498AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Mild"
+                      },
+                      {
+                        "concept": "1499AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Moderate"
+                      },
+                      {
+                        "concept": "1500AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Severe"
+                      },
+                      {
+                        "concept": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "None"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "BIOPHYSICAL PROFILE",
+                  "id": "biophysicalPROFILE",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "c9fd4597-eb70-40c6-b776-b4ed69a3bd91"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "useFieldValue('biophysicalPROFILE')>10 && !isEmpty(useFieldValue('biophysicalPROFILE'))",
+                      "message": "BPP must be between 0 and 10"
+                    }
+                  ]
+                },
+                {
+                  "label": "HCT",
+                  "id": "hct",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "bca97d9a-4415-49a5-8f4f-f870af1a9229"
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(useFieldValue('hct')<20 || useFieldValue('hct')>50) && !isEmpty(useFieldValue('hct'))",
+                      "message": "HCT should be between 20 and 50"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "57f8f70c-f587-4108-a3a7-ded36b309523",
+  "description": "APH CHART",
+  "version": "1.0",
+  "repeatable": true
+}

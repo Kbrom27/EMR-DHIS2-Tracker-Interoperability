@@ -1,0 +1,1073 @@
+{
+  "name": "Neonatal Intervention Sheet",
+  "pages": [
+    {
+      "label": "Neonatal Intervention Sheet",
+      "sections": [
+        {
+          "label": "Neonatal Intervention Sheet",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "Medication and Intervention Entry",
+              "id": "medicationAndInterventionEntry",
+              "type": "obsGroup",
+              "questionOptions": {
+                "rendering": "repeating",
+                "concept": "e122954a-e48c-464f-b741-76a86525c506",
+                "repeatOptions": {}
+              },
+              "questions": [
+                {
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "7f36c0b6-a1ed-40a0-936c-134f0072b933"
+                  },
+                  "id": "dateAndTime",
+                  "label": "Date and Time",
+                  "datePickerFormat": "both"
+                },
+                {
+                  "label": "Bed No.",
+                  "id": "bedNo",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "c146fd99-8a00-4c58-a31f-95aa83bebfc6"
+                  }
+                },
+                {
+                  "label": "Oxygen Therapy Administered?",
+                  "id": "oxygenTherapyAdministered",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "a86df04c-0536-4b44-b22c-cd038d9a4de1",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Oxygen saturation (%) level that led to the use of oxygen therapy",
+                  "id": "oxygenSaturationLevelThatLedToTheUseOfOxygenTherapy",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "d88e0ce6-f032-4e53-82e2-f686303c2de0"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('oxygenTherapyAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Oxygen Therapy Start date",
+                  "id": "oxygenTherapyStartDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "641c9414-7360-4287-9399-c42b46d00868"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('oxygenTherapyAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Oxygen Therapy Start time",
+                  "id": "oxygenTherapyStartTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "041690fa-5660-495b-be67-c33ec878add1"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('oxygenTherapyAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Oxygen Therapy End date",
+                  "id": "oxygenTherapyEndDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "4219bbdf-b18e-4409-9a29-a6576fe93967"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('oxygenTherapyAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Oxygen Therapy End time",
+                  "id": "oxygenTherapyEndTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "b0a7bad2-3c72-4014-8af0-f7758148577b"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('oxygenTherapyAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Does the infant receive mechanical ventilation?",
+                  "id": "doesTheInfantReceiveMechanicalVentilation",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "b8c1f021-872f-490c-a7b6-bb37bd816e35",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Oxygen saturation (%) level that led to the use of mechanical ventilation",
+                  "id": "oxygenSaturationLevelThatLedToTheUseOfMechanicalVentilation",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "number",
+                    "concept": "96df94f9-8768-428c-b475-f1f25b767fd1"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('doesTheInfantReceiveMechanicalVentilation')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Mechanical Ventilation Start Date",
+                  "id": "mechanicalVentilationStartDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "6125fd4b-7b94-4a56-8d50-3e40951f8fa4"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('doesTheInfantReceiveMechanicalVentilation')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Mechanical Ventilation Start Time",
+                  "id": "mechanicalVentilationStartTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "17f6e595-2f7d-425e-a6e1-5e4f65a73c5b"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('doesTheInfantReceiveMechanicalVentilation')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Mechanical Ventilation End Date",
+                  "id": "mechanicalVentilationEndDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "835930e9-9f39-4f47-8cb8-2b1f0e0c9f36"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('doesTheInfantReceiveMechanicalVentilation')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Mechanical Ventilation End Time",
+                  "id": "mechanicalVentilationEndTime",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "e2b1b7d7-9423-40d8-8c04-06bfc0f9a233"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('doesTheInfantReceiveMechanicalVentilation')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Antibiotics administered?",
+                  "id": "antibioticsAdministered",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "2e2b41a4-cdd1-4ac6-b1f6-3dacd2255ece",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "If yes - select antibiotic(s)",
+                  "id": "ifYesSelectAntibioticS",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "checkbox-searchable",
+                    "concept": "0163ef78-415b-4eb7-b87e-8a9d4f36d306",
+                    "answers": [
+                      {
+                        "concept": "9019b2e5-62fd-4238-b448-909a44f845ca",
+                        "label": "Gentamicin"
+                      },
+                      {
+                        "concept": "71188AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Ampicillin"
+                      },
+                      {
+                        "concept": "1b535529-68fb-4bb5-bb5a-202ec74efb1d",
+                        "label": "Cloxacillin"
+                      },
+                      {
+                        "concept": "73449AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Ciprofloxacin"
+                      },
+                      {
+                        "concept": "73041AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Ceftriaxone"
+                      },
+                      {
+                        "concept": "71060AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Amikacin"
+                      },
+                      {
+                        "concept": "71160AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Amoxicillin"
+                      },
+                      {
+                        "concept": "407ff256-aa15-4dac-92c1-8173ba46232c",
+                        "label": "Benzathine penicillin"
+                      },
+                      {
+                        "concept": "79782AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Metronidazole"
+                      },
+                      {
+                        "concept": "a93ad5bd-6f39-45d1-8fa7-d21c5bbc7ddd",
+                        "label": "Cefotaxime"
+                      },
+                      {
+                        "concept": "28bd5ea0-2945-41d5-80ca-620d3b5ae0bc",
+                        "label": "Meropenem"
+                      },
+                      {
+                        "concept": "940ba097-8947-425c-9d4e-a2310b98d18a",
+                        "label": "Vancomycin"
+                      },
+                      {
+                        "concept": "c9e81689-ece2-4af3-98b2-c3f8f3bbe1c4",
+                        "label": "Crystalline Penicillin"
+                      },
+                      {
+                        "concept": "1605530b-1d7a-4a66-bb68-9be3c40d0c74",
+                        "label": "Cefalexin"
+                      },
+                      {
+                        "concept": "4316906b-9ef4-4326-bd76-2988beed82a4",
+                        "label": "Cefixime"
+                      },
+                      {
+                        "concept": "38d061a2-e963-49dd-86fb-c8444b5de4c3",
+                        "label": "Ceftazidime"
+                      },
+                      {
+                        "concept": "be063ef1-5a35-491c-b521-fd93bcad0117",
+                        "label": "Clindamycin"
+                      },
+                      {
+                        "concept": "d38e9a4d-24e5-49bd-8523-35fb456c8c65",
+                        "label": "Flucloxacillin"
+                      },
+                      {
+                        "concept": "7ed764b2-577b-493b-b29d-2504c0242919",
+                        "label": "Levofloxacin"
+                      },
+                      {
+                        "concept": "18547352-f256-417b-bd7e-944dbeac1c0e",
+                        "label": "Piperazine"
+                      },
+                      {
+                        "concept": "8759912c-25a8-430a-ab27-68b579a601e1",
+                        "label": "Tazobactam"
+                      },
+                      {
+                        "concept": "c71c7542-8ff5-44dd-a623-dc9559cbbbb5",
+                        "label": "Other (specify below)"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('antibioticsAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Date of Gentamicin administration",
+                  "id": "dateOfGentamicinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "95d5e49b-ba3b-4f24-9212-f9db47a7ec41"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('9019b2e5-62fd-4238-b448-909a44f845ca')"
+                  }
+                },
+                {
+                  "label": "Time of Gentamicin administration:",
+                  "id": "timeOfGentamicinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "c52292dd-ad59-448a-a092-fce3aab22706"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('9019b2e5-62fd-4238-b448-909a44f845ca')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Ampicillin administration",
+                  "id": "dateOfAmpicillinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "159053a2-b22d-4a5c-a6d8-0ad07673cd60"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('71188AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+                  }
+                },
+                {
+                  "label": "Time of Ampicillin administration:",
+                  "id": "timeOfAmpicillinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "ddaa050d-b7f3-4b14-8ca1-2ebb72035386"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('71188AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Cloxacillin administration",
+                  "id": "dateOfCloxacillinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "2bedef98-2182-46ca-9df5-f914563c5f04"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('1b535529-68fb-4bb5-bb5a-202ec74efb1d')"
+                  }
+                },
+                {
+                  "label": "Time of Cloxacillin administration:",
+                  "id": "timeOfCloxacillinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "b81bc872-bc86-4cfe-932c-71445a5f2f06"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('1b535529-68fb-4bb5-bb5a-202ec74efb1d')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Ciprofloxacin administration",
+                  "id": "dateOfCiprofloxacinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "8c6adb63-2464-4b7c-8105-c866b0229438"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('73449AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+                  }
+                },
+                {
+                  "label": "Time of Ciprofloxacin administration:",
+                  "id": "timeOfCiprofloxacinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "0adec9a3-fc0a-4da2-80aa-7eac4453d060"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('73449AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Ceftriaxone administration",
+                  "id": "dateOfCeftriaxoneAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "9a7f62f4-272a-4864-a4a5-9350a7df4498"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('73041AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+                  }
+                },
+                {
+                  "label": "Time of Ceftriaxone administration:",
+                  "id": "timeOfCeftriaxoneAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "500c1e5d-058f-439e-b83d-87d64ee66f82"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('73041AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Amikacin administration",
+                  "id": "dateOfAmikacinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "33f09846-a350-438e-a10b-b6cf98a91639"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('71060AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+                  }
+                },
+                {
+                  "label": "Time of Amikacin administration:",
+                  "id": "timeOfAmikacinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "2b598b99-632e-41b0-9e04-ae3ac49cdec2"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('71060AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Amoxicillin administration",
+                  "id": "dateOfAmoxicillinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "f7e98260-ea2c-449c-9c82-fb61565085d9"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('71160AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+                  }
+                },
+                {
+                  "label": "Time of Amoxicillin administration:",
+                  "id": "timeOfAmoxicillinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "d0f9716d-7524-4c5b-a1fa-c21556d63810"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('71160AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Benzathine Penicillin administration",
+                  "id": "dateOfBenzathinePenicillinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "75544717-270a-4c71-a554-2e2ea24609d0"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('407ff256-aa15-4dac-92c1-8173ba46232c')"
+                  }
+                },
+                {
+                  "label": "Time of Benzathine Penicillin administration:",
+                  "id": "timeOfBenzathinePenicillinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "2abf4d79-a6ad-434f-a79f-54189cb30a0d"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('407ff256-aa15-4dac-92c1-8173ba46232c')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Metronidazole administration",
+                  "id": "dateOfMetronidazoleAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "30902e41-33b0-44ff-9ce4-a5e583facd0d"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('79782AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+                  }
+                },
+                {
+                  "label": "Time of Metronidazole administration:",
+                  "id": "timeOfMetronidazoleAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "367aff67-a794-4445-ba99-da05f3c6204e"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('79782AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Cefotaxime administration",
+                  "id": "dateOfCefotaximeAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "e01273f4-d7ac-48a5-8331-a9e36abbee76"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('a93ad5bd-6f39-45d1-8fa7-d21c5bbc7ddd')"
+                  }
+                },
+                {
+                  "label": "Time of Cefotaxime administration:",
+                  "id": "timeOfCefotaximeAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "1fd9f286-9c7f-45ca-9103-b0c4c75ae191"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('a93ad5bd-6f39-45d1-8fa7-d21c5bbc7ddd')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Meropenem administration",
+                  "id": "dateOfMeropenemAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "552b43f0-ee07-4305-917e-bc5423ce7be9"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('28bd5ea0-2945-41d5-80ca-620d3b5ae0bc')"
+                  }
+                },
+                {
+                  "label": "Time of Meropenem administration:",
+                  "id": "timeOfMeropenemAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "8f15ba87-5353-499c-977e-5fbb3f692388"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('28bd5ea0-2945-41d5-80ca-620d3b5ae0bc')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Vancomycin administration",
+                  "id": "dateOfVancomycinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "c8022d59-542c-4fb2-9bcd-5d9220d4aea7"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('940ba097-8947-425c-9d4e-a2310b98d18a')"
+                  }
+                },
+                {
+                  "label": "Time of Vancomycin administration:",
+                  "id": "timeOfVancomycinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "dbe62b00-bf48-4d1d-8961-902961047b84"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('940ba097-8947-425c-9d4e-a2310b98d18a')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Crystalline Penicillin administration",
+                  "id": "dateOfCrystallinePenicillinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "fd3eee3d-5f48-4334-b261-4f2b90bd16a7"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('c9e81689-ece2-4af3-98b2-c3f8f3bbe1c4')"
+                  }
+                },
+                {
+                  "label": "Time of Crystalline Penicillin administration:",
+                  "id": "timeOfCrystallinePenicillinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "5b830b35-8e1f-4298-92dc-b7e1b84a7481"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('c9e81689-ece2-4af3-98b2-c3f8f3bbe1c4')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Cefalexin administration",
+                  "id": "dateOfCefalexinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "93aaaaa2-c8c1-44b5-b2c3-d13f818c1b4f"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('1605530b-1d7a-4a66-bb68-9be3c40d0c74')"
+                  }
+                },
+                {
+                  "label": "Time of Cefalexin administration:",
+                  "id": "timeOfCefalexinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "2183102f-c283-4859-b900-94169826a54d"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('1605530b-1d7a-4a66-bb68-9be3c40d0c74')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Cefixime administration",
+                  "id": "dateOfCefiximeAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "4bf793ce-8764-4ead-80a6-6094cfff1a02"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('4316906b-9ef4-4326-bd76-2988beed82a4')"
+                  }
+                },
+                {
+                  "label": "Time of Cefixime administration:",
+                  "id": "timeOfCefiximeAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "2e4d50eb-79ee-45ee-aea0-835823de76c7"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('4316906b-9ef4-4326-bd76-2988beed82a4')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Ceftazidime administration",
+                  "id": "dateOfCeftazidimeAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "530adb83-8c7f-4aa1-9a75-214097e8c03f"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('38d061a2-e963-49dd-86fb-c8444b5de4c3')"
+                  }
+                },
+                {
+                  "label": "Time of Ceftazidime administration:",
+                  "id": "timeOfCeftazidimeAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "1b1b46d0-81bd-4847-926e-cc77bb4266c7"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('38d061a2-e963-49dd-86fb-c8444b5de4c3')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Clindamycin administration",
+                  "id": "dateOfClindamycinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "a2230936-a59a-4a70-b667-9fab3e9f495e"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('be063ef1-5a35-491c-b521-fd93bcad0117')"
+                  }
+                },
+                {
+                  "label": "Time of Clindamycin administration:",
+                  "id": "timeOfClindamycinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "10d41590-d7ae-43b0-b1d2-b9ff45650114"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('be063ef1-5a35-491c-b521-fd93bcad0117')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Flucloxacillin administration",
+                  "id": "dateOfFlucloxacillinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "5b558589-33c5-4857-9745-11172e80d4ab"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('d38e9a4d-24e5-49bd-8523-35fb456c8c65')"
+                  }
+                },
+                {
+                  "label": "Time of Flucloxacillin administration:",
+                  "id": "timeOfFlucloxacillinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "ef4638df-e5d7-4fe0-8c34-19757e08fe88"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('d38e9a4d-24e5-49bd-8523-35fb456c8c65')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Levofloxacin administration",
+                  "id": "dateOfLevofloxacinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "a611b241-abd4-4833-be49-28c0adb2ded1"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('7ed764b2-577b-493b-b29d-2504c0242919')"
+                  }
+                },
+                {
+                  "label": "Time of Levofloxacin administration:",
+                  "id": "timeOfLevofloxacinAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "8ae2c044-97db-4c39-9266-82e7eb5444ac"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('7ed764b2-577b-493b-b29d-2504c0242919')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Piperazine administration",
+                  "id": "dateOfPiperazineAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "40da993e-abc1-49fb-9361-d24ad3634a97"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('18547352-f256-417b-bd7e-944dbeac1c0e')"
+                  }
+                },
+                {
+                  "label": "Time of Piperazine administration:",
+                  "id": "timeOfPiperazineAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "13c68cf5-2853-49fc-88d4-9d99078ed14d"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('18547352-f256-417b-bd7e-944dbeac1c0e')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Date of Tazobactam administration",
+                  "id": "dateOfTazobactamAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "87b16771-aff8-40b8-bc98-834b617b8e82"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('8759912c-25a8-430a-ab27-68b579a601e1')"
+                  }
+                },
+                {
+                  "label": "Time of Tazobactam administration:",
+                  "id": "timeOfTazobactamAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "b475dcd4-b979-41fa-9721-acaec372e9a4"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('8759912c-25a8-430a-ab27-68b579a601e1')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "If other - specify name:",
+                  "id": "ifOtherSpecifyName",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "6038dcd1-8656-4a5e-9aa2-156de6b0dd3d"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('c71c7542-8ff5-44dd-a623-dc9559cbbbb5')"
+                  }
+                },
+                {
+                  "label": "Date of OTHER antibiotic administration",
+                  "id": "dateOfOTHERAntibioticAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "07bf1795-0fcc-4fcf-82f2-f4a94898c9ba"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('c71c7542-8ff5-44dd-a623-dc9559cbbbb5')"
+                  }
+                },
+                {
+                  "label": "Time of OTHER antibiotic administration:",
+                  "id": "timeOfOTHERAntibioticAdministration",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "datetime",
+                    "concept": "6d36b7e8-c2e1-4ebf-b1ca-0e6fe0c810b2"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesSelectAntibioticS')?.includes('c71c7542-8ff5-44dd-a623-dc9559cbbbb5')"
+                  },
+                  "datePickerFormat": "timer"
+                },
+                {
+                  "label": "Apnea Prevention/Treatment",
+                  "id": "apneaPreventionTreatment",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "514c34a1-ec7f-4d18-be32-2c1d6025dc8b",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "If yes - Apnea Prevention/Treatment Administered",
+                  "id": "ifYesApneaPreventionTreatmentAdministered",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "checkbox",
+                    "concept": "51db9c0d-c349-497d-a9dc-1934ccb86af1",
+                    "answers": [
+                      {
+                        "concept": "72609AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Caffeine"
+                      },
+                      {
+                        "concept": "92836bbe-aa15-458f-97d6-96da0a5a2345",
+                        "label": "Aminophyllin"
+                      },
+                      {
+                        "concept": "ab8651dd-96e7-48f4-b307-b35fcbde4ee3",
+                        "label": "other( specify)"
+                      }
+                    ]
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('apneaPreventionTreatment')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "If other - specify name:",
+                  "id": "ifOtherSpecifyName2",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "text",
+                    "concept": "ddcdf917-b218-4ebf-baa6-610cfb7e8d18"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "!useFieldValue('ifYesApneaPreventionTreatmentAdministered')?.includes('ab8651dd-96e7-48f4-b307-b35fcbde4ee3')"
+                  }
+                },
+                {
+                  "label": "Phototherapy Administered?",
+                  "id": "phototherapyAdministered",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "fc1f011e-75a8-4996-942a-1e191b6aa182",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Phototherapy Start date",
+                  "id": "phototherapyStartDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "4d5f783e-a360-4634-9b21-c82c69a1180f"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('phototherapyAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Phototherapy End date",
+                  "id": "phototherapyEndDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "c940329b-9d5f-426a-b5b4-7160e8c13e72"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('phototherapyAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "IV fluids administered?",
+                  "id": "ivFluidsAdministered",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "4edc66fd-0cb9-4d86-a29a-3f792c08bcd7",
+                    "answers": [
+                      {
+                        "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "Yes"
+                      },
+                      {
+                        "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "label": "No"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "IV Fluids Start date",
+                  "id": "ivFluidsStartDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "a21ea5bf-b271-4671-b8f8-588ac32b34b5"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('ivFluidsAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "IV Fluids End date",
+                  "id": "ivFluidsEndDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "5a4ae5c1-9c48-4728-b60d-b907a82b945c"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('ivFluidsAdministered')!=='1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+                  }
+                },
+                {
+                  "label": "Transfusion given?",
+                  "id": "transfusionGiven",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "radio",
+                    "concept": "d1c460b5-0a5c-4a84-89d2-19d9e24c49c6",
+                    "answers": [
+                      {
+                        "concept": "91a02063-d6d2-4492-9228-29aec3a90f0c",
+                        "label": "Yes - Blood transfusion"
+                      },
+                      {
+                        "concept": "2691f368-aaa2-420e-a807-e52c21554013",
+                        "label": "Yes - Exchange blood transfusion"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "label": "Transfusion date",
+                  "id": "transfusionDate",
+                  "type": "obs",
+                  "questionOptions": {
+                    "rendering": "date",
+                    "concept": "e5105bee-e4dc-47a0-9f58-7e7c5dded6cf"
+                  },
+                  "hide": {
+                    "hideWhenExpression": "useFieldValue('transfusionGiven')!=='91a02063-d6d2-4492-9228-29aec3a90f0c'"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "encounterType": "dd528487-82a5-4082-9c72-ed246bd49591",
+  "referencedForms": [],
+  "uuid": "a9232e8b-99b7-458a-b8ad-48cd8b8721b1",
+  "description": "Medication and Intervention",
+  "version": "1.0",
+  "repeatable": true
+}
