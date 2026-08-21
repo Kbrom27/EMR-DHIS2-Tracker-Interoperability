@@ -1,0 +1,4 @@
+record_id,patient,program,stage,column,field_name,field_id,value,reason
+Test0000010001,Test0000010001,Neonatal Care Form/QYJKpoUeg9F,Tracked Entity Attributes,Tracked Entity Attributes :: Neonate sex,Neonate sex,W8CvotP4K6C,M,Value is not a configured DHIS2 option and was discarded.
+Test0000100038,Test0000100038,Neonatal Care Form/QYJKpoUeg9F,Tracked Entity Attributes,Tracked Entity Attributes :: Neonate sex,Neonate sex,W8CvotP4K6C,M,Value is not a configured DHIS2 option and was discarded.
+Test0000100038,Test0000100038,Neonatal Care Form/QYJKpoUeg9F,NICU Admission Careform,NICU Admission Careform :: Gestational age at delivery weeks,Gestational age at delivery weeks,bJ4oRACbbLP,Exact number of months; weeks or days,Value could not be converted to DHIS2 INTEGER_ZERO_OR_POSITIVE format and was discarded.

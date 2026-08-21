@@ -117,6 +117,11 @@ FIELD_RULES: Dict[str, Dict[str, object]] = {
         "preferred_sources": ["lab_results"],
         "transform": "all_text",
     },
+    "Investigation sheet :: Date and Time inv n": {
+        "preferred_sources": ["visit_date"],
+        "strict_preferred_sources": True,
+        "transform": "datetime",
+    },
     "Medication Administration record :: Diagnosis": {
         "preferred_sources": ["Diagnosis Notes [Maternal Medication Administration Record]"],
         "strict_preferred_sources": True,

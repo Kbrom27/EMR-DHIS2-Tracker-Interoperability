@@ -92,6 +92,8 @@ FACILITIES = (
     ("Dubti General Hospital", "DUB"),
     ("Axum referral hospital", "AxRH"),
     ("Mulu Assefa Primary hospital", "MASPH"),
+    ("Boru Meda GH", "BRM"),
+    ("Debre Birhan CSH", "DBR"),
     ("Test", "Test"),
 )
 

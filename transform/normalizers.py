@@ -215,11 +215,13 @@ def normalize_time(raw_value: str) -> str:
     value = last_export_value(raw_value)
     if not value:
         return ""
-    match = re.search(r"(?:T|\b)(\d{1,2}:\d{2})(?::\d{2})?", value)
+    match = re.search(r"(?:\b|T|\s)(\d{1,2}):(\d{2})(?::\d{2})?", value)
     if match:
-        hour, minute = match.group(1).split(":")
-        return f"{int(hour):02d}:{minute}"
-    return value
+        hour = int(match.group(1))
+        minute = match.group(2)
+        if hour <= 23 and int(minute) <= 59:
+            return f"{hour:02d}:{minute}"
+    return ""
 
 
 def normalize_datetime_value(raw_value: str) -> str:
@@ -227,10 +229,12 @@ def normalize_datetime_value(raw_value: str) -> str:
     if not value:
         return ""
     date_value = normalize_date(value)
+    if not date_value or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date_value):
+        return ""
     time_value = normalize_time(value)
-    if date_value and time_value:
+    if time_value:
         return f"{date_value}T{time_value}:00"
-    return value
+    return f"{date_value}T00:00:00"
 
 
 def normalize_text_value(raw_value: str) -> str:

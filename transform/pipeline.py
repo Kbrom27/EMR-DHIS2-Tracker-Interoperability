@@ -16,6 +16,10 @@ from config import (
     SPECIAL_COLUMNS,
 )
 from models import MappingField
+from transform.investigations import (
+    NEONATAL_INVESTIGATION_HEADERS,
+    apply_neonatal_investigation_transform,
+)
 from transform.mapping import load_program_fields
 from transform.matcher import resolve_program_sources, select_mapping_field
 from transform.normalizers import normalize_tracker_value
@@ -181,6 +185,10 @@ def transform_rows(
             ordered_target_headers = deduplicate(
                 tuple(ordered_target_headers) + MATERNAL_COMPUTED_DIAGNOSIS_HEADERS
             )
+        elif selected_program == NEONATAL_PROGRAM:
+            ordered_target_headers = deduplicate(
+                tuple(ordered_target_headers) + tuple(NEONATAL_INVESTIGATION_HEADERS)
+            )
 
         for row in chain([first_row], reader):
             program_value = normalize_program_value(row.get("program", ""))
@@ -219,6 +227,8 @@ def transform_rows(
 
             if program_value == MATERNAL_PROGRAM:
                 apply_maternal_diagnosis_transform(transformed_row, row)
+            elif program_value == NEONATAL_PROGRAM:
+                apply_neonatal_investigation_transform(transformed_row, row)
 
             rows_to_write.append(transformed_row)
             counts[program_value] += 1

@@ -163,7 +163,7 @@ If the session is interrupted, read this file to resume from where we stopped.
 - `Resources/` stays SHARED (data, not code). Both `config.py` and `o3app/config.py` resolve to repo-root `Resources/`.
 - `o3app/config.py` uses `Path(__file__).resolve().parents[1] / "Resources"` for RESOURCES_DIR.
 - If May 11 `utils.py` is ever wanted verbatim, the UI pages that call `require_xlsx_file`/`require_value_mapping_csv` must also be reverted (those helpers do not exist in May 11 utils).
-- `transform/investigations.py` is gone from the Bahmni side; if neonate investigation handling is needed again, it must be re-added (it did not exist in May 11).
+- `transform/investigations.py` is RE-ADDED on the Bahmni side (2026-08-15) to populate the neonatal Investigation sheet: it sets the group MULTI_TEXT checkboxes (CBC n, Renal function n, Serum electrolyte, Liver function n) from whichever components carry a valid numeric value, clears non-numeric garbage that the fuzzy matcher may pull in, and extracts numeric results from `lab_results` order text (e.g. "Total bilirubin comment:12.3"). Wired into `transform/pipeline.py` for the neonatal program only. `o3app/transform/investigations.py` is untouched.
 - O3 mapping files are stored in `Resources/O3/` (generated once): `EMR-DHIS2 Tracker O3 Maternal Mapping.xlsx`, `EMR-DHIS2 Tracker O3 Neonatal Mapping.xlsx`, `EMR-DHIS2 Tracker O3 Value Mappings.csv`. Form schemas + metadata also under `Resources/O3/`.
 
 ---

@@ -57,19 +57,24 @@ def today_date() -> str:
 
 
 def normalize_time_value(value: str) -> str:
-    match = re.search(r"(?:T|\b)(\d{1,2}:\d{2})(?::\d{2})?", str(value or ""))
+    match = re.search(r"(?:\b|T|\s)(\d{1,2}):(\d{2})(?::\d{2})?", str(value or ""))
     if not match:
         return ""
-    hour, minute = match.group(1).split(":")
-    return f"{int(hour):02d}:{minute}"
+    hour = int(match.group(1))
+    minute = match.group(2)
+    if hour > 23 or int(minute) > 59:
+        return ""
+    return f"{hour:02d}:{minute}"
 
 
 def normalize_datetime_value(value: str) -> str:
     date_value = normalize_date(value)
-    time_value = normalize_time_value(value)
-    if not date_value or not time_value:
+    if not date_value or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date_value):
         return ""
-    return f"{date_value}T{time_value}:00"
+    time_value = normalize_time_value(value)
+    if time_value:
+        return f"{date_value}T{time_value}:00"
+    return f"{date_value}T00:00:00"
 
 
 def normalize_numeric_value(value: str, integer_only: bool) -> str:
