@@ -321,7 +321,11 @@ class ExportPage(ttk.Frame):
                     ),
                 )
 
-                visits = api.get_visits(start_date, end_date, page_size=100)
+                visits = api.get_visits(
+                    visit_start_date=start_date,
+                    visit_end_date=end_date,
+                    visit_type_uuid=selected_visit["uuid"],
+                )
                 patients = get_patients_by_visit_type(
                     visits=visits,
                     visit_type_uuid=selected_visit["uuid"],
@@ -347,7 +351,7 @@ class ExportPage(ttk.Frame):
                     output_filename=output_path,
                     org_unit_code=org_unit_code,
                     program_value=program_value,
-                    fetch_concurrency=4,
+                    fetch_concurrency=12,
                 )
 
                 def on_success() -> None:

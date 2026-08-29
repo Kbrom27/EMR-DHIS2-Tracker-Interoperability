@@ -20,7 +20,7 @@ def _install_connection_retries(session: requests.Session) -> None:
         status_forcelist=(500, 502, 503, 504),
         allowed_methods=frozenset({"GET", "HEAD", "OPTIONS", "TRACE"}),
     )
-    adapter = HTTPAdapter(max_retries=retry)
+    adapter = HTTPAdapter(max_retries=retry, pool_connections=32, pool_maxsize=32)
     session.mount("http://", adapter)
     session.mount("https://", adapter)
 
@@ -127,9 +127,10 @@ class ApiClient:
 
     def get_visits(
         self,
-        visit_start_date: Optional[str],
-        visit_end_date: Optional[str],
-        page_size: int,
+        visit_start_date: Optional[str] = None,
+        visit_end_date: Optional[str] = None,
+        page_size: int = 100,
+        visit_type_uuid: Optional[str] = None,
     ) -> List[Dict]:
         params = {
             "includeInactive": "true",
@@ -139,6 +140,16 @@ class ApiClient:
             params["fromStartDate"] = f"{visit_start_date}T00:00:00.000Z"
         if visit_end_date:
             params["toStartDate"] = f"{visit_end_date}T23:59:59.999Z"
+
+        if visit_type_uuid:
+            params_with_type = dict(params)
+            params_with_type["visitType"] = visit_type_uuid
+            try:
+                return self.get_all_results_by_params("visit", params=params_with_type, limit=page_size)
+            except Exception:
+                # OpenMRS REST API on this server does not support `visitType` filter on /visit resource; fallback
+                pass
+
         return self.get_all_results_by_params("visit", params=params, limit=page_size)
 
     def get_patient_person(self, patient_uuid: str) -> Dict:
@@ -159,19 +170,19 @@ class ApiClient:
         preferred_paths = [
             (
                 f"obs?patient={patient_uuid}"
-                "&v=custom:(uuid,display,concept:(name,display),value,"
-                "encounter:(encounterType:(display),form:(name,display,uuid)),"
-                "groupMembers:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value)))))"
+                "&v=custom:(uuid,display,obsDatetime,concept:(name,display),value,"
+                "encounter:(encounterDatetime,encounterType:(display),form:(name,display,uuid)),"
+                "groupMembers:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value)))))"
             ),
             (
                 f"obs?patient={patient_uuid}"
-                "&v=custom:(uuid,display,concept:(name,display),value,"
-                "encounter:(encounterType:(display)),"
-                "groupMembers:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value)))))"
+                "&v=custom:(uuid,display,obsDatetime,concept:(name,display),value,"
+                "encounter:(encounterDatetime,encounterType:(display)),"
+                "groupMembers:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value)))))"
             ),
             (
                 f"obs?patient={patient_uuid}"
-                "&v=custom:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value))))"
+                "&v=custom:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value))))"
             ),
         ]
         for path in preferred_paths:
@@ -185,14 +196,14 @@ class ApiClient:
         preferred_paths = [
             (
                 f"order?patient={patient_uuid}"
-                "&v=custom:(display,action,instructions,commentToFulfiller,"
+                "&v=custom:(display,action,instructions,commentToFulfiller,dateActivated,dateCreated,"
                 "orderType:(display),type,concept:(display),drug:(display),dose,"
                 "doseUnits:(display),frequency:(display),duration,durationUnits:(display),"
                 "quantity,route:(display))"
             ),
             (
                 f"order?patient={patient_uuid}"
-                "&v=custom:(display,orderType:(display),concept:(display),drug:(display))"
+                "&v=custom:(display,dateActivated,dateCreated,orderType:(display),concept:(display),drug:(display))"
             ),
             f"order?patient={patient_uuid}&v=default",
         ]
@@ -208,16 +219,16 @@ class ApiClient:
             (
                 f"encounter?patient={patient_uuid}"
                 "&v=custom:(encounterDatetime,encounterType:(display),form:(name,display,uuid),"
-                "obs:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value)))),"
-                "orders:(display,action,instructions,commentToFulfiller,orderType:(display),type,"
+                "obs:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value)))),"
+                "orders:(display,action,instructions,commentToFulfiller,dateActivated,dateCreated,orderType:(display),type,"
                 "concept:(display),drug:(display),dose,doseUnits:(display),frequency:(display),"
                 "duration,durationUnits:(display),quantity,route:(display)))"
             ),
             (
                 f"encounter?patient={patient_uuid}"
                 "&v=custom:(encounterDatetime,encounterType:(display),"
-                "obs:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value,groupMembers:(uuid,display,concept:(name,display),value))),"
-                "orders:(display,orderType:(display),concept:(display),drug:(display)))"
+                "obs:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value,groupMembers:(uuid,display,obsDatetime,concept:(name,display),value))),"
+                "orders:(display,dateActivated,dateCreated,orderType:(display),concept:(display),drug:(display)))"
             ),
         ]
         for path in preferred_paths:

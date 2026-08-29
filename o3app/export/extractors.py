@@ -67,6 +67,12 @@ def visit_matches_date_range(
     return True
 
 
+def is_on_or_after_visit(date_val: Optional[str], visit_date: str) -> bool:
+    if not visit_date or not date_val:
+        return True
+    return str(date_val)[:10] >= str(visit_date)[:10]
+
+
 def split_obs_display(obs: Dict) -> Tuple[str, str]:
     display = str(obs.get("display") or "").strip()
     if not display:

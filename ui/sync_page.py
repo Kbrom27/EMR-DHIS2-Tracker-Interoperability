@@ -459,7 +459,11 @@ class SyncPage(ttk.Frame):
             raise RuntimeError(f"Visit type '{visit_type_name}' was not found on the current server.")
 
         self.log(f"Loading visits for '{visit_type_name}'...")
-        visits = api.get_visits(start_date, end_date, page_size=100)
+        visits = api.get_visits(
+            visit_start_date=start_date,
+            visit_end_date=end_date,
+            visit_type_uuid=selected_visit["uuid"],
+        )
         patients = get_patients_by_visit_type(
             visits=visits,
             visit_type_uuid=selected_visit["uuid"],
@@ -476,7 +480,7 @@ class SyncPage(ttk.Frame):
         seen_obs_columns = set()
         buffered_rows: List[Tuple[List[str], Dict[str, str]]] = []
 
-        with ThreadPoolExecutor(max_workers=4) as executor:
+        with ThreadPoolExecutor(max_workers=12) as executor:
             futures = {
                 executor.submit(
                     build_patient_row,

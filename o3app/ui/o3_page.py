@@ -538,7 +538,11 @@ class O3Page(ttk.Frame):
         api = self.api or self._create_api()
         if not self.visit_types:
             self.visit_types = api.get_visit_types()
-        visits = api.get_visits(start_date, end_date, page_size=100)
+        visits = api.get_visits(
+            visit_start_date=start_date,
+            visit_end_date=end_date,
+            visit_type_uuid=selected_visit["uuid"],
+        )
         patients = get_patients_by_visit_type(
             visits=visits,
             visit_type_uuid=selected_visit["uuid"],
@@ -556,7 +560,7 @@ class O3Page(ttk.Frame):
             output_filename=output_path,
             org_unit_code=self._selected_facility_code(),
             program_value=program_value,
-            fetch_concurrency=4,
+            fetch_concurrency=12,
         )
         self.api = api
         self.input_csv_var.set(str(output_path))

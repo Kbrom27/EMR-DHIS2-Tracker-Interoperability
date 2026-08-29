@@ -67,6 +67,12 @@ def visit_matches_date_range(
     return True
 
 
+def is_on_or_after_visit(date_val: Optional[str], visit_date: str) -> bool:
+    if not visit_date or not date_val:
+        return True
+    return str(date_val)[:10] >= str(visit_date)[:10]
+
+
 def split_obs_display(obs: Dict) -> Tuple[str, str]:
     display = str(obs.get("display") or "").strip()
     if not display:
@@ -469,6 +475,24 @@ def build_patient_row(
     encounters = api.get_patient_encounters(patient_uuid)
     direct_orders = api.get_patient_orders(patient_uuid)
 
+    if visit_date:
+        encounters = [
+            enc for enc in encounters
+            if is_on_or_after_visit(enc.get("encounterDatetime") or enc.get("encounterDate"), visit_date)
+        ]
+        filtered_obs = []
+        for obs in obs_list:
+            obs_dt = obs.get("obsDatetime")
+            if not obs_dt and isinstance(obs.get("encounter"), dict):
+                obs_dt = obs.get("encounter", {}).get("encounterDatetime")
+            if is_on_or_after_visit(obs_dt, visit_date):
+                filtered_obs.append(obs)
+        obs_list = filtered_obs
+        direct_orders = [
+            ord_item for ord_item in direct_orders
+            if is_on_or_after_visit(ord_item.get("dateActivated") or ord_item.get("dateCreated") or ord_item.get("scheduledDate"), visit_date)
+        ]
+
     encounter_obs_entries = flatten_encounter_obs(encounters)
     seen_encounter_pairs = {(concept, value) for concept, _column, value in encounter_obs_entries}
     standalone_obs_entries: List[Tuple[str, str, str]] = []
@@ -550,7 +574,7 @@ def write_patients_csv(
     output_filename: Path,
     org_unit_code: str,
     program_value: str,
-    fetch_concurrency: int = 4,
+    fetch_concurrency: int = 12,
 ) -> int:
     all_obs_columns: List[str] = []
     seen_obs_columns = set()
