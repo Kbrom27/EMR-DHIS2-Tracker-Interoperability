@@ -57,7 +57,7 @@ class SyncPage(ttk.Frame):
         self.dict_var = tk.StringVar()
         self.value_mapping_var = tk.StringVar()
 
-        self.dhis2_url_var = tk.StringVar(value="https://imnid.aau.edu.et/dhis")
+        self.dhis2_url_var = tk.StringVar(value="https://imnid.mohdigitalhealth.gov.et")
         self.dhis2_username_var = tk.StringVar()
         self.dhis2_password_var = tk.StringVar()
 
@@ -495,6 +495,8 @@ class SyncPage(ttk.Frame):
             }
             for future in as_completed(futures):
                 fixed_row, obs_values = future.result()
+                if not fixed_row:
+                    continue
                 for column in obs_values:
                     if column not in seen_obs_columns:
                         seen_obs_columns.add(column)

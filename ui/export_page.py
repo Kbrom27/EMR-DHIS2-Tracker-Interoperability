@@ -16,7 +16,7 @@ from export.extractors import (
     validate_date_range,
     write_patients_csv,
 )
-from ui.components import LogPanel
+from ui.components import DatePicker, LogPanel
 
 
 class ExportPage(ttk.Frame):
@@ -113,13 +113,9 @@ class ExportPage(ttk.Frame):
         ttk.Label(container, text="Start Date").grid(row=row, column=0, sticky="w", pady=4)
         date_frame = ttk.Frame(container)
         date_frame.grid(row=row, column=1, sticky="w", pady=4)
-        ttk.Entry(date_frame, textvariable=self.start_date_var, width=14).pack(side="left")
-        ttk.Label(date_frame, text="YYYY-MM-DD").pack(side="left", padx=(8, 18))
+        DatePicker(date_frame, self.start_date_var).pack(side="left", padx=(0, 18))
         ttk.Label(date_frame, text="End Date").pack(side="left")
-        ttk.Entry(date_frame, textvariable=self.end_date_var, width=14).pack(
-            side="left", padx=(8, 0)
-        )
-        ttk.Label(date_frame, text="YYYY-MM-DD").pack(side="left", padx=(8, 0))
+        DatePicker(date_frame, self.end_date_var).pack(side="left", padx=(8, 0))
 
         row += 1
         ttk.Label(container, text="Visit Type").grid(row=row, column=0, sticky="w", pady=4)

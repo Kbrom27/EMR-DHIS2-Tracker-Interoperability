@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from o3app.clients.openmrs_client import ApiClient
-from o3app.config import DETAIL_COLUMNS, MATERNAL_PROGRAM, NEONATAL_PROGRAM
+from o3app.config import DETAIL_COLUMNS, MATERNAL_PROGRAM, NEONATAL_PROGRAM, is_patient_eligible_for_program
 from o3app.export.extractors import (
     append_unique_value,
     attr_value,
@@ -190,6 +190,9 @@ def build_o3_patient_row(
     record_id = build_record_id(org_unit_code, patient_id)
 
     person = api.get_patient_person(patient_uuid) or {}
+    if not is_patient_eligible_for_program(person.get("gender"), person.get("age"), program_value):
+        return [], {}
+
     obs_list = api.get_patient_obs(patient_uuid) or []
     encounters = api.get_patient_encounters(patient_uuid) or []
     direct_orders = api.get_patient_orders(patient_uuid) or []
@@ -317,6 +320,8 @@ def write_o3_patients_csv(
 
         for future in as_completed(futures):
             fixed_row, obs_values = future.result()
+            if not fixed_row:
+                continue
             for column in obs_values:
                 if column not in seen_obs_columns:
                     seen_obs_columns.add(column)

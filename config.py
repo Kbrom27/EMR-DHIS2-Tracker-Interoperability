@@ -137,3 +137,33 @@ def normalize_program_value(value: str) -> str:
     if "qyjkpoueg9f" in lower or "neonatal care form" in lower:
         return NEONATAL_PROGRAM
     return cleaned
+
+
+def is_patient_eligible_for_program(gender: str, age_val: Optional[Any], program_value: str) -> bool:
+    import re
+    norm_program = normalize_program_value(program_value)
+    norm_gender = str(gender or "").strip().casefold()
+
+    parsed_age: Optional[float] = None
+    if age_val is not None:
+        cleaned_age = str(age_val).strip()
+        match = re.search(r"^\d+(\.\d+)?", cleaned_age)
+        if match:
+            try:
+                parsed_age = float(match.group(0))
+            except ValueError:
+                parsed_age = None
+
+    if norm_program == MATERNAL_PROGRAM:
+        if norm_gender not in ("f", "female"):
+            return False
+        if parsed_age is not None and parsed_age < 10:
+            return False
+        return True
+
+    if norm_program == NEONATAL_PROGRAM:
+        if parsed_age is not None and parsed_age > 0:
+            return False
+        return True
+
+    return True

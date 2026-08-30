@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from clients.openmrs_client import ApiClient
-from config import DETAIL_COLUMNS, MATERNAL_PROGRAM, NEONATAL_PROGRAM
+from config import DETAIL_COLUMNS, MATERNAL_PROGRAM, NEONATAL_PROGRAM, is_patient_eligible_for_program
 from utils import clean_csv_cell
 
 
@@ -41,7 +41,7 @@ def determine_program_from_visit_type(visit_type_name: str) -> str:
     normalized = visit_type_name.casefold()
     if "nicu" in normalized:
         return NEONATAL_PROGRAM
-    if any(marker in normalized for marker in ("delivery", "labour", "labor")):
+    if any(marker in normalized for marker in ("delivery", "labour", "labor", "obs")):
         return MATERNAL_PROGRAM
     return ""
 
@@ -471,6 +471,9 @@ def build_patient_row(
     record_id = build_record_id(org_unit_code, patient_id)
 
     person = api.get_patient_person(patient_uuid)
+    if not is_patient_eligible_for_program(person.get("gender"), person.get("age"), program_value):
+        return [], {}
+
     obs_list = api.get_patient_obs(patient_uuid)
     encounters = api.get_patient_encounters(patient_uuid)
     direct_orders = api.get_patient_orders(patient_uuid)
@@ -596,6 +599,8 @@ def write_patients_csv(
 
         for future in as_completed(futures):
             fixed_row, obs_values = future.result()
+            if not fixed_row:
+                continue
             for column in obs_values:
                 if column not in seen_obs_columns:
                     seen_obs_columns.add(column)

@@ -14,6 +14,7 @@ from config import (
     NEONATAL_PROGRAM,
     PROGRAM_SPECS,
     SPECIAL_COLUMNS,
+    is_patient_eligible_for_program,
 )
 from models import MappingField
 from transform.investigations import (
@@ -192,6 +193,11 @@ def transform_rows(
 
         for row in chain([first_row], reader):
             program_value = normalize_program_value(row.get("program", ""))
+            gender = row.get("gender", "")
+            age = row.get("age")
+            if not is_patient_eligible_for_program(gender, age, program_value):
+                counts["skipped"] += 1
+                continue
             if program_value not in resolved_fields:
                 counts["skipped"] += 1
                 continue

@@ -14,7 +14,7 @@ class ImportPage(ttk.Frame):
         self.parent = parent
         self.on_back_to_menu = on_back_to_menu
 
-        self.url_var = tk.StringVar(value="https://imnid.aau.edu.et/dhis")
+        self.url_var = tk.StringVar(value="https://imnid.mohdigitalhealth.gov.et")
         self.username_var = tk.StringVar()
         self.password_var = tk.StringVar()
         self.file_var = tk.StringVar()

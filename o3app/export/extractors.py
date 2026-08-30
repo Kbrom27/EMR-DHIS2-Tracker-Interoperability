@@ -41,7 +41,7 @@ def determine_program_from_visit_type(visit_type_name: str) -> str:
     normalized = visit_type_name.casefold()
     if "nicu" in normalized:
         return NEONATAL_PROGRAM
-    if any(marker in normalized for marker in ("delivery", "labour", "labor")):
+    if any(marker in normalized for marker in ("delivery", "labour", "labor", "obs")):
         return MATERNAL_PROGRAM
     return ""
 

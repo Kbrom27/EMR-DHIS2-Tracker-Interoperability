@@ -18,6 +18,7 @@ from o3app.config import (
     RESOURCES_DIR,
 )
 from o3app.import_.importer import import_rows
+from o3app.export.extractors import sanitize_filename
 from o3app.extract import (
     determine_program_from_visit_type,
     get_patients_by_visit_type,
@@ -59,17 +60,23 @@ class O3Page(ttk.Frame):
         self.start_date_var = tk.StringVar()
         self.end_date_var = tk.StringVar()
         self.visit_type_var = tk.StringVar()
+        self.export_file_var = tk.StringVar(
+            value=str(Path.cwd() / "O3 Export" / "openmrs3_export.csv")
+        )
         self.output_dir_var = tk.StringVar(
             value=str(Path.cwd() / "O3 Export")
         )
         self.input_csv_var = tk.StringVar(
             value=str(Path.cwd() / "O3 Export" / "openmrs3_export.csv")
         )
+        self.transform_output_var = tk.StringVar(
+            value=str(Path.cwd() / "O3 Export" / "dhis2_tracker_import.csv")
+        )
         self.import_file_var = tk.StringVar(
             value=str(Path.cwd() / "O3 Export" / "dhis2_tracker_import.csv")
         )
 
-        self.dhis2_url_var = tk.StringVar(value="https://imnid.aau.edu.et/dhis")
+        self.dhis2_url_var = tk.StringVar(value="https://imnid.mohdigitalhealth.gov.et")
         self.dhis2_username_var = tk.StringVar()
         self.dhis2_password_var = tk.StringVar()
 
@@ -242,7 +249,7 @@ class O3Page(ttk.Frame):
         self._field(view, row, "Visit Type", combo)
 
         row += 1
-        self._browse_field(view, row, "Output Folder", self.output_dir_var, self.browse_output_dir)
+        self._browse_field(view, row, "Export Output File", self.export_file_var, self.browse_export_output)
 
         row += 1
         ttk.Label(
@@ -253,8 +260,7 @@ class O3Page(ttk.Frame):
 
         row += 1
         self._field(view, row, " ",
-                    tk.Label(view, text="The export CSV is saved as openmrs3_export.csv in the output folder.\n"
-                                        "Form schemas are used to write column labels instead of backend concept names.",
+                    tk.Label(view, text="Form schemas are used to write column labels instead of backend concept names.",
                              foreground="#64748b"))
         row += 1
         export_btn = ttk.Button(view, text="Export O3 Patients", command=self.export_patients)
@@ -275,7 +281,7 @@ class O3Page(ttk.Frame):
             foreground="#64748b", justify="left", anchor="w",
         )
         hint.grid(row=1, column=1, sticky="w")
-        self._browse_field(view, 2, "Output Folder", self.output_dir_var, self.browse_output_dir)
+        self._browse_field(view, 2, "Transformed Output File", self.transform_output_var, self.browse_transform_output)
 
         row = 3
         mapping_frame = ttk.Frame(view)
@@ -328,60 +334,67 @@ class O3Page(ttk.Frame):
 
     def _build_sync_view(self, parent) -> ttk.Frame:
         view = ttk.Frame(parent, padding=16)
-        self._field(view, 0, "EMR Server / IP", ttk.Entry(view, textvariable=self.base_url_var, width=60))
-        self._field(view, 1, "EMR Username", ttk.Entry(view, textvariable=self.username_var, width=30))
-        self._field(view, 2, "EMR Password", ttk.Entry(view, textvariable=self.password_var, show="*", width=30))
+        view.columnconfigure(0, weight=1)
 
-        self._facility_field(view, 3)
+        cards = ttk.Frame(view)
+        cards.grid(row=0, column=0, sticky="ew", pady=(0, 10))
+        cards.columnconfigure(0, weight=1, uniform="sync_side")
+        cards.columnconfigure(1, weight=1, uniform="sync_side")
 
-        row = 4
-        connect_frame = ttk.Frame(view)
+        # OpenMRS 3 Source Frame
+        emr_card = ttk.LabelFrame(cards, text=" OpenMRS 3 Source ", padding=12)
+        emr_card.grid(row=0, column=0, sticky="nsew", padx=(0, 8))
+
+        self._field(emr_card, 0, "EMR Server / IP", ttk.Entry(emr_card, textvariable=self.base_url_var, width=32))
+        self._field(emr_card, 1, "EMR Username", ttk.Entry(emr_card, textvariable=self.username_var, width=24))
+        self._field(emr_card, 2, "EMR Password", ttk.Entry(emr_card, textvariable=self.password_var, show="*", width=24))
+        self._facility_field(emr_card, 3)
+
+        connect_frame = ttk.Frame(emr_card)
         connect_frame.columnconfigure(1, weight=1)
-        ttk.Button(connect_frame, text="Connect and Load Visit Types", command=self.connect_and_load).grid(
+        ttk.Button(connect_frame, text="Connect & Load Visit Types", command=self.connect_and_load).grid(
             row=0, column=1, sticky="w", pady=(2, 6)
         )
-        self._field(view, row, " ", connect_frame)
+        self._field(emr_card, 4, " ", connect_frame)
         self.buttons.append(connect_frame.winfo_children()[0])
 
-        row += 1
-        date_frame = ttk.Frame(view)
-        DatePicker(date_frame, self.start_date_var).pack(side="left", padx=(0, 18))
-        ttk.Label(date_frame, text="End Date").pack(side="left")
-        DatePicker(date_frame, self.end_date_var).pack(side="left", padx=(8, 0))
-        self._field(view, row, "Start Date", date_frame)
+        date_frame = ttk.Frame(emr_card)
+        DatePicker(date_frame, self.start_date_var).pack(side="left", padx=(0, 8))
+        ttk.Label(date_frame, text="End Date").pack(side="left", padx=(4, 4))
+        DatePicker(date_frame, self.end_date_var).pack(side="left")
+        self._field(emr_card, 5, "Start Date", date_frame)
 
-        row += 1
-        combo = ttk.Combobox(view, textvariable=self.visit_type_var, state="readonly", width=44)
+        combo = ttk.Combobox(emr_card, textvariable=self.visit_type_var, state="readonly", width=32)
         self._visit_type_combos.append(combo)
-        self._field(view, row, "Visit Type", combo)
+        self._field(emr_card, 6, "Visit Type", combo)
 
-        row += 1
-        ttk.Separator(view).grid(row=row, column=0, columnspan=2, sticky="ew", pady=10)
+        # DHIS2 Destination Frame
+        dhis2_card = ttk.LabelFrame(cards, text=" DHIS2 Tracker Destination ", padding=12)
+        dhis2_card.grid(row=0, column=1, sticky="nsew", padx=(8, 0))
 
-        row += 1
-        self._field(view, row, "DHIS2 URL", ttk.Entry(view, textvariable=self.dhis2_url_var, width=60))
-        row += 1
-        self._field(view, row, "DHIS2 Username", ttk.Entry(view, textvariable=self.dhis2_username_var, width=30))
-        row += 1
-        self._field(view, row, "DHIS2 Password", ttk.Entry(view, textvariable=self.dhis2_password_var, show="*", width=30))
-        row += 1
-        self._browse_field(view, row, "Output Folder", self.output_dir_var, self.browse_output_dir)
+        self._field(dhis2_card, 0, "DHIS2 URL", ttk.Entry(dhis2_card, textvariable=self.dhis2_url_var, width=32))
+        self._field(dhis2_card, 1, "DHIS2 Username", ttk.Entry(dhis2_card, textvariable=self.dhis2_username_var, width=24))
+        self._field(dhis2_card, 2, "DHIS2 Password", ttk.Entry(dhis2_card, textvariable=self.dhis2_password_var, show="*", width=24))
+        self._browse_field(dhis2_card, 3, "Export Output File", self.export_file_var, self.browse_export_output)
+        self._browse_field(dhis2_card, 4, "Transformed Output File", self.transform_output_var, self.browse_transform_output)
 
-        row += 1
+        # Action bar & Metadata info
+        action_frame = ttk.Frame(view)
+        action_frame.grid(row=1, column=0, sticky="ew", pady=(5, 0))
+
         ttk.Label(
-            view,
+            action_frame,
             text=f"Form schemas loaded from:\n{O3_SCHEMA_ROOT}\nMetadata: {O3_METADATA_PATH}",
             foreground="#64748b", justify="left", anchor="w",
-        ).grid(row=row, column=1, sticky="w", pady=(2, 8))
+        ).pack(anchor="w", pady=(0, 8))
 
-        row += 1
-        sync_btn = ttk.Button(view, text="Run Full O3 Sync", command=self.run_sync)
-        sync_btn.grid(row=row, column=1, sticky="w", pady=(10, 4))
+        sync_btn = ttk.Button(action_frame, text="Run Full O3 Sync", command=self.run_sync)
+        sync_btn.pack(anchor="w", pady=(2, 4))
         self.buttons.append(sync_btn)
 
         spacer = ttk.Frame(view)
-        spacer.grid(row=row + 1, column=0, columnspan=2, sticky="nsew")
-        view.rowconfigure(row + 1, weight=1)
+        spacer.grid(row=2, column=0, sticky="nsew")
+        view.rowconfigure(2, weight=1)
         return view
 
     def go_back(self):
@@ -412,6 +425,30 @@ class O3Page(ttk.Frame):
             self.output_dir_var.set(selected)
             self._apply_default_paths(selected)
 
+    def browse_export_output(self) -> None:
+        visit_type_name = self.visit_type_var.get().strip()
+        initial_name = f"openmrs3_export_{sanitize_filename(visit_type_name)}.csv" if visit_type_name else "openmrs3_export.csv"
+        selected = filedialog.asksaveasfilename(
+            title="Choose O3 export output file",
+            defaultextension=".csv",
+            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")],
+            initialfile=initial_name,
+        )
+        if selected:
+            self.export_file_var.set(selected)
+            self.input_csv_var.set(selected)
+
+    def browse_transform_output(self) -> None:
+        selected = filedialog.asksaveasfilename(
+            title="Choose transformed DHIS2 output file",
+            defaultextension=".csv",
+            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")],
+            initialfile="dhis2_tracker_import.csv",
+        )
+        if selected:
+            self.transform_output_var.set(selected)
+            self.import_file_var.set(selected)
+
     def browse_input_csv(self) -> None:
         selected = filedialog.askopenfilename(
             title="Choose the O3 export CSV to transform",
@@ -430,8 +467,12 @@ class O3Page(ttk.Frame):
 
     def _apply_default_paths(self, output_dir: str) -> None:
         base = Path(output_dir)
+        if not self.export_file_var.get().strip():
+            self.export_file_var.set(str(base / "openmrs3_export.csv"))
         if not self.input_csv_var.get().strip():
             self.input_csv_var.set(str(base / "openmrs3_export.csv"))
+        if not self.transform_output_var.get().strip():
+            self.transform_output_var.set(str(base / "dhis2_tracker_import.csv"))
         if not self.import_file_var.get().strip():
             self.import_file_var.set(str(base / "dhis2_tracker_import.csv"))
 
@@ -531,9 +572,10 @@ class O3Page(ttk.Frame):
                 "Could not determine the DHIS2 program from the visit type. Use a visit type "
                 "containing 'Delivery'/'Labour' for maternal or 'NICU' for neonatal data."
             )
-        output_dir = self._output_dir()
+        output_file_str = self.export_file_var.get().strip()
+        output_path = Path(output_file_str) if output_file_str else (self._output_dir() / "openmrs3_export.csv")
+        output_path.parent.mkdir(parents=True, exist_ok=True)
         registry = self._load_form_registry()
-        output_path = output_dir / "openmrs3_export.csv"
 
         api = self.api or self._create_api()
         if not self.visit_types:
@@ -640,8 +682,9 @@ class O3Page(ttk.Frame):
     def _run_transform(self, input_path: Path) -> Tuple[Path, int, Dict[str, int], Dict[str, List[str]]]:
         program_value = self._export_program(input_path)
         mapping_path, dictionary_path, value_mapping_path = self._pick_o3_files(program_value)
-        output_dir = self._output_dir()
-        output_path = output_dir / "dhis2_tracker_import.csv"
+        output_file_str = self.transform_output_var.get().strip()
+        output_path = Path(output_file_str) if output_file_str else (self._output_dir() / "dhis2_tracker_import.csv")
+        output_path.parent.mkdir(parents=True, exist_ok=True)
         set_mapping_files(mapping_path, dictionary_path, value_mapping_path)
         row_count, counts, missing = transform_rows(input_path, output_path)
         self.import_file_var.set(str(output_path))
