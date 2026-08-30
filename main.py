@@ -24,6 +24,8 @@ from ui.export_page import ExportPage
 from ui.transform_page import TransformPage
 from ui.import_page import ImportPage
 from ui.sync_page import SyncPage
+from ui.mediator_page import MediatorPage
+from ui.bahmni_page import BahmniPage
 from o3app.ui.o3_page import O3Page
 
 
@@ -81,9 +83,9 @@ class MainApplication:
         ).pack(anchor="w", pady=(4, 0))
         return header
 
-    def create_tile(self, parent, title, subtitle, color, command, row, col):
+    def create_tile(self, parent, title, subtitle, color, command, row, col, colspan=1):
         tile = tk.Frame(parent, bg=color, padx=20, pady=18, cursor="hand2")
-        tile.grid(row=row, column=col, sticky="nsew", padx=10, pady=10)
+        tile.grid(row=row, column=col, columnspan=colspan, sticky="nsew", padx=10, pady=10)
         tile.columnconfigure(0, weight=1)
 
         tk.Label(
@@ -103,7 +105,7 @@ class MainApplication:
             font=("Segoe UI", 10),
             anchor="w",
             justify="left",
-            wraplength=390,
+            wraplength=780 if colspan > 1 else 390,
         ).grid(row=1, column=0, sticky="ew", pady=(10, 24))
 
         button = tk.Button(
@@ -132,33 +134,56 @@ class MainApplication:
         self._build_header(
             self.menu_frame,
             APP_TITLE,
-            "Choose the OpenMRS source. Each workflow runs its own independent scripts.",
+            "Choose the OpenMRS source or start the REST Mediator service.",
         )
 
-        main_frame = ttk.Frame(self.menu_frame, padding=40)
+        main_frame = ttk.Frame(self.menu_frame, padding=30)
         main_frame.pack(fill="both", expand=True)
-        main_frame.columnconfigure((0, 1), weight=1, uniform="menu")
+        main_frame.columnconfigure((0, 1, 2), weight=1, uniform="menu")
         main_frame.rowconfigure(0, weight=1)
 
-        items = [
-            (
-                "OpenMRS (Bahmni)",
-                "Original workflow. Export, transform using imported mapping\n"
-                "files and dictionary, import, or run the full tracker sync.",
-                "#0f766e",
-                self.show_bahmni_menu,
-            ),
-            (
-                "OpenMRS 3 (O3)",
-                "OpenMRS 3 workflow. Export O3 data, generate mapping files,\n"
-                "transform, import, or run the full O3 sync. No file upload needed.",
-                "#0d9488",
-                self.show_o3_page,
-            ),
-        ]
-        for index, (title, subtitle, color, command) in enumerate(items):
-            row, column = divmod(index, 2)
-            self.create_tile(main_frame, title, subtitle, color, command, row, column)
+        # 3-Column Layout: Bahmni, O3, Mediator Side-by-Side
+        self.create_tile(
+            main_frame,
+            "OpenMRS (Bahmni)",
+            "Original workflow. Export, transform using imported mapping files, import, or run tracker sync.",
+            "#0f766e",
+            self.show_bahmni_page,
+            row=0,
+            col=0,
+        )
+
+        self.create_tile(
+            main_frame,
+            "OpenMRS 3 (O3)",
+            "OpenMRS 3 workflow. Export O3 data, generate mapping files, transform, import, or run O3 sync.",
+            "#0d9488",
+            self.show_o3_page,
+            row=0,
+            col=1,
+        )
+
+        self.create_tile(
+            main_frame,
+            "🌐 REST Mediator Service",
+            "REST Mediator microservice. Launch local REST API server, open Swagger docs, check sync status & resume sync.",
+            "#1e40af",
+            self.show_mediator_page,
+            row=0,
+            col=2,
+        )
+
+    def show_bahmni_page(self):
+        self.clear_page()
+        self.hide_menu()
+        self.current_page = BahmniPage(self.root, self.show_source_menu)
+        self.current_page.pack(fill="both", expand=True)
+
+    def show_mediator_page(self):
+        self.clear_page()
+        self.hide_menu()
+        self.current_page = MediatorPage(self.root, self.show_source_menu)
+        self.current_page.pack(fill="both", expand=True)
 
     def show_bahmni_menu(self):
         self.clear_page()

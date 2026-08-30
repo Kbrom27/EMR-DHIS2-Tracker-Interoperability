@@ -780,12 +780,16 @@ class O3Page(ttk.Frame):
             messagebox.showerror("Sync details required", str(exc))
             return
 
+        facility_name = self.facility_var.get()
+        facility_code = FACILITY_CODES.get(facility_name, "")
+        visit_type_name = self.visit_type_var.get().strip() or "All"
+
         def worker() -> None:
             self.after(0, lambda: self.set_busy(True))
             self.after(0, lambda: self.status_var.set("Running full O3 sync (export -> transform -> import)..."))
             try:
                 self.log_thread("Step 1/3: Exporting O3 patients...")
-                export_path, _program_value, count = self._run_export()
+                export_path, program_value, count = self._run_export()
                 self.log_thread(f"  Exported {count} patient(s) to {export_path}")
 
                 self.log_thread("Step 2/3: Using stored O3 mapping files...")
@@ -806,6 +810,25 @@ class O3Page(ttk.Frame):
                     password=dhis2_password,
                     input_path=output_path,
                 )
+
+                # Save checkpoint for Mediator status view
+                try:
+                    import json, datetime
+                    chk = {
+                        "status": "completed" if counts.get("row_errors", 0) == 0 else "completed_with_errors",
+                        "system": "OpenMRS 3.x (O3)",
+                        "facility_name": facility_name,
+                        "facility_code": facility_code,
+                        "program": program_value,
+                        "visit_type": visit_type_name,
+                        "patients_extracted": count,
+                        "dhis2_import_stats": counts,
+                        "updated_at": datetime.datetime.now().isoformat(),
+                        "can_resume": counts.get("row_errors", 0) > 0,
+                    }
+                    Path("sync_checkpoint.json").write_text(json.dumps(chk, indent=2), encoding="utf-8")
+                except Exception as e:
+                    print(f"Checkpoint save error: {e}")
 
                 def on_success() -> None:
                     self.status_var.set(f"Sync complete. {counts['processed']} row(s) imported.")

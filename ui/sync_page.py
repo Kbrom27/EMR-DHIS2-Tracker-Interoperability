@@ -427,6 +427,25 @@ class SyncPage(ttk.Frame):
                         transformed_path,
                     )
 
+                    # Save checkpoint for Mediator status view
+                    try:
+                        import json, datetime
+                        chk = {
+                            "status": "completed" if counts.get("row_errors", 0) == 0 else "completed_with_errors",
+                            "system": "Bahmni (OpenMRS 2.x)",
+                            "facility_name": self.facility_var.get(),
+                            "facility_code": self._selected_facility_code(),
+                            "program": program_value,
+                            "visit_type": visit_type_name,
+                            "patients_extracted": len(patients),
+                            "dhis2_import_stats": counts,
+                            "updated_at": datetime.datetime.now().isoformat(),
+                            "can_resume": counts.get("row_errors", 0) > 0,
+                        }
+                        Path("sync_checkpoint.json").write_text(json.dumps(chk, indent=2), encoding="utf-8")
+                    except Exception as e:
+                        print(f"Checkpoint save error: {e}")
+
                 def done() -> None:
                     self.api = api
                     self.visit_types = list(visit_types)
