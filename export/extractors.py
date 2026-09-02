@@ -39,9 +39,9 @@ def sanitize_filename(value: str) -> str:
 
 def determine_program_from_visit_type(visit_type_name: str) -> str:
     normalized = visit_type_name.casefold()
-    if "nicu" in normalized:
+    if any(marker in normalized for marker in ("nicu", "neonatal", "ncu")):
         return NEONATAL_PROGRAM
-    if any(marker in normalized for marker in ("delivery", "labour", "labor", "obs")):
+    if any(marker in normalized for marker in ("delivery", "labour", "labor", "obs", "obstetric")):
         return MATERNAL_PROGRAM
     return ""
 

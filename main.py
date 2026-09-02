@@ -29,7 +29,7 @@ from ui.bahmni_page import BahmniPage
 from o3app.ui.o3_page import O3Page
 
 
-APP_TITLE = "EMR-DHIS2 Tracker interoperability"
+APP_TITLE = "EMR-DHIS2 Tracker Interoperability V102"
 
 
 class MainApplication:

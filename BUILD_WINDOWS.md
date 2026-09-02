@@ -14,11 +14,11 @@ build_windows.bat
 The executable will be created at:
 
 ```text
-dist\EMR-DHIS2 Tracker interoperability App V101.exe
+dist\EMR-DHIS2 Tracker interoperability App V102.exe
 ```
 
-If the app still crashes on another Windows PC, rebuild once with `console=True` in `EMR_DHIS2_Tracker_Interoperability_App_V101.spec`, run the `.exe` from Command Prompt, and read the traceback. The most important warning file after a build is:
+If the app still crashes on another Windows PC, rebuild once with `console=True` in `EMR_DHIS2_Tracker_Interoperability_App_V102.spec`, run the `.exe` from Command Prompt, and read the traceback. The most important warning file after a build is:
 
 ```text
-build\EMR-DHIS2 Tracker interoperability App V101\warn-EMR-DHIS2 Tracker interoperability App V101.txt
+build\EMR-DHIS2 Tracker interoperability App V102\warn-EMR-DHIS2 Tracker interoperability App V102.txt
 ```

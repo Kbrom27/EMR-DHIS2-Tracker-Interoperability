@@ -10,9 +10,9 @@ if not exist .venv (
 call .venv\Scripts\activate.bat
 python -m pip install --upgrade pip
 python -m pip install -r requirements-windows.txt
-python -m PyInstaller --clean --noconfirm EMR_DHIS2_Tracker_Interoperability_App_V101.spec
+python -m PyInstaller --clean --noconfirm EMR_DHIS2_Tracker_Interoperability_App_V102.spec
 
 echo.
 echo Build finished. Your Windows executable is:
-echo dist\EMR-DHIS2 Tracker interoperability App V101.exe
+echo dist\EMR-DHIS2 Tracker interoperability App V102.exe
 pause

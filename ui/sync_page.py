@@ -29,7 +29,7 @@ from export.extractors import (
 from import_.importer import import_rows
 from transform.mapping import set_mapping_files
 from transform.pipeline import transform_rows
-from ui.components import CalendarPopup, DatePicker, LogPanel
+from ui.components import CalendarPopup, DatePicker, LogPanel, SearchableCombobox
 from utils import require_value_mapping_csv, require_xlsx_file
 
 APP_TITLE = "EMR-DHIS2 Tracker interoperability"
@@ -48,7 +48,7 @@ class SyncPage(ttk.Frame):
         self.emr_url_var = tk.StringVar()
         self.emr_username_var = tk.StringVar(value="superman")
         self.emr_password_var = tk.StringVar(value="Admin123")
-        self.facility_var = tk.StringVar(value=FACILITIES[0][0])
+        self.facility_var = tk.StringVar(value="")
         self.start_date_var = tk.StringVar()
         self.end_date_var = tk.StringVar()
         self.visit_type_var = tk.StringVar()
@@ -223,8 +223,11 @@ class SyncPage(ttk.Frame):
             "EMR Password",
             ttk.Entry(parent, textvariable=self.emr_password_var, show="*"),
         )
-        self.facility_combo = ttk.Combobox(parent, textvariable=self.facility_var, state="readonly")
-        self.facility_combo["values"] = [name for name, _code in FACILITIES]
+        self.facility_combo = SearchableCombobox(
+            parent,
+            textvariable=self.facility_var,
+            values=[name for name, _code in FACILITIES],
+        )
         self.add_field(parent, start_row + 3, "Facility", self.facility_combo)
         load_button = ttk.Button(parent, text="Connect and Load Visit Types", command=self.load_visit_types)
         load_button.grid(row=start_row + 4, column=1, sticky="w", pady=(4, 10))
@@ -344,6 +347,8 @@ class SyncPage(ttk.Frame):
             start_date = normalize_date_filter(self.start_date_var.get())
             end_date = normalize_date_filter(self.end_date_var.get())
             validate_date_range(start_date, end_date)
+            if not self.facility_var.get().strip():
+                raise ValueError("Please search and select a facility.")
             visit_type_name = self.visit_type_var.get().strip()
             if not visit_type_name:
                 raise ValueError("Load visit types and choose one visit type.")

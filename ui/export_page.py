@@ -16,7 +16,7 @@ from export.extractors import (
     validate_date_range,
     write_patients_csv,
 )
-from ui.components import DatePicker, LogPanel
+from ui.components import DatePicker, LogPanel, SearchableCombobox
 
 
 class ExportPage(ttk.Frame):
@@ -32,7 +32,7 @@ class ExportPage(ttk.Frame):
         self.base_url_var = tk.StringVar()
         self.username_var = tk.StringVar(value="superman")
         self.password_var = tk.StringVar(value="Admin123")
-        self.facility_var = tk.StringVar(value=FACILITIES[0][0])
+        self.facility_var = tk.StringVar(value="")
         self.start_date_var = tk.StringVar()
         self.end_date_var = tk.StringVar()
         self.visit_type_var = tk.StringVar()
@@ -90,10 +90,9 @@ class ExportPage(ttk.Frame):
 
         row += 1
         ttk.Label(container, text="Facility").grid(row=row, column=0, sticky="w", pady=4)
-        self.facility_combo = ttk.Combobox(
+        self.facility_combo = SearchableCombobox(
             container,
             textvariable=self.facility_var,
-            state="readonly",
             width=57,
             values=[name for name, _code in FACILITIES],
         )
@@ -279,6 +278,13 @@ class ExportPage(ttk.Frame):
             messagebox.showerror(
                 "Output file required",
                 "Choose where to save the CSV export.",
+            )
+            return
+
+        if not self.facility_var.get().strip():
+            messagebox.showerror(
+                "Facility required",
+                "Please search and select a facility before exporting.",
             )
             return
 

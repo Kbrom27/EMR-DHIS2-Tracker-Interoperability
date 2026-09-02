@@ -30,7 +30,7 @@ from o3.mappings import DEFAULT_MATERNAL_DICTIONARY, DEFAULT_NEONATAL_DICTIONARY
 from o3.schemas import FormRegistry, load_default_forms
 from transform.mapping import set_mapping_files
 from transform.pipeline import transform_rows
-from ui.components import DatePicker, LogPanel
+from ui.components import DatePicker, LogPanel, SearchableCombobox
 from utils import read_xlsx_rows
 
 O3_MAPPING_DIR = RESOURCES_DIR / "O3"
@@ -56,7 +56,7 @@ class O3Page(ttk.Frame):
         self.base_url_var = tk.StringVar()
         self.username_var = tk.StringVar(value="superman")
         self.password_var = tk.StringVar(value="Admin123")
-        self.facility_var = tk.StringVar(value=FACILITIES[0][0])
+        self.facility_var = tk.StringVar(value="")
         self.start_date_var = tk.StringVar()
         self.end_date_var = tk.StringVar()
         self.visit_type_var = tk.StringVar()
@@ -202,8 +202,12 @@ class O3Page(ttk.Frame):
         widget.grid(row=row, column=1, sticky="ew", pady=5)
 
     def _facility_field(self, parent: ttk.Frame, row: int) -> None:
-        combo = ttk.Combobox(parent, textvariable=self.facility_var, state="readonly", width=44)
-        combo["values"] = [name for name, _code in FACILITIES]
+        combo = SearchableCombobox(
+            parent,
+            textvariable=self.facility_var,
+            width=44,
+            values=[name for name, _code in FACILITIES],
+        )
         self._field(parent, row, "Facility", combo)
 
     def _selected_facility_code(self) -> str:
@@ -562,6 +566,8 @@ class O3Page(ttk.Frame):
         return registry
 
     def _run_export(self) -> Tuple[Path, str, int]:
+        if not self.facility_var.get().strip():
+            raise RuntimeError("Please search and select a facility before exporting/syncing.")
         start_date = normalize_date_filter(self.start_date_var.get())
         end_date = normalize_date_filter(self.end_date_var.get())
         validate_date_range(start_date, end_date)

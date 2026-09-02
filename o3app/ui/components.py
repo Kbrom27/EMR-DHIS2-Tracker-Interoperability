@@ -4,7 +4,42 @@ import calendar
 import tkinter as tk
 from datetime import date, datetime
 from tkinter import ttk
-from typing import Optional
+from typing import Optional, Sequence
+
+
+class SearchableCombobox(ttk.Combobox):
+    def __init__(self, parent: tk.Misc, values: Sequence[str] = (), **kwargs) -> None:
+        self.all_values = list(values)
+        if "state" not in kwargs or kwargs.get("state") == "readonly":
+            kwargs["state"] = "normal"
+        super().__init__(parent, values=self.all_values, **kwargs)
+        self.bind("<KeyRelease>", self._on_key_release)
+        self.bind("<FocusIn>", self._on_focus_in)
+
+    def set_values(self, new_values: Sequence[str]) -> None:
+        self.all_values = list(new_values)
+        self["values"] = self.all_values
+
+    def _on_key_release(self, event: tk.Event) -> None:
+        if event.keysym in (
+            "Up", "Down", "Left", "Right", "Return", "Escape", "Tab",
+            "Control_L", "Control_R", "Alt_L", "Alt_R", "Shift_L", "Shift_R"
+        ):
+            return
+        query = self.get().strip().lower()
+        if not query:
+            self["values"] = self.all_values
+        else:
+            filtered = [val for val in self.all_values if query in val.lower()]
+            self["values"] = filtered if filtered else self.all_values
+
+    def _on_focus_in(self, event: tk.Event) -> None:
+        query = self.get().strip().lower()
+        if not query:
+            self["values"] = self.all_values
+        else:
+            filtered = [val for val in self.all_values if query in val.lower()]
+            self["values"] = filtered if filtered else self.all_values
 
 
 class CalendarPopup(tk.Toplevel):

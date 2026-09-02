@@ -31,9 +31,9 @@ from o3.schemas import FormRegistry, load_default_forms
 
 def determine_program_from_visit_type(visit_type_name: str) -> str:
     normalized = visit_type_name.casefold()
-    if "nicu" in normalized:
+    if any(marker in normalized for marker in ("nicu", "neonatal", "ncu")):
         return NEONATAL_PROGRAM
-    if any(marker in normalized for marker in ("delivery", "labour", "labor")):
+    if any(marker in normalized for marker in ("delivery", "labour", "labor", "obs", "obstetric")):
         return MATERNAL_PROGRAM
     return ""
 

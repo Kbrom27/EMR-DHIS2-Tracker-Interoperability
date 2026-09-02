@@ -1,22 +1,13 @@
 {
-  "status": "completed",
+  "status": "interrupted",
   "system": "OpenMRS 3.x (O3)",
-  "facility_name": "Test",
   "facility_code": "Test",
-  "program": "Neonatal Care Form/QYJKpoUeg9F",
   "visit_type": "NICU",
-  "patients_extracted": 1,
-  "dhis2_import_stats": {
-    "processed": 1,
-    "created_entities": 0,
-    "updated_entities": 1,
-    "created_enrollments": 0,
-    "upserted_events": 0,
-    "unsynced_values": 1,
-    "row_errors": 0,
-    "skipped": 0,
-    "log_file": "/home/kbrom/Work/IMNID/ccc_dhis2_import_log_20260830_131824.csv"
-  },
-  "updated_at": "2026-08-30T13:18:24.485375",
-  "can_resume": false
+  "dhis2_url": "https://imnid.mohdigitalhealth.gov.et",
+  "dhis2_username": "admin",
+  "dhis2_password": "DHC@IMNID_2025!",
+  "work_dir": "/tmp/o3_mediator_hdumz9yb",
+  "can_resume": false,
+  "updated_at": "2026-08-31T14:03:31.124280",
+  "error": "401: Failed to authenticate with OpenMRS Server."
 }
