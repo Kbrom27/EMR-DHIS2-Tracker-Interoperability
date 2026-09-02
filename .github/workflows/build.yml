@@ -25,10 +25,10 @@ jobs:
 
       - name: Build EXE
         run: |
-          pyinstaller --clean --noconfirm EMR_DHIS2_Tracker_Interoperability_App_V101.spec
+          pyinstaller --clean --noconfirm EMR_DHIS2_Tracker_Interoperability_App_V102.spec
 
       - name: Upload EXE artifact
         uses: actions/upload-artifact@v4
         with:
-          name: EMR-DHIS2-Tracker-interoperability-App-V101
-          path: dist/EMR-DHIS2 Tracker interoperability App V101.exe
+          name: EMR-DHIS2-Tracker-interoperability-App-V102
+          path: dist/EMR-DHIS2 Tracker interoperability App V102.exe
