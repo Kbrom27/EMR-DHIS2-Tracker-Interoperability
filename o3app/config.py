@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 RESOURCES_DIR = Path(__file__).resolve().parents[1] / "Resources"
 

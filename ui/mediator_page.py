@@ -131,7 +131,8 @@ class MediatorPage(ttk.Frame):
         
         def run():
             try:
-                config = uvicorn.Config("mediator:app", host="127.0.0.1", port=8000, log_level="info")
+                from mediator import app as mediator_app
+                config = uvicorn.Config(mediator_app, host="127.0.0.1", port=8000, log_level="info")
                 self.uvicorn_server = uvicorn.Server(config)
                 self.uvicorn_server.run()
             except Exception as e:

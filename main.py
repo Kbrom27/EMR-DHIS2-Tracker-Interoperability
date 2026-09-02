@@ -265,4 +265,18 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as exc:
+        import sys
+        import traceback
+        from tkinter import messagebox
+        err_msg = f"Unhandled Exception in Script:\n\n{exc}\n\nTraceback:\n{traceback.format_exc()}"
+        print(err_msg, file=sys.stderr)
+        try:
+            err_root = tk.Tk()
+            err_root.withdraw()
+            messagebox.showerror("Application Startup Error", err_msg)
+        except Exception:
+            pass
+        sys.exit(1)

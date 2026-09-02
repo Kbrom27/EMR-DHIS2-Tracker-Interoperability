@@ -9,12 +9,20 @@ hidden_imports = (
     + collect_submodules('idna')
     + collect_submodules('requests')
     + collect_submodules('urllib3')
+    + collect_submodules('openpyxl')
+    + collect_submodules('fastapi')
+    + collect_submodules('uvicorn')
+    + collect_submodules('pydantic')
+    + collect_submodules('starlette')
     + collect_submodules('clients')
     + collect_submodules('export')
     + collect_submodules('transform')
     + collect_submodules('import_')
     + collect_submodules('ui')
     + collect_submodules('rules')
+    + collect_submodules('o3')
+    + collect_submodules('o3app')
+    + ['mediator', 'config', 'utils', 'models', 'tracker_mapping_rules', 'transform_export_to_dhis2_csv']
 )
 
 a = Analysis(
